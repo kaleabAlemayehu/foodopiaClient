@@ -1,6 +1,6 @@
 # foodopia client
 
-Look at the [foodopia api](https:/github.com/kaleabAlemayehu/foodopia) to learn more foodopia.
+Look at the [foodopia api](/kaleabAlemayehu/foodopia) to learn more foodopia.
 
 ## Setup
 
