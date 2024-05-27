@@ -1,8 +1,8 @@
 <template>
     <div>
         <NavBar>
-            <UserLogedIn />
-            <!-- <AnonUser /> -->
+            <!-- <UserLogedIn /> -->
+            <AnonUser />
         </NavBar>
 
     </div>
@@ -10,7 +10,7 @@
 
 <script setup>
 import NavBar from '~/components/NavBar.vue';
-import UserLogedIn from '~/components/UserLogedIn.vue';
+// import UserLogedIn from '~/components/UserLogedIn.vue';
 import AnonUser from '~/components/AnonUser.vue';
 
 </script>
