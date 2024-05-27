@@ -16,6 +16,7 @@ export default {
         customGolden: "#EAB839",
         customWhitishGolden: "#F2D280",
         customBlack: "#2C263F",
+        customGray: "#F3E7D7"
       }
     },
   },

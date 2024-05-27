@@ -1,12 +1,15 @@
-<template >
- <nav class="flex w-screen h-8 bg-customOrang">
-    
+<template>
+    <div >
+        <NavBar/>
 
- </nav>
+    </div>
 </template>
-<script setup>
 
-</script>
-<style >
+<script setup>
+import NavBar from '~/components/NavBar.vue';
     
+</script>
+
+<style scoped>
+  
 </style>
