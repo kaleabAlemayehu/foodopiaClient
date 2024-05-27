@@ -1,0 +1,21 @@
+<template>
+    <div class="authBtns flex items-center justify-center ">
+        <nuxt-link to="">
+            <button class="btn">Login</button>
+        </nuxt-link>
+        <nuxt-link to="">
+            <button class="btn">SignUp</button>
+        </nuxt-link>
+
+    </div>
+</template>
+
+<script setup>
+
+</script>
+
+<style scoped>
+.btn {
+    @apply outline-none py-[0.4rem] px-3 text-customWhite border-customWhite border-[0.4px] outline-[0.4px] rounded-2xl mx-3 shadow-md;
+}
+</style>
