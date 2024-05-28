@@ -35,10 +35,10 @@
 
                 </div>
                 <div class="ingredients">
-                    <p class="ingHeader">ingredients</p>
-                    <ul>
-                        <li v-for="ing in ingredients" :key="ing">{{ ing }}</li>
-                    </ul>
+                    <p class="ingHeader">Ingredients</p>
+                    <div class="ingredientList">
+                        <div v-for="ing in ingredients" :key="ing" class="">{{ ing }}</div>
+                    </div>
                 </div>
             </div>
 
@@ -62,9 +62,6 @@ const instructions = ref([
     "boil water and grid onions",
     "put onions on the pan",
     "add some oil",
-    " Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex consequatur, porro nam non unde dolorum molestiae quos! Rem libero accusamus architecto aspernatur reiciendis distinctio, laboriosam, soluta vel odio ipsa officia magni incidunt iste corrupti? Ipsa corporis eveniet iste vel sed.",
-    " Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex consequatur, porro nam non unde dolorum molestiae quos! Rem libero accusamus architecto aspernatur reiciendis distinctio, laboriosam, soluta vel odio ipsa officia magni incidunt iste corrupti? Ipsa corporis eveniet iste vel sed.",
-    " Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex consequatur, porro nam non unde dolorum molestiae quos! Rem libero accusamus architecto aspernatur reiciendis distinctio, laboriosam, soluta vel odio ipsa officia magni incidunt iste corrupti? Ipsa corporis eveniet iste vel sed.",
 ]);
 const ingredients = ref([
     "onions",
@@ -82,14 +79,19 @@ const ingredients = ref([
 </script>
 
 <style scoped>
+.ingHeader {
+    @apply text-4xl text-customBlack mb-12 border-b-[0.1px] pb-8 border-customBlack;
+}
+
+.ingredients {
+    @apply rounded-lg px-8 py-4;
+}
+
 .wrapper {
     @apply flex justify-center;
 }
 
-/* 
-.socials {
-    @apply ;
-} */
+
 
 .icons {
     @apply text-customGolden text-3xl m-3;
@@ -124,15 +126,7 @@ const ingredients = ref([
     @apply text-5xl;
 }
 
-.ingHeader {
-    @apply text-2xl text-customBlack;
-}
-
 .ins {
     @apply text-justify;
 }
-
-/* .ingredients {
-    @apply ;
-} */
 </style>
