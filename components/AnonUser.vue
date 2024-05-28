@@ -16,6 +16,6 @@
 
 <style scoped>
 .btn {
-    @apply outline-none py-[0.4rem] px-3 text-customWhite border-customWhite border-[0.4px] outline-[0.4px] rounded-2xl mx-3 hover:shadow-md hover:shadow-customBlack transition-all duration-1000;
+    @apply outline-none py-[0.4rem] px-3 text-customWhite border-customGray border-[0.4px] outline-[0.4px] rounded-2xl mx-3 hover:shadow-md hover:shadow-customBlack transition-all duration-1000 hover:border-customWhite;
 }
 </style>
