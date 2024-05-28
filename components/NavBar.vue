@@ -1,7 +1,7 @@
 <template>
     <div
         class="sticky top-0 left-0 flex w-screen h-16 bg-customOrang  justify-center items-center max-w-full overflow-hidden flex-1 z-10">
-        <div class="navContent flex h-full min-w-[90%]  max-w-[90%] justify-between items-center">
+        <div class="navContent flex h-full min-w-[80%]  max-w-[80%] justify-between items-center">
             <nuxt-link to="/" class="text-customWhite text-3xl  font-bold">Foodopia</nuxt-link>
 
             <div class="intercation flex justify-between w-[30%] items-center">

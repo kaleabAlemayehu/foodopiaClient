@@ -1,40 +1,44 @@
 <template>
-    <div class="bg-customWhite">
+    <div>
 
         <NavBar>
             <AnonUser />
         </NavBar>
         <ShowCase />
-        <div class="details">
+        <div class="wrapper">
+            <div class="details">
 
-            <div class="socials">
-                <div class="iconWrap">
-                    <Icon name="fa-brands:twitter" class="icons" />
+
+                <div class="socials">
+                    <div class="iconWrap">
+                        <Icon name="fa-brands:twitter" class="icons" />
+                    </div>
+                    <div class="iconWrap">
+                        <Icon name="fa-brands:facebook" class="icons" />
+                    </div>
+                    <div class="iconWrap">
+                        <Icon name="fa-brands:instagram" class="icons" />
+
+                    </div>
+
                 </div>
-                <div class="iconWrap">
-                    <Icon name="fa-brands:facebook" class="icons" />
-                </div>
-                <div class="iconWrap">
-                    <Icon name="fa-brands:instagram" class="icons" />
+                <div class="instructions">
+                    <p class="insHeader">Instruction</p>
+                    <ul class="instructionLists">
+                        <li v-for="ins, index in instructions" :key="ins" class="list"><span class="index">{{ index
+                                }}</span> {{ ins }}
+                        </li>
+                    </ul>
 
                 </div>
+                <div class="ingredients">
+                    <p class="ingHeader">ingredients</p>
+                    <ul>
+                        <li v-for="ing in ingredients" :key="ing">{{ ing }}</li>
+                    </ul>
+                </div>
+            </div>
 
-            </div>
-            <div class="instructions">
-                <p class="insHeader">Instruction</p>
-                <ul class="instructionLists">
-                    <li v-for="ins, index in instructions" :key="ins" class="list"><span class="index">{{ index
-                            }}</span> {{ ins }}
-                    </li>
-                </ul>
-
-            </div>
-            <div class="ingredients">
-                <p class="ingHeader">ingredients</p>
-                <ul>
-                    <li v-for="ing in ingredients" :key="ing">{{ ing }}</li>
-                </ul>
-            </div>
         </div>
     </div>
 </template>
@@ -71,16 +75,21 @@ const ingredients = ref([
 </script>
 
 <style scoped>
-.socials {
-    @apply relative right-36;
+.wrapper {
+    @apply w-dvw h-full;
 }
+
+/* 
+.socials {
+    @apply ;
+}  */
 
 .icons {
     @apply text-customGolden text-3xl m-3;
 }
 
 .iconWrap {
-    @apply p-2 my-2 transition-all duration-700 border-[1px] border-transparent;
+    @apply p-2 my-2 transition-all duration-700 border-[1px] border-transparent w-[72px];
 }
 
 
@@ -89,7 +98,7 @@ const ingredients = ref([
 }
 
 .details {
-    @apply w-full flex justify-around items-center absolute;
+    @apply w-full mt-6 min-w-[80%] max-w-[80%];
 }
 
 .instructionLists {
@@ -109,6 +118,10 @@ const ingredients = ref([
 }
 
 .ingHeader {
-    @apply text-2xl text-customBlack
+    @apply text-2xl text-customBlack;
 }
+
+/* .ingredients {
+    @apply ;
+} */
 </style>
