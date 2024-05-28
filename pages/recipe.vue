@@ -84,14 +84,16 @@ const ingredients = ref([
 }
 
 .ingredients {
-    @apply rounded-lg px-8 py-4;
+    @apply rounded-lg px-8 py-4 h-min;
 }
 
 .wrapper {
     @apply flex justify-center;
 }
 
-
+.socials {
+    @apply h-min w-min;
+}
 
 .icons {
     @apply text-customGolden text-3xl m-3;
@@ -111,7 +113,7 @@ const ingredients = ref([
 }
 
 .instructionLists {
-    @apply list-none text-3xl text-customBlack mt-20;
+    @apply list-none text-3xl text-customBlack mt-20 h-min;
 }
 
 .list {
