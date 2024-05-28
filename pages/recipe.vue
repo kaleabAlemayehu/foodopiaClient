@@ -25,9 +25,10 @@
                 <div class="instructions">
                     <p class="insHeader">Instruction</p>
                     <ul class="instructionLists">
-                        <li v-for="ins, index in instructions" :key="ins" class="list"><span class="index">{{ index
-                                }}</span> {{ ins }}
-                        </li>
+                        <div v-for="ins, index in instructions" :key="ins" class="list">
+                            <span class="index">{{ index }}</span>
+                            <span class="ins">{{ ins }}</span>
+                        </div>
                     </ul>
 
                 </div>
@@ -51,6 +52,7 @@ import UserLogedIn from "~/components/UserLogedIn.vue";
 import ShowCase from "~/components/ShowCase.vue"
 const instructions = ref([
     "hi there is instruction",
+    "hi there is instruction",
     "boil water and grid onions",
     "put onions on the pan",
     "add some oil",
@@ -58,6 +60,9 @@ const instructions = ref([
     "boil water and grid onions",
     "put onions on the pan",
     "add some oil",
+    " Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex consequatur, porro nam non unde dolorum molestiae quos! Rem libero accusamus architecto aspernatur reiciendis distinctio, laboriosam, soluta vel odio ipsa officia magni incidunt iste corrupti? Ipsa corporis eveniet iste vel sed.",
+    " Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex consequatur, porro nam non unde dolorum molestiae quos! Rem libero accusamus architecto aspernatur reiciendis distinctio, laboriosam, soluta vel odio ipsa officia magni incidunt iste corrupti? Ipsa corporis eveniet iste vel sed.",
+    " Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex consequatur, porro nam non unde dolorum molestiae quos! Rem libero accusamus architecto aspernatur reiciendis distinctio, laboriosam, soluta vel odio ipsa officia magni incidunt iste corrupti? Ipsa corporis eveniet iste vel sed.",
 ]);
 const ingredients = ref([
     "onions",
@@ -76,13 +81,13 @@ const ingredients = ref([
 
 <style scoped>
 .wrapper {
-    @apply w-dvw h-full;
+    @apply flex justify-center;
 }
 
 /* 
 .socials {
     @apply ;
-}  */
+} */
 
 .icons {
     @apply text-customGolden text-3xl m-3;
@@ -98,15 +103,15 @@ const ingredients = ref([
 }
 
 .details {
-    @apply w-full mt-6 min-w-[80%] max-w-[80%];
+    @apply w-full mt-6 w-[90%] grid max-w-[90%] grid-cols-[100px_5fr_2fr] gap-x-32;
 }
 
 .instructionLists {
-    @apply list-none text-3xl text-customBlack;
+    @apply list-none text-3xl text-customBlack mt-20;
 }
 
 .list {
-    @apply block m-2 py-2 my-8;
+    @apply m-2 ml-0 py-2 my-8;
 }
 
 .index {
@@ -119,6 +124,10 @@ const ingredients = ref([
 
 .ingHeader {
     @apply text-2xl text-customBlack;
+}
+
+.ins {
+    @apply text-left;
 }
 
 /* .ingredients {
