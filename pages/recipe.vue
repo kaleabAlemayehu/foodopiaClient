@@ -26,8 +26,10 @@
                     <p class="insHeader">Instruction</p>
                     <ul class="instructionLists">
                         <div v-for="ins, index in instructions" :key="ins" class="list">
-                            <span class="index">{{ index }}</span>
-                            <span class="ins">{{ ins }}</span>
+                            <div>
+                                <span class="index">{{ index }}</span>
+                            </div>
+                            <div class="ins">{{ ins }}</div>
                         </div>
                     </ul>
 
@@ -111,7 +113,7 @@ const ingredients = ref([
 }
 
 .list {
-    @apply m-2 ml-0 py-2 my-8;
+    @apply m-2 ml-0 py-2 my-8 flex;
 }
 
 .index {
@@ -127,7 +129,7 @@ const ingredients = ref([
 }
 
 .ins {
-    @apply text-left;
+    @apply text-justify;
 }
 
 /* .ingredients {
