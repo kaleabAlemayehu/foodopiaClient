@@ -53,7 +53,7 @@ defineProps(['recipe'])
 
 <style>
 .card {
-    @apply grid border-[1px] border-customGray shadow-md p-0 rounded-lg bg-customGray transition-all duration-700;
+    @apply grid border-[1px] border-customGray shadow-md p-0 rounded-lg bg-customGray transition-all duration-300;
 }
 
 .card:hover {

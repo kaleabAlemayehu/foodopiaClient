@@ -19,12 +19,37 @@
                 <div class="choice seasonal" @click="changeCurrent">Seasonal</div>
             </div>
         </div>
-        <div class="cards">
-            <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
+        <div class="contents">
+
+            <div class="cards">
+                <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
+            </div>
+            <div class="filterBox">
+                <div class="filters">
+                    <div class="time currentFilter">Time</div>
+                    <div class="ingredients">Time</div>
+                </div>
+                <div class="checkboxs">
+                    <div><input type="checkbox" name="" id=""><span class="parameter"> less 10 min</span>
+                    </div>
+                    <div><input type="checkbox" name="" id=""><span class="parameter">11 - 30 min</span></div>
+                    <div><input type="checkbox" name="" id=""><span class="parameter">31 - 40 min</span></div>
+                    <div><input type="checkbox" name="" id=""><span class="parameter">41 - 50 min</span></div>
+                    <div><input type="checkbox" name="" id=""><span class="parameter">51 min +</span></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <style scoped>
+.filterBox {
+    @apply sticky right-20 top-20;
+}
+
+.contents {
+    @apply flex justify-between items-baseline my-48;
+}
+
 .choice {
     @apply px-8 py-4 mx-2 rounded-xl transition-all duration-300 cursor-pointer;
 }
@@ -46,7 +71,7 @@
 }
 
 .cards {
-    @apply grid grid-cols-3 gap-x-8 gap-y-10 w-[70%] px-8 mx-6 my-48;
+    @apply grid grid-cols-3 gap-x-8 gap-y-10 w-[70%] px-8 mx-6;
 }
 </style>
 
