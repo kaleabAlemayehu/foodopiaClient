@@ -27,7 +27,7 @@
             <div class="filterBox">
                 <div class="filters">
                     <div class="time currentFilter">Time</div>
-                    <div class="ingredients">Time</div>
+                    <div class="ingredients">ingredients</div>
                 </div>
                 <div class="checkboxs">
                     <div><input type="checkbox" name="" id=""><span class="parameter"> less 10 min</span>
@@ -43,7 +43,7 @@
 </template>
 <style scoped>
 .filterBox {
-    @apply sticky right-20 top-20;
+    @apply sticky right-20 top-20 py-32 px-16 bg-customGray leading-relaxed w-[20%] rounded-lg text-xl;
 }
 
 .contents {
