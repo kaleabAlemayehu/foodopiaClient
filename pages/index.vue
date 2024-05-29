@@ -9,14 +9,14 @@
                 Explore our huge selection of delicious recipe ideas
             </div>
             <div class="catagories">
-                <div class="choice all">All</div>
-                <div class="choice breakfast">Breakfast</div>
-                <div class="choice lunch">Lunch</div>
-                <div class="choice dinner">Dinner</div>
-                <div class="choice  current dessert">Dessert</div>
-                <div class="choice drinks">Drinks</div>
-                <div class="choice snacks">Snacks</div>
-                <div class="choice seasonal">Seasonal</div>
+                <div class="choice all" @click="changeCurrent">All</div>
+                <div class="choice breakfast" @click="changeCurrent">Breakfast</div>
+                <div class="choice current lunch" @click="changeCurrent">Lunch</div>
+                <div class="choice  dinner" @click="changeCurrent">Dinner</div>
+                <div class="choice   dessert" @click="changeCurrent">Dessert</div>
+                <div class="choice drinks" @click="changeCurrent">Drinks</div>
+                <div class="choice snacks" @click="changeCurrent">Snacks</div>
+                <div class="choice seasonal" @click="changeCurrent">Seasonal</div>
             </div>
         </div>
         <div class="cards">
@@ -26,7 +26,7 @@
 </template>
 <style scoped>
 .choice {
-    @apply px-8 py-4 mx-2 rounded-xl;
+    @apply px-8 py-4 mx-2 rounded-xl transition-all duration-300 cursor-pointer;
 }
 
 .current {
@@ -69,5 +69,7 @@ const recipes = ref([
     { id: 3, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
     { id: 1, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
 ])
-
+const changeCurrent = (e) => {
+    e.target.classList.toggle("current");
+}
 </script>
