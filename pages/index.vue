@@ -1,8 +1,8 @@
 <template>
     <div>
         <NavBar>
-            <!-- <UserLogedIn /> -->
-            <AnonUser />
+            <UserLogedIn />
+            <!-- <AnonUser /> -->
         </NavBar>
 
     </div>
