@@ -9,14 +9,14 @@
                 Explore our huge selection of delicious recipe ideas
             </div>
             <div class="catagories">
-                <div class="all">All</div>
-                <div class="breakfast">Breakfast</div>
-                <div class="lunch">Lunch</div>
-                <div class="dinner">Dinner</div>
-                <div class="dessert">Dessert</div>
-                <div class="drinks">Drinks</div>
-                <div class="snacks">Snacks</div>
-                <div class="seasonal">Seasonal</div>
+                <div class="choice all">All</div>
+                <div class="choice breakfast">Breakfast</div>
+                <div class="choice lunch">Lunch</div>
+                <div class="choice dinner">Dinner</div>
+                <div class="choice  current dessert">Dessert</div>
+                <div class="choice drinks">Drinks</div>
+                <div class="choice snacks">Snacks</div>
+                <div class="choice seasonal">Seasonal</div>
             </div>
         </div>
         <div class="cards">
@@ -25,6 +25,18 @@
     </div>
 </template>
 <style scoped>
+.choice {
+    @apply px-8 py-4 mx-2 rounded-xl;
+}
+
+.current {
+    @apply bg-customBlack text-customWhite;
+}
+
+.catagories {
+    @apply flex relative top-[10.5rem] w-min justify-around text-2xl bg-customGray px-8 py-3 rounded-xl shadow-md font-bold;
+}
+
 .showcase {
     @apply flex w-full h-[70dvh] bg-customOrang justify-center items-center flex-col;
 }
