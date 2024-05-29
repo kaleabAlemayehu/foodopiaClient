@@ -26,9 +26,12 @@
 </template>
 <style scoped>
 .showcase {
-    @apply flex w-full h-[70dvh] bg-customOrang;
+    @apply flex w-full h-[70dvh] bg-customOrang justify-center items-center flex-col;
 }
 
+.showcaseText {
+    @apply text-7xl text-center leading-relaxed text-customWhite w-1/2 font-semibold mt-20;
+}
 
 .cards {
     @apply grid grid-cols-3 gap-x-8 gap-y-10 w-[70%] px-8 mx-6 my-48;
