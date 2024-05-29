@@ -12,7 +12,7 @@
                 </div>
                 <div class="description">
                     <div class="user">
-                        <Icon name="fa-regular:user" class=" text-customWhite" />
+                        <Icon name="fa-regular:user" class=" text-customBlack" />
                         <span class="userName">{{ recipe.author }}</span>
                     </div>
                     <div class="rating">
@@ -52,6 +52,11 @@
         </div>
     </div>
 </template>
+<style scoped>
+.cards {
+    @apply grid grid-cols-3 gap-x-8 gap-y-10 w-[70%] px-8 mx-6 my-48;
+}
+</style>
 
 <script setup>
 import NavBar from '~/components/NavBar.vue';
@@ -65,5 +70,3 @@ const recipes = ref([
 ])
 
 </script>
-
-<style scoped></style>
