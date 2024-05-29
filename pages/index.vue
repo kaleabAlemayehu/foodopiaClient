@@ -15,7 +15,7 @@
                         {{ recipe.title }}
                     </div>
                     <div class="user">
-                        <Icon name="fa-regular:user" class=" text-customBlack" />
+                        <Icon name="fa-regular:user" class=" text-customBlack mr-4" />
                         <span class="userName">{{ recipe.author }}</span>
                     </div>
                     <div class="rating">
@@ -70,6 +70,13 @@
     @apply col-span-2 flex justify-start items-center text-lg h-min my-4 mx-4;
 }
 
+.rating {
+    @apply flex justify-evenly text-xl font-thin h-min my-4 mx-8;
+}
+
+.star {
+    @apply text-customGolden my-auto text-xl;
+}
 
 .interactions {
     @apply col-span-3 flex justify-around items-center text-base h-min;
