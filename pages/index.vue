@@ -11,37 +11,34 @@
                     <img src="@/static/assets/images/thumbnail.jpg" :alt="recipe.img">
                 </div>
                 <div class="description">
+                    <div class="title">
+                        {{ recipe.title }}
+                    </div>
                     <div class="user">
                         <Icon name="fa-regular:user" class=" text-customBlack" />
                         <span class="userName">{{ recipe.author }}</span>
                     </div>
                     <div class="rating">
-                        <div class="star">
-                            <Icon name="" />
-                        </div>
+                        <Icon name="fa-regular:star" class="star" />
                         <span class="ratingNumber">
                             {{ recipe.rating }}
                         </span>
                     </div>
                     <div class="interactions">
                         <div class="comments">
-                            <div class="chat">
-                                <Icon name="fa-regular:comment" />
-                            </div>
+                            <Icon name="fa-regular:comment" class="chat" />
                             <span class="commentNumber">
                                 {{ recipe.comments }}
                             </span>
                         </div>
                         <div class="likes">
-                            <div class="heart">
-                                <Icon name="fa6-regular:heart" />
-                            </div>
+                            <Icon name="fa6-regular:heart" class="heart" />
                             <span class="likeNumber">
                                 {{ recipe.likes }}
                             </span>
                         </div>
                         <div class="bookmark">
-                            <Icon name="fa6-regular:bookmark" />
+                            <Icon name="fa6-regular:bookmark" class="bg-customGolden" />
 
                         </div>
                     </div>
@@ -55,6 +52,27 @@
 <style scoped>
 .cards {
     @apply grid grid-cols-3 gap-x-8 gap-y-10 w-[70%] px-8 mx-6 my-48;
+}
+
+.card {
+    @apply grid border-[1px] border-customGray shadow-md p-0 rounded-lg bg-customGray;
+}
+
+.description {
+    @apply grid grid-rows-[h-min] grid-cols-3;
+}
+
+.title {
+    @apply col-span-3 flex justify-start items-center text-2xl h-min my-6 mx-4 font-medium;
+}
+
+.user {
+    @apply col-span-2 flex justify-start items-center text-lg h-min my-4 mx-4;
+}
+
+
+.interactions {
+    @apply col-span-3 flex justify-around items-center text-base h-min;
 }
 </style>
 
