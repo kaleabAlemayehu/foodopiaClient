@@ -34,7 +34,7 @@
 }
 
 .catagories {
-    @apply flex relative top-[10.5rem] w-min justify-around text-2xl bg-customGray px-8 py-3 rounded-xl shadow-md font-bold;
+    @apply flex relative top-[11.25rem] w-min justify-around text-2xl bg-customGray px-8 py-3 rounded-xl shadow-md font-bold;
 }
 
 .showcase {
