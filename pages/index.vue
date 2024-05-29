@@ -37,8 +37,10 @@
                                 {{ recipe.likes }}
                             </span>
                         </div>
-                        <div class="bookmark">
-                            <Icon name="fa6-regular:bookmark" class="bg-customGolden" />
+
+                        <div :class="recipe.isBookmarked ? marked : notMarked" class="bookmark">
+
+                            <Icon name="fa6-regular:bookmark" class="" />
 
                         </div>
                     </div>
@@ -55,7 +57,11 @@
 }
 
 .card {
-    @apply grid border-[1px] border-customGray shadow-md p-0 rounded-lg bg-customGray;
+    @apply grid border-[1px] border-customGray shadow-md p-0 rounded-lg bg-customGray transition-all duration-700;
+}
+
+.card:hover {
+    @apply shadow-lg;
 }
 
 .description {
@@ -79,8 +85,36 @@
 }
 
 .interactions {
-    @apply col-span-3 flex justify-around items-center text-base h-min;
+    @apply col-span-3 flex justify-around items-center text-base h-min mx-2 my-8;
 }
+
+.chat,
+.heart,
+.bookmark {
+    @apply mr-4 text-xl border-[1px];
+}
+
+.comments,
+.likes,
+.bookmark {
+    @apply text-xl border-[1px] px-4 py-2 rounded-lg transition-all duration-300;
+}
+
+.comments:hover,
+.likes:hover,
+.bookmark:hover {
+    @apply shadow-md;
+}
+
+.marked {
+    @apply bg-customGolden text-customWhite;
+}
+
+/* 
+    TODO adding change when it is bookmarked
+.bookmark:TODO {
+    @apply bg-customGolden text-customWhite;
+} */
 </style>
 
 <script setup>
@@ -88,6 +122,14 @@ import NavBar from '~/components/NavBar.vue';
 // import UserLogedIn from '~/components/UserLogedIn.vue';
 import AnonUser from '~/components/AnonUser.vue';
 const recipes = ref([
+    { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
+    { id: 2, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
+    { id: 3, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
+    { id: 1, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
+    { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
+    { id: 2, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
+    { id: 3, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
+    { id: 1, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
     { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
     { id: 2, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
     { id: 3, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
