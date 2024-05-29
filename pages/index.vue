@@ -4,12 +4,32 @@
             <UserLogedIn />
             <!-- <AnonUser /> -->
         </NavBar>
+        <div class="showcase">
+            <div class="showcaseText">
+                Explore our huge selection of delicious recipe ideas
+            </div>
+            <div class="catagories">
+                <div class="all">All</div>
+                <div class="breakfast">Breakfast</div>
+                <div class="lunch">Lunch</div>
+                <div class="dinner">Dinner</div>
+                <div class="dessert">Dessert</div>
+                <div class="drinks">Drinks</div>
+                <div class="snacks">Snacks</div>
+                <div class="seasonal">Seasonal</div>
+            </div>
+        </div>
         <div class="cards">
             <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
         </div>
     </div>
 </template>
 <style scoped>
+.showcase {
+    @apply flex w-full h-[70dvh] bg-customOrang;
+}
+
+
 .cards {
     @apply grid grid-cols-3 gap-x-8 gap-y-10 w-[70%] px-8 mx-6 my-48;
 }
