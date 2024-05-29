@@ -7,7 +7,8 @@
             <div class="intercation flex justify-between w-[30%] items-center">
                 <div class="search flex relative top-0  group  transition-all duration-1000 ">
                     <div class="searchIcon">
-                        <img src="@/static/assets/icons/searchIcon.svg" alt="searchIcon" class="absolute top-2 left-2">
+                        <Icon name="fa6-solid:magnifying-glass" alt="searchIcon"
+                            class="absolute top-3 left-2 text-customOrang" />
                     </div>
                     <input type="search" placeholder="Search Recipe..."
                         class="px-10 py-2 rounded-lg outline-none border-none text-customBlack focus:shadow-sm bg-customWhite  group-hover:shadow-md group-hover:shadow-customBlack group-focus:shadow-md group-focus:shadow-customBlack "
