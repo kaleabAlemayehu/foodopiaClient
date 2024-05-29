@@ -5,38 +5,45 @@
             <AnonUser />
         </NavBar>
         <ShowCase />
-        <div class="wrapper">
-            <div class="details">
+        <div class="wrapper  flex justify-center">
+            <div class="details  w-full mt-6 w-[90%] grid max-w-[90%] grid-cols-[100px_5fr_2fr] gap-x-32">
 
 
-                <div class="socials">
-                    <div class="iconWrap">
-                        <Icon name="fa-brands:twitter" class="icons" />
+                <div class="socials h-min w-min;">
+                    <div
+                        class="iconWrap p-2 my-2 transition-all duration-700 border-[1px] border-transparent w-[72px]  hover:border-[1px] hover:rounded-full hover:border-customGolden">
+                        <Icon name="fa-brands:twitter" class="icons  text-customGolden text-3xl m-3" />
                     </div>
-                    <div class="iconWrap">
-                        <Icon name="fa-brands:facebook" class="icons" />
+                    <div
+                        class="iconWrap p-2 my-2 transition-all duration-700 border-[1px] border-transparent w-[72px]  hover:border-[1px] hover:rounded-full hover:border-customGolden">
+                        <Icon name="fa-brands:facebook" class="icons  text-customGolden text-3xl m-3" />
                     </div>
-                    <div class="iconWrap">
-                        <Icon name="fa-brands:instagram" class="icons" />
+                    <div
+                        class="iconWrap p-2 my-2 transition-all duration-700 border-[1px] border-transparent w-[72px]  hover:border-[1px] hover:rounded-full hover:border-customGolden">
+                        <Icon name="fa-brands:instagram" class="icons  text-customGolden text-3xl m-3" />
 
                     </div>
 
                 </div>
                 <div class="instructions">
-                    <p class="insHeader">Instruction</p>
-                    <ul class="instructionLists">
-                        <div v-for="ins, index in instructions" :key="ins" class="list">
+                    <p class="insHeader text-5xl">Instruction</p>
+                    <ul class="instructionLists list-none text-3xl text-customBlack mt-20 h-min">
+                        <div v-for="ins, index in instructions" :key="ins" class="list m-2 ml-0 py-2 my-8 flex">
                             <div>
-                                <span class="index">{{ index }}</span>
+                                <span
+                                    class="index p-2 text-customGolden border-2 border-customGolden rounded-full px-4 mr-5">{{
+                                    index }}</span>
                             </div>
-                            <div class="ins">{{ ins }}</div>
+                            <div class="ins text-justify">{{ ins }}</div>
                         </div>
                     </ul>
 
                 </div>
-                <div class="ingredients">
-                    <p class="ingHeader">Ingredients</p>
-                    <div class="ingredientList">
+                <div class="ingredients rounded-lg px-8 py-4 h-min shadow-md shadow-customBlack">
+                    <p class="ingHeader text-4xl text-customBlack mb-8 border-b-[0.1px] pb-8 border-customBlack">
+                        Ingredients</p>
+                    <div
+                        class="ingredientList rounded-lg p-3 border-customGolden border-[1px] mb-8 px-4 leading-relaxed text-lg px-8">
                         <div v-for="ing in ingredients" :key="ing" class="">{{ ing }}</div>
                     </div>
                 </div>
@@ -78,57 +85,4 @@ const ingredients = ref([
 ])
 </script>
 
-<style scoped>
-.ingHeader {
-    @apply text-4xl text-customBlack mb-12 border-b-[0.1px] pb-8 border-customBlack;
-}
-
-.ingredients {
-    @apply rounded-lg px-8 py-4 h-min;
-}
-
-.wrapper {
-    @apply flex justify-center;
-}
-
-.socials {
-    @apply h-min w-min;
-}
-
-.icons {
-    @apply text-customGolden text-3xl m-3;
-}
-
-.iconWrap {
-    @apply p-2 my-2 transition-all duration-700 border-[1px] border-transparent w-[72px];
-}
-
-
-.iconWrap:hover {
-    @apply border-[1px] rounded-full border-customGolden;
-}
-
-.details {
-    @apply w-full mt-6 w-[90%] grid max-w-[90%] grid-cols-[100px_5fr_2fr] gap-x-32;
-}
-
-.instructionLists {
-    @apply list-none text-3xl text-customBlack mt-20 h-min;
-}
-
-.list {
-    @apply m-2 ml-0 py-2 my-8 flex;
-}
-
-.index {
-    @apply p-2 text-customGolden border-2 border-customGolden rounded-full px-4 mr-5;
-}
-
-.insHeader {
-    @apply text-5xl;
-}
-
-.ins {
-    @apply text-justify;
-}
-</style>
+<style scoped></style>
