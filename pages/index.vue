@@ -30,20 +30,37 @@
                     <div class="ingredients">ingredients</div>
                 </div>
                 <div class="checkboxs">
-                    <div><input type="checkbox" name="" id=""><span class="parameter"> less 10 min</span>
+                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>less 10
+                            min</span>
                     </div>
-                    <div><input type="checkbox" name="" id=""><span class="parameter">11 - 30 min</span></div>
-                    <div><input type="checkbox" name="" id=""><span class="parameter">31 - 40 min</span></div>
-                    <div><input type="checkbox" name="" id=""><span class="parameter">41 - 50 min</span></div>
-                    <div><input type="checkbox" name="" id=""><span class="parameter">51 min +</span></div>
+                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>11 - 30
+                            min</span></div>
+                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>31 - 40
+                            min</span></div>
+                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>41 - 50
+                            min</span></div>
+                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>51 min +</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <style scoped>
+.checkboxs {
+    @apply mr-8;
+}
+
+.parameter {
+    @apply mb-6;
+}
+
+.filters {
+    @apply flex justify-around mb-10 pb-6 border-customBlack border-b-[1px];
+}
+
 .filterBox {
-    @apply sticky right-20 top-20 py-32 px-16 bg-customGray leading-relaxed w-[20%] rounded-lg text-xl;
+    @apply sticky right-20 top-20 py-5 px-16 bg-customGray leading-relaxed w-[20%] rounded-xl text-xl font-thin;
 }
 
 .contents {
