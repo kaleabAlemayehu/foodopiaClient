@@ -29,23 +29,60 @@
                     <div class="time currentFilter">Time</div>
                     <div class="ingredients">ingredients</div>
                 </div>
-                <div class="checkboxs">
-                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>less 10
-                            min</span>
+
+
+                <fieldset>
+
+                    <div class="flex items-center mb-4">
+                        <input checked id="checkbox-1" type="checkbox" value=""
+                            class="w-4 h-4 text-customBlack bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="checkbox-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">less
+                            than 10 min.</label>
                     </div>
-                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>11 - 30
-                            min</span></div>
-                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>31 - 40
-                            min</span></div>
-                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>41 - 50
-                            min</span></div>
-                    <div class="parameter"><input class="checkboxs" type="checkbox" name="" id=""><span>51 min +</span>
+
+                    <div class="flex items-center mb-4">
+                        <input id="checkbox-2" type="checkbox" value=""
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="checkbox-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">11 -
+                            30 min</label>
                     </div>
-                </div>
+
+                    <div class="flex items-center mb-4">
+                        <input id="checkbox-3" type="checkbox" value=""
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="checkbox-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">31 -
+                            40 min</label>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="flex items-center h-5">
+                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        </div>
+                        <div class="ms-2 text-sm">
+                            <label for="helper-checkbox" class="font-medium text-gray-900 dark:text-gray-300">41 - 50
+                                min</label>
+
+                        </div>
+                    </div>
+                    <div class="flex mb-4">
+                        <div class="flex items-center h-5">
+                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        </div>
+                        <div class="ms-2 text-sm">
+                            <label for="helper-checkbox" class="font-medium text-gray-900 dark:text-gray-300">51 min
+                                +</label>
+
+                        </div>
+                    </div>
+                </fieldset>
+
             </div>
         </div>
     </div>
 </template>
+
 <style scoped>
 .checkboxs {
     @apply mr-8;
