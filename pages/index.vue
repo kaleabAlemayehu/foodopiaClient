@@ -60,7 +60,7 @@ const changeCurrent = (e) => {
             <div class="filterBox">
 
                 <button id="dropdownHelperButton" data-dropdown-toggle="dropdownHelper"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    class="text-customBlack bg-customGray hover:bg-customGray focus:ring-4 focus:outline-none focus:ring-customGray font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-customGray dark:hover:bg-customGray dark:focus:ring-customGray"
                     type="button">filters <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -70,11 +70,11 @@ const changeCurrent = (e) => {
 
                 <!-- Dropdown menu -->
                 <div id="dropdownHelper"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700 dark:divide-gray-600">
-                    <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                    class="z-10 hidden bg-customGray divide-y divide-customGray rounded-lg shadow w-60 dark:bg-customBlack dark:divide-customBlack">
+                    <ul class="p-3 space-y-1 text-sm text-customBlack dark:text-customWhite"
                         aria-labelledby="dropdownHelperButton">
                         <li>
-                            <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
                                 <div class="flex items-center h-5">
                                     <input id="helper-checkbox-1" aria-describedby="helper-checkbox-text-1"
                                         type="checkbox" value=""
@@ -83,15 +83,12 @@ const changeCurrent = (e) => {
                                 <div class="ms-2 text-sm">
                                     <label for="helper-checkbox-1" class="font-medium text-gray-900 dark:text-gray-300">
                                         <div>Enable notifications</div>
-                                        <p id="helper-checkbox-text-1"
-                                            class="text-xs font-normal text-gray-500 dark:text-gray-300">Some helpful
-                                            instruction goes over here.</p>
                                     </label>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
                                 <div class="flex items-center h-5">
                                     <input id="helper-checkbox-2" aria-describedby="helper-checkbox-text-2"
                                         type="checkbox" value=""
@@ -100,15 +97,12 @@ const changeCurrent = (e) => {
                                 <div class="ms-2 text-sm">
                                     <label for="helper-checkbox-2" class="font-medium text-gray-900 dark:text-gray-300">
                                         <div>Enable 2FA auth</div>
-                                        <p id="helper-checkbox-text-2"
-                                            class="text-xs font-normal text-gray-500 dark:text-gray-300">Some helpful
-                                            instruction goes over here.</p>
                                     </label>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
                                 <div class="flex items-center h-5">
                                     <input id="helper-checkbox-3" aria-describedby="helper-checkbox-text-3"
                                         type="checkbox" value=""
@@ -117,9 +111,6 @@ const changeCurrent = (e) => {
                                 <div class="ms-2 text-sm">
                                     <label for="helper-checkbox-3" class="font-medium text-gray-900 dark:text-gray-300">
                                         <div>Subscribe newsletter</div>
-                                        <p id="helper-checkbox-text-3"
-                                            class="text-xs font-normal text-gray-500 dark:text-gray-300">Some helpful
-                                            instruction goes over here.</p>
                                     </label>
                                 </div>
                             </div>
@@ -134,20 +125,8 @@ const changeCurrent = (e) => {
 </template>
 
 <style scoped>
-.checkboxs {
-    @apply mr-8;
-}
-
-.parameter {
-    @apply mb-6;
-}
-
-.filters {
-    @apply flex justify-around mb-10 pb-6 border-customBlack border-b-[1px];
-}
-
 .filterBox {
-    @apply sticky right-20 top-20 py-5 px-16 bg-customGray leading-relaxed w-[20%] rounded-xl text-xl font-thin;
+    @apply sticky right-20 top-20 py-5 px-16 w-[20%];
 }
 
 .contents {
