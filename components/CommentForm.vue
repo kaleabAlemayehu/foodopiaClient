@@ -15,9 +15,6 @@
                         Post comment
                     </button>
                     <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
-
-
-
                     </div>
                 </div>
             </div>
