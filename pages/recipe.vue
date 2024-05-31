@@ -5,6 +5,7 @@
         </NavBar>
         <ShowCase />
         <Details />
+        <CommentForm />
         <Footer />
     </div>
 </template>
@@ -16,6 +17,7 @@ import UserLogedIn from "~/components/UserLogedIn.vue";
 import ShowCase from "~/components/ShowCase.vue"
 import Details from "~/components/Details.vue";
 import Footer from "~/components/Footer.vue";
+import CommentForm from "../components/CommentForm.vue";
 
 </script>
 
