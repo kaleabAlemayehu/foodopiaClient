@@ -31,83 +31,8 @@
                         class="z-10 hidden bg-customGray divide-y divide-customGray rounded-lg shadow w-60 dark:bg-customBlack dark:divide-customBlack">
                         <ul class="p-3 space-y-1 text-sm text-customBlack dark:text-customWhite start-0"
                             aria-labelledby="timeButton">
-                            <li>
-                                <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
-                                    <div class="flex items-center h-5">
-                                        <input id="helper-checkbox-1" aria-describedby="helper-checkbox-text-1"
-                                            type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    </div>
-                                    <div class="ms-2 text-sm">
-                                        <label for="helper-checkbox-1"
-                                            class="font-medium text-gray-900 dark:text-gray-300">
-                                            <div>less than 15 min</div>
-                                        </label>
-                                    </div>
-                                </div>
+                            <FilterList parameter="kaleab" />
 
-                            </li>
-                            <li>
-                                <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
-                                    <div class="flex items-center h-5">
-                                        <input id="helper-checkbox-2" aria-describedby="helper-checkbox-text-2"
-                                            type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    </div>
-                                    <div class="ms-2 text-sm">
-                                        <label for="helper-checkbox-2"
-                                            class="font-medium text-gray-900 dark:text-gray-300">
-                                            <div>16 - 30 min</div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
-                                    <div class="flex items-center h-5">
-                                        <input id="helper-checkbox-3" aria-describedby="helper-checkbox-text-3"
-                                            type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    </div>
-                                    <div class="ms-2 text-sm">
-                                        <label for="helper-checkbox-3"
-                                            class="font-medium text-gray-900 dark:text-gray-300">
-                                            <div>31 - 45 min</div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
-                                    <div class="flex items-center h-5">
-                                        <input id="helper-checkbox-3" aria-describedby="helper-checkbox-text-3"
-                                            type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    </div>
-                                    <div class="ms-2 text-sm">
-                                        <label for="helper-checkbox-3"
-                                            class="font-medium text-gray-900 dark:text-gray-300">
-                                            <div>46 - 60 min</div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
-                                    <div class="flex items-center h-5">
-                                        <input id="helper-checkbox-3" aria-describedby="helper-checkbox-text-3"
-                                            type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    </div>
-                                    <div class="ms-2 text-sm">
-                                        <label for="helper-checkbox-3"
-                                            class="font-medium text-gray-900 dark:text-gray-300">
-                                            <div>60 min + </div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
 
@@ -123,58 +48,13 @@
                                 d="m1 1 4 4 4-4" />
                         </svg>
                     </button>
-                    <!-- ingredient drop menu -->
+                    <!-- timer drop menu -->
                     <div id="ingredientFilter"
                         class="z-10 hidden bg-customGray divide-y divide-customGray rounded-lg shadow w-60 dark:bg-customBlack dark:divide-customBlack">
                         <ul class="p-3 space-y-1 text-sm text-customBlack dark:text-customWhite start-0"
                             aria-labelledby="timeButton">
-                            <li>
-                                <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
-                                    <div class="flex items-center h-5">
-                                        <input id="helper-checkbox-1" aria-describedby="helper-checkbox-text-1"
-                                            type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    </div>
-                                    <div class="ms-2 text-sm">
-                                        <label for="helper-checkbox-1"
-                                            class="font-medium text-gray-900 dark:text-gray-300">
-                                            <div>mango</div>
-                                        </label>
-                                    </div>
-                                </div>
+                            <FilterList parameter="kaleab" />
 
-                            </li>
-                            <li>
-                                <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
-                                    <div class="flex items-center h-5">
-                                        <input id="helper-checkbox-2" aria-describedby="helper-checkbox-text-2"
-                                            type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    </div>
-                                    <div class="ms-2 text-sm">
-                                        <label for="helper-checkbox-2"
-                                            class="font-medium text-gray-900 dark:text-gray-300">
-                                            <div>Spaghetti</div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="flex p-2 rounded hover:bg-customWhite dark:hover:bg-gray-600">
-                                    <div class="flex items-center h-5">
-                                        <input id="helper-checkbox-3" aria-describedby="helper-checkbox-text-3"
-                                            type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    </div>
-                                    <div class="ms-2 text-sm">
-                                        <label for="helper-checkbox-3"
-                                            class="font-medium text-gray-900 dark:text-gray-300">
-                                            <div>Tomato</div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
 
@@ -188,6 +68,8 @@
 </template>
 
 <script setup>
+import FilterList from './FilterList.vue';
+
 
 </script>
 
