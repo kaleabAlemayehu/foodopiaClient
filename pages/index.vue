@@ -4,6 +4,7 @@ import NavBar from '~/components/NavBar.vue';
 import AnonUser from '~/components/AnonUser.vue';
 import Card from '~/components/Card.vue';
 import Filter from '~/components/Filter.vue';
+import Footer from '~/components/Footer.vue';
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 
@@ -60,6 +61,7 @@ const changeCurrent = (e) => {
             </div>
             <Filter />
         </div>
+        <Footer />
     </div>
 </template>
 
