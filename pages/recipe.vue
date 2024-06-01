@@ -5,7 +5,8 @@
         </NavBar>
         <ShowCase />
         <Details />
-        <div class="w-[60%] mx-auto flex flex-col">
+        <div class="w-[60%] mx-auto flex flex-col mb-8">
+            <p class="mb-12 text-xl">Comments...</p>
 
             <CommentCard v-for="comment in comments" :key="comment" />
         </div>
