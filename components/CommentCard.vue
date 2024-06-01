@@ -15,7 +15,7 @@
             </div>
 
         </div>
-        <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start"
+        <button :id="btn" :data-dropdown-toggle="dot" data-dropdown-placement="bottom-start"
             class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-customGray rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600"
             type="button">
             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +24,9 @@
                     d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
             </svg>
         </button>
-        <div id="dropdownDots"
+        <div :id="dot"
             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="btn">
 
                 <li>
                     <a href="#"
@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-
+defineProps(["btn", "dot"])
 </script>
 
 <style></style>

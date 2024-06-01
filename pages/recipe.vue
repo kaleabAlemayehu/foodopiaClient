@@ -7,8 +7,11 @@
         <Details />
         <div class="w-[60%] mx-auto flex flex-col mb-8">
             <p class="mb-12 text-xl">Comments...</p>
+            <div v-for="comment in comments" :key="comment">
 
-            <CommentCard v-for="comment in comments" :key="comment" />
+                <CommentCard :btn="comment.btn" :dot="comment.dot" />
+            </div>
+
         </div>
         <CommentForm />
 
@@ -26,9 +29,17 @@ import Details from "~/components/Details.vue";
 import Footer from "~/components/Footer.vue";
 import CommentForm from "../components/CommentForm.vue";
 import CommentCard from "~/components/CommentCard.vue";
-const comments = ref([
-    1, 2, 3, 4, 5, 6,
+import { onMounted } from 'vue'
+import { initFlowbite } from 'flowbite'
+const comments = ref([{ btn: "btn1", dot: "dot1" },
+{ btn: "btn2", dot: "dot2" },
+{ btn: "btn3", dot: "dot3" },
+{ btn: "btn4", dot: "dot4" },
+{ btn: "btn5", dot: "dot5" },
 ])
+onMounted(() => {
+    initFlowbite();
+})
 </script>
 
 <style></style>
