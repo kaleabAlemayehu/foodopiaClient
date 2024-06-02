@@ -7,25 +7,24 @@
             <div class="dashboard grid grid-cols-[1fr_3fr] grid-rows-4 w-full h-full m-10 rounded-lg bg-customGray">
                 <div
                     class="menu row-span-4  h-full w-full bg-customBlack rounded-lg text-customWhite grid grid-rows-4 text-lg  ">
-                    <div class="home flex justify-center items-center text-center"
-                        :class="{ isCurrent: isCurrent == 1 ? true : false }" @click="changeCurrent">
+                    <div class="home flex justify-center items-center text-center cursor-pointer transition-colors duration-600"
+                        :class="{ isCurrent: isCurrent == 1 ? true : false }" @click="changeCurrent" data-id="1">
 
-                        <span class="menuItem">Home</span>
+                        <span class="menuItem " data-id="1">Home</span>
                     </div>
-                    <div class="edit  flex justify-center items-center"
-                        :class="{ isCurrent: isCurrent == 2 ? true : false }" @click="changeCurrent">
+                    <div class="edit  flex justify-center items-center cursor-pointer transition-colors duration-600"
+                        :class="{ isCurrent: isCurrent == 2 ? true : false }" @click="changeCurrent" data-id="2">
 
-                        <span class="menuItem">Edit</span>
+                        <span class="menuItem" data-id="2">Edit</span>
                     </div>
-                    <div class="create  flex justify-center items-center"
-                        :class="{ isCurrent: isCurrent == 3 ? true : false }" @click="changeCurrent">
-
-                        <span class="menuItem">Create</span>
+                    <div class="create  flex justify-center items-center cursor-pointer transition-colors duration-600"
+                        :class="{ isCurrent: isCurrent == 3 ? true : false }" @click="changeCurrent" data-id="3">
+                        <span class="menuItem" data-id="3">Create</span>
                     </div>
-                    <div class="bookmarked  flex justify-center items-center"
-                        :class="{ isCurrent: isCurrent == 4 ? true : false }" @click="changeCurrent">
+                    <div class="bookmarked  flex justify-center items-center cursor-pointer transition-colors duration-600"
+                        :class="{ isCurrent: isCurrent == 4 ? true : false }" @click="changeCurrent" data-id="4">
 
-                        <span class="menuItem ml-9">Bookmarked</span>
+                        <span class="menuItem ml-9" data-id="4">Bookmarked</span>
                     </div>
                 </div>
                 <div class="content row-span-4 flex justify-center items-center overflow-auto">
@@ -53,7 +52,7 @@ import Card from "~/components/Card.vue";
 import Footer from "~/components/Footer.vue";
 const isCurrent = ref(1);
 const changeCurrent = (e) => {
-    isCurrent.value = 3;
+    isCurrent.value = e.target.dataset.id;
 }
 const recipes = ref([
     { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
