@@ -14,7 +14,7 @@
 
 </script>
 
-<style>
+<style scoped>
 .pen,
 .trash {
     @apply text-xl border-[1px];

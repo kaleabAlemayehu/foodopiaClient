@@ -77,6 +77,6 @@ const recipes = ref([
 }
 
 .isCurrent {
-    @apply text-customGolden;
+    @apply text-customBlack bg-customWhitishGolden;
 }
 </style>
