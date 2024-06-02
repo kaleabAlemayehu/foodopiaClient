@@ -21,7 +21,8 @@
                     </span>
                 </div>
                 <div class="interactions col-span-3 flex justify-around items-center text-base h-min mx-2 my-8">
-                    <NotOwend :recipe="recipe" />
+                    <NotOwned :recipe="recipe" />
+                    <!-- <Owned /> -->
                 </div>
             </div>
 
@@ -31,7 +32,7 @@
 </template>
 
 <script setup>
-import NotOwend from './NotOwend.vue';
+import NotOwned from './NotOwned.vue';
 defineProps(['recipe'])
 
 </script>

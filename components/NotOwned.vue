@@ -12,7 +12,7 @@
         </span>
     </div>
 
-    <div :class="recipe.isBookmarked ? marked : notMarked" class="bookmark">
+    <div :class="{ marked: recipe.isBookmarked }" class="bookmark">
 
         <Icon name="fa6-regular:bookmark" class="" />
 
