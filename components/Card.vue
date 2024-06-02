@@ -21,7 +21,8 @@
                     </span>
                 </div>
                 <div class="interactions col-span-3 flex justify-around items-center text-base h-min mx-2 my-8">
-                    <NotOwned :recipe="recipe" />
+                    <!-- <NotOwned :recipe="recipe" /> -->
+                    <slot />
                     <!-- <Owned /> -->
                 </div>
             </div>

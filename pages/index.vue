@@ -57,7 +57,10 @@ const changeCurrent = (e) => {
         <div class="contents">
 
             <div class="cards">
-                <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
+                <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe">
+                    <NotOwned :recipe="recipe" />
+                </Card>
+
             </div>
             <Filter />
         </div>
