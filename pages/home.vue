@@ -47,7 +47,7 @@
                                 <label for="description"
                                     class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Description</label>
                                 <textarea id="description" rows="4"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-customWhite rounded-lg border border-customOrang focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customOrang dark:focus:border-customOrang"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-customWhite rounded-lg border border-customWhite focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customOrang dark:focus:border-customOrang"
                                     placeholder="Leave a comment..."></textarea>
                             </div>
                             <div class="mb-5">
@@ -83,6 +83,58 @@
                                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="addtionalTwo">
                                     Addtional Picture</div>
                             </div>
+
+
+                            <label class="inline-flex items-center mb-5 cursor-pointer mr-5">
+                                <input type="checkbox" value="" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang">
+                                </div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">BreakFast</span>
+                            </label>
+                            <label class="inline-flex items-center mb-5 cursor-pointer mr-5">
+                                <input type="checkbox" value="lunch" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang">
+                                </div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Lunch</span>
+                            </label>
+                            <label class="inline-flex items-center mb-5 cursor-pointer mr-5">
+                                <input type="checkbox" value="dinner" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang">
+                                </div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Dinner</span>
+                            </label>
+                            <label class="inline-flex items-center mb-5 cursor-pointer mr-5">
+                                <input type="checkbox" value="dessert" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang">
+                                </div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Dessert</span>
+                            </label>
+                            <label class="inline-flex items-center mb-5 cursor-pointer mr-5">
+                                <input type="checkbox" value="drinks" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang">
+                                </div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Drinks</span>
+                            </label>
+                            <label class="inline-flex items-center mb-5 cursor-pointer mr-5">
+                                <input type="checkbox" value="snacks" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang">
+                                </div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Snacks</span>
+                            </label>
+                            <label class="inline-flex items-center mb-5 cursor-pointer mr-5">
+                                <input type="checkbox" value="seasonal" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang">
+                                </div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Seasonal</span>
+                            </label>
+
 
 
                         </form>

@@ -13,6 +13,7 @@ export default {
     extend: {
       colors: {
         customOrang: "#EA6036",
+        customWhitishOrange: "#EB9F7E",
         customWhite: "#FFF3E0",
         customGolden: "#EAB839",
         customWhitishGolden: "#F2D280",
