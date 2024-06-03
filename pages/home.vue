@@ -28,10 +28,66 @@
                     </div>
                 </div>
                 <div class="content row-span-4 flex justify-center items-center overflow-auto">
-                    <div class="homeContent grid grid-cols-[350px_350px_350px] gap-10 my-auto ">
+                    <div v-if="isCurrent == 1" class="homeContent grid grid-cols-[350px_350px_350px] gap-10 my-auto ">
                         <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe">
                             <Owned :recipe="recipe" />
                         </Card>
+                    </div>
+                    <div class="" v-else-if="isCurrent == 2">
+
+                        <form class="w-[60vw] mx-auto">
+                            <div class="mb-5">
+                                <label for="title"
+                                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Title</label>
+                                <input type="text" id="title"
+                                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+
+                            <div class="mb-5">
+                                <label for="description"
+                                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Description</label>
+                                <textarea id="description" rows="4"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-customWhite rounded-lg border border-customOrang focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customOrang dark:focus:border-customOrang"
+                                    placeholder="Leave a comment..."></textarea>
+                            </div>
+                            <div class="mb-5">
+                                <label for="preparation"
+                                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">preparation</label>
+                                <input type="text" id="preparation"
+                                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div class="mb-5">
+                                <label class="block mb-2 text-sm font-medium text-customBlack dark:text-white"
+                                    for="primaryPicture">Upload Primary Picture</label>
+                                <input
+                                    class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                    aria-describedby="user_avatar_help" id="primaryPicture" type="file">
+                                <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Primary
+                                    Picture</div>
+                            </div>
+                            <div class="mb-5">
+                                <label class="block mb-2 text-sm font-medium text-customBlack dark:text-white"
+                                    for="addtionalPic">Upload Addtional Picture</label>
+                                <input
+                                    class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                    aria-describedby="addtionalOne" id="addtionalPic" type="file">
+                                <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="addtionalOne">
+                                    Addtional Picture</div>
+                            </div>
+                            <div class="mb-5">
+                                <label class="block mb-2 text-sm font-medium text-customBlack dark:text-white"
+                                    for="addtionalPic2">Upload Addtional Picture</label>
+                                <input
+                                    class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite 50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                    aria-describedby="addtionalTwo" id="primaryPicture" type="file">
+                                <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="addtionalTwo">
+                                    Addtional Picture</div>
+                            </div>
+
+
+                        </form>
+
+
                     </div>
 
                 </div>
@@ -50,7 +106,12 @@ import AnonUser from '~/components/AnonUser.vue';
 import Owned from "~/components/Owned.vue";
 import Card from "~/components/Card.vue";
 import Footer from "~/components/Footer.vue";
-const isCurrent = ref(1);
+import { onMounted } from 'vue'
+import { initFlowbite } from 'flowbite'
+onMounted(() => {
+    initFlowbite();
+})
+const isCurrent = ref(2);
 const changeCurrent = (e) => {
     isCurrent.value = e.target.dataset.id;
 }
@@ -68,6 +129,7 @@ const recipes = ref([
     { id: 11, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
     { id: 12, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
 ])
+
 </script>
 
 <style>
@@ -76,6 +138,6 @@ const recipes = ref([
 }
 
 .isCurrent {
-    @apply text-customBlack bg-customWhitishGolden;
+    @apply text-customGray bg-customOrang;
 }
 </style>
