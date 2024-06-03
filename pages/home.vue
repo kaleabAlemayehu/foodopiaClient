@@ -142,7 +142,7 @@
                                 <input type="text" id="ingredient"
                                     class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
-                            <div class="">
+                            <div class=" mb-5">
 
                                 <div class="my-5" v-for="step in steps" :key="step">
                                     <label :for="step"
@@ -160,6 +160,8 @@
                                     <Icon name="mi:remove" />
                                 </button>
                             </div>
+                            <button type="button"
+                                class="text-white bg-customOrang hover:bg-customOrang focus:outline-none focus:ring-4 focus:ring-customWhitishOrange font-medium rounded-full text-sm px-5 py-2.5 text-center mx-auto mt-3 mb-5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
 
 
 
@@ -190,7 +192,7 @@ onMounted(() => {
     initFlowbite();
 })
 const isCurrent = ref(2);
-const steps = reactive([1, 2, 3, 4, 5])
+const steps = reactive([1, 2, 3])
 const changeCurrent = (e) => {
     isCurrent.value = e.target.dataset.id;
 }
