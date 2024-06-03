@@ -33,10 +33,10 @@
                             <Owned :recipe="recipe" />
                         </Card>
                     </div>
-                    <div class="" v-else-if="isCurrent == 2">
+                    <div class="my-auto" v-else-if="isCurrent == 2">
 
                         <form class="w-[60vw] mx-auto">
-                            <div class="mb-5">
+                            <div class="my-5">
                                 <label for="title"
                                     class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Title</label>
                                 <input type="text" id="title"
@@ -134,6 +134,32 @@
                                 </div>
                                 <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Seasonal</span>
                             </label>
+                            <div class="my-5">
+                                <label for=" ingredient"
+                                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
+                                    <span class="text-xs text-gray-500 dark:text-gray-300">(separate them by
+                                        comma)</span></label>
+                                <input type="text" id="ingredient"
+                                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div class="">
+
+                                <div class="my-5" v-for="step in steps" :key="step">
+                                    <label :for="step"
+                                        class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Instruction
+                                        {{ step }}</label>
+                                    <input type="text" :id="step"
+                                        class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <button type="button" @click="addStep"
+                                    class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <Icon name="mi:add" />
+                                </button>
+                                <button type="button" @click="removeStep"
+                                    class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <Icon name="mi:remove" />
+                                </button>
+                            </div>
 
 
 
@@ -152,7 +178,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, reactive } from "vue"
 import NavBar from '~/components/NavBar.vue';
 import AnonUser from '~/components/AnonUser.vue';
 import Owned from "~/components/Owned.vue";
@@ -164,8 +190,15 @@ onMounted(() => {
     initFlowbite();
 })
 const isCurrent = ref(2);
+const steps = reactive([1, 2, 3, 4, 5])
 const changeCurrent = (e) => {
     isCurrent.value = e.target.dataset.id;
+}
+const removeStep = () => {
+    steps.pop()
+}
+const addStep = () => {
+    steps.push(steps.length + 1)
 }
 const recipes = ref([
     { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
