@@ -1,7 +1,9 @@
 <template>
     <div>
         <NavBar>
-            <AnonUser />
+            <UserLogedIn />
+            <button type="button"
+                class="relative top-1 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 ">Logout</button>
         </NavBar>
         <div class="flex   h-[86dvh] mb-28">
             <div class="dashboard grid grid-cols-[1fr_3fr] grid-rows-4 w-full h-full m-10 rounded-lg bg-customGray">
@@ -46,6 +48,7 @@
                     </div>
 
                 </div>
+
 
 
             </div>
