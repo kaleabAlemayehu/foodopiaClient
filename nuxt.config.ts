@@ -1,6 +1,23 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from "nuxt/config";
+
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/google-fonts", "nuxt-icon"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/google-fonts",
+    "nuxt-icon",
+    "@nuxtjs/apollo",
+  ],
+  typescript: {
+    strict: false,
+  },
   css: ["@/static/assets/css/main.css"],
+  apollo: {
+    clients: {
+      default: {
+        httpEndpoint: "http://localhost:8080/v1/graphql",
+      },
+    },
+  },
 });

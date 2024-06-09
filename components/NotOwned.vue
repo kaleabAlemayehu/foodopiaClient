@@ -2,13 +2,13 @@
     <div class="comments">
         <Icon name="fa-regular:comment" class="chat" />
         <span class="commentNumber">
-            {{ recipe.comments }}
+            {{ recipe.total_comments }}
         </span>
     </div>
     <div class="likes">
         <Icon name="fa6-regular:heart" class="heart" />
         <span class="likeNumber">
-            {{ recipe.likes }}
+            {{ recipe.total_likes }}
         </span>
     </div>
 

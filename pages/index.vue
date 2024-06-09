@@ -12,20 +12,29 @@ import { initFlowbite } from 'flowbite'
 onMounted(() => {
     initFlowbite();
 })
-const recipes = ref([
-    { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
-    { id: 2, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
-    { id: 3, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
-    { id: 1, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
-    { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
-    { id: 2, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
-    { id: 3, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
-    { id: 1, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
-    { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
-    { id: 2, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
-    { id: 3, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
-    { id: 1, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
-])
+const query = gql`
+        query MyQuery {
+  recipes {
+    avg_rating
+    description
+    featured_image_url
+    id
+    prep_time
+    title
+    total_comments
+    total_likes
+    user {
+      username
+      id
+    }
+  }
+}
+
+`
+
+const { data } = await useAsyncQuery(query)
+console.log(data._rawValue.recipes)
+const recipes = ref(data._rawValue.recipes)
 const changeCurrent = (e) => {
     e.target.classList.toggle("current");
 }
@@ -60,7 +69,6 @@ const changeCurrent = (e) => {
                 <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe">
                     <NotOwned :recipe="recipe" />
                 </Card>
-
             </div>
             <Filter />
         </div>
