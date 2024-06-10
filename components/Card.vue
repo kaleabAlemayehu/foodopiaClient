@@ -2,19 +2,21 @@
     <div>
         <div class="card grid border-[1px] border-customGray shadow-md p-0 rounded-lg bg-customGray transition-all duration-300 hover:shadow-lg"
             :data-id="recipe.id">
-            <div class="thumbnail">
+            <NuxtLink to="/recipe" class="thumbnail">
                 <!-- TODO: replace placeholder image with fetched one -->
                 <img :src="recipe.featured_image_url" :alt="recipe.featured_image">
-            </div>
+            </NuxtLink>
             <div class="description grid grid-rows-[h-min] grid-cols-3">
-                <div class="title col-span-3 flex justify-start items-center text-2xl h-min my-6 mx-4 font-medium">
+                <NuxtLink to="/recipe"
+                    class="title col-span-3 flex justify-start items-center text-2xl h-min my-6 mx-4 font-medium">
                     {{ recipe.title }}
-                </div>
+                </NuxtLink>
 
-                <div class="user col-span-2 flex justify-start items-center text-lg h-min my-4 mx-4">
+                <NuxtLink to="/recipeSearch"
+                    class="user col-span-2 flex justify-start items-center text-lg h-min my-4 mx-4">
                     <Icon name="fa-regular:user" class=" text-customBlack mr-4" />
                     <span class="userName">{{ recipe.user.username }}</span>
-                </div>
+                </NuxtLink>
                 <div class="rating flex justify-evenly text-xl font-thin h-min my-4 mx-8">
                     <Icon name="fa-regular:star" class="sta text-customGolden my-auto text-xl" />
                     <span class="ratingNumber">
@@ -34,7 +36,6 @@
 </template>
 
 <script setup>
-import NotOwned from './NotOwned.vue';
 defineProps(['recipe'])
 
 </script>

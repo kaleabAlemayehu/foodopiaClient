@@ -1,16 +1,17 @@
 <template>
     <div class="authBtns flex items-center justify-center ">
-        <nuxt-link to="">
+        <NuxtLink to="/login">
             <button class="btn">Login</button>
-        </nuxt-link>
-        <nuxt-link to="">
+        </NuxtLink>
+        <NuxtLink to="/signUp">
             <button class="btn">SignUp</button>
-        </nuxt-link>
+        </NuxtLink>
 
     </div>
 </template>
 
 <script setup>
+
 
 </script>
 

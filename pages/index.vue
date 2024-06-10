@@ -33,7 +33,6 @@ const query = gql`
 `
 
 const { data } = await useAsyncQuery(query)
-console.log(data._rawValue.recipes)
 const recipes = ref(data._rawValue.recipes)
 const changeCurrent = (e) => {
     e.target.classList.toggle("current");
@@ -45,8 +44,8 @@ const changeCurrent = (e) => {
 <template>
     <div>
         <NavBar>
-            <UserLogedIn />
-            <!-- <AnonUser /> -->
+            <!-- <UserLogedIn /> -->
+            <AnonUser />
         </NavBar>
         <div class="showcase">
             <div class="showcaseText">
