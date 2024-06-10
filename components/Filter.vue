@@ -1,68 +1,56 @@
 <template>
     <div class="filterBox  sticky right-20 top-20 py-5 px-16 w-[20%]">
 
-        <button id="dropdownHelperButton" data-dropdown-toggle="dropdownHelper" data-dropdown-placement="right"
-            class="text-customBlack bg-customGray hover:bg-customGray focus:ring-4 focus:outline-none focus:ring-customGray font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-customGray dark:hover:bg-customGray dark:focus:ring-customGray"
-            type="button">filters <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 1 4 4 4-4" />
-            </svg>
-        </button>
+        <div id="accordion-color" data-accordion="open"
+            data-active-classes="bg-customOrang dark:bg-gray-800 text-blue-600 dark:text-white">
+            <h2 id="accordion-color-heading-1">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-customBlack border border-b-0 border-customWhitishOrange rounded-t-xl focus:ring-4 focus:ring-customWhitishOrange dark:focus:ring-customWhitishOrange dark:border-gray-700 dark:text-gray-400 hover:bg-customGray dark:hover:bg-gray-800 gap-3"
+                    data-accordion-target="#accordion-color-body-1" aria-expanded="true"
+                    aria-controls="accordion-color-body-1">
+                    <span>Filter By Time</span>
+                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5 5 1 1 5" />
+                    </svg>
+                </button>
+            </h2>
+            <div id="accordion-color-body-1" class="hidden" aria-labelledby="accordion-color-heading-1">
+                <div
+                    class="p-5 border border-b-0 border-customWhitishOrange dark:border-gray-700 dark:bg-gray-900 list-none">
+                    <FilterList parameter="test1" />
+                    <FilterList parameter="test1" />
+                    <FilterList parameter="test1" />
 
-        <!-- Dropdown menu -->
-        <div id="dropdownHelper"
-            class="z-10 hidden bg-customGray divide-y divide-customGray rounded-lg shadow w-60 dark:bg-customBlack dark:divide-customBlack">
-            <ul class="p-3 space-y-1 text-sm text-customBlack dark:text-customWhite"
-                aria-labelledby="dropdownHelperButton">
-                <li>
+                </div>
+            </div>
+            <h2 id="accordion-color-heading-2">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-customBlack border  border-customWhitishOrange  rounded-b-xl focus:ring-4 focus:ring-customWhitishOrange dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-customGray dark:hover:bg-gray-800 gap-3"
+                    data-accordion-target="#accordion-color-body-2" aria-expanded="false"
+                    aria-controls="accordion-color-body-2">
+                    <span>Filter By Ingredients</span>
+                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5 5 1 1 5" />
+                    </svg>
+                </button>
+            </h2>
+            <div id="accordion-color-body-2" class="hidden " aria-labelledby="accordion-color-heading-2">
+                <div
+                    class="p-5 border border-t-0 border-customWhitishOrange dark:border-gray-700 list-none rounded-b-xl">
+                    <FilterList parameter="test1" />
+                    <FilterList parameter="test1" />
+                    <FilterList parameter="test1" />
 
+                </div>
+            </div>
 
-                    <button id="timeButton" data-dropdown-toggle="timeFilter" data-dropdown-placement="top-start"
-                        class="text-customBlack bg-customGray hover:bg-customGray focus:ring-4 focus:outline-none focus:ring-customGray font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-customGray dark:hover:bg-customGray dark:focus:ring-customGray"
-                        type="button">Time <svg class="w-2.5 h-2.5 ms-3" aria-hidden="false"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                    <!-- timer drop menu -->
-                    <div id="timeFilter"
-                        class="z-10 hidden bg-customGray divide-y divide-customGray rounded-lg shadow w-60 dark:bg-customBlack dark:divide-customBlack">
-                        <ul class="p-3 space-y-1 text-sm text-customBlack dark:text-customWhite start-0"
-                            aria-labelledby="timeButton">
-                            <FilterList parameter="kaleab" />
-
-                        </ul>
-                    </div>
-
-                </li>
-                <li>
-
-
-                    <button id="ingredientButton" data-dropdown-toggle="ingredientFilter"
-                        data-dropdown-placement="bottom-start"
-                        class="text-customBlack bg-customGray hover:bg-customGray focus:ring-4 focus:outline-none focus:ring-customGray font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-customGray dark:hover:bg-customGray dark:focus:ring-customGray"
-                        type="button">Ingredients <svg class="w-2.5 h-2.5 ms-3" aria-hidden="false"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                    <!-- timer drop menu -->
-                    <div id="ingredientFilter"
-                        class="z-10 hidden bg-customGray divide-y divide-customGray rounded-lg shadow w-60 dark:bg-customBlack dark:divide-customBlack">
-                        <ul class="p-3 space-y-1 text-sm text-customBlack dark:text-customWhite start-0"
-                            aria-labelledby="timeButton">
-                            <FilterList parameter="kaleab" />
-
-                        </ul>
-                    </div>
-
-                </li>
-
-            </ul>
         </div>
+
+
 
 
     </div>
@@ -70,7 +58,13 @@
 
 <script setup>
 import FilterList from './FilterList.vue';
+import { onMounted } from 'vue'
+import { initFlowbite } from 'flowbite'
 
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initFlowbite();
+})
 
 </script>
 

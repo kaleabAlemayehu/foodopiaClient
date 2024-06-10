@@ -2,11 +2,11 @@
     <div class="authBtns flex items-center justify-center ">
         <NuxtLink to="/login" class="my-auto mx-auto">
             <button type="button"
-                class="text-customWhite bg-customOrang hover:bg-[#f7734b] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5  mx-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">LogIn</button>
+                class="text-customWhite bg-customOrang hover:bg-[#f7734b] focus:ring-4 focus:ring-customWhitishOrange font-medium rounded-lg  px-5 py-2.5  mx-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">LogIn</button>
         </NuxtLink>
         <NuxtLink to="/signUp">
             <button type="button"
-                class="text-customWhite bg-customOrang hover:bg-[#f7734b] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5  mx-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">SignUp</button>
+                class="text-customWhite bg-customOrang hover:bg-[#f7734b] focus:ring-4 focus:ring-customWhitishOrange font-medium rounded-lg  px-5 py-2.5  mx-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">SignUp</button>
         </NuxtLink>
 
     </div>
@@ -17,8 +17,4 @@
 
 </script>
 
-<style scoped>
-.btn {
-    @apply outline-none py-[0.4rem] px-3 text-customWhite border-customGray border-[0.4px] outline-[0.4px] rounded-2xl mx-3 hover:shadow-md hover:shadow-customBlack transition-all duration-1000 hover:border-customWhite;
-}
-</style>
+<style scoped></style>
