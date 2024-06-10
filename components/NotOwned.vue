@@ -1,18 +1,18 @@
-<template>
-    <div class="comments">
+<template :data-id="recipe.id">
+    <NuxtLink to="/recipe" class="comments">
         <Icon name="fa-regular:comment" class="chat" />
         <span class="commentNumber">
-            {{ recipe.comments }}
+            {{ recipe.total_comments }}
         </span>
-    </div>
+    </NuxtLink>
     <div class="likes">
         <Icon name="fa6-regular:heart" class="heart" />
         <span class="likeNumber">
-            {{ recipe.likes }}
+            {{ recipe.total_likes }}
         </span>
     </div>
 
-    <div :class="{ marked: recipe.isBookmarked }" class="bookmark">
+    <div :class="{ marked: bookmark.marked }" class="bookmark" @click="addBookmark">
 
         <Icon name="fa6-regular:bookmark" class="" />
 
@@ -22,6 +22,13 @@
 <script setup>
 import { defineProps } from 'vue';
 defineProps(["recipe"])
+const bookmark = ref({ marked: false })
+const addBookmark = (e) => {
+    e.preventDefault();
+    console.log(e)
+    bookmark.value.marked = !(bookmark.value.marked)
+    console.log(bookmark.value)
+}
 </script>
 
 <style>
@@ -29,12 +36,13 @@ defineProps(["recipe"])
 .heart,
 .bookmark {
     @apply mr-4 text-xl border-[1px];
+    ;
 }
 
 .comments,
 .likes,
 .bookmark {
-    @apply text-xl border-[1px] px-4 py-2 rounded-lg transition-all duration-300;
+    @apply text-xl border-[1px] px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer;
 }
 
 .comments:hover,

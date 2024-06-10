@@ -22,7 +22,7 @@
 
 .edit,
 .delete {
-    @apply text-xl border-[1px] p-2 rounded-lg transition-all duration-300;
+    @apply text-xl border-[1px] p-2 rounded-lg transition-all duration-300 cursor-pointer;
 }
 
 .trash {

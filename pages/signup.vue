@@ -2,9 +2,9 @@
 
     <section class="bg-customWhite dark:bg-gray-900">
         <class class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <a href="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <NuxtLink to="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                 Foodopia
-            </a>
+            </NuxtLink>
             <div
                 class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -48,8 +48,14 @@
                         </div>
 
                         <button type="submit"
-                            class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register
+                            class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-5">Register
                             new account</button>
+
+                        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                            Already have an account ? <NuxtLink to="/login"
+                                class="font-medium text-primary-600 hover:underline dark:text-primary-500">Log in
+                            </NuxtLink>
+                        </p>
                     </form>
                 </div>
             </div>
