@@ -17,25 +17,22 @@
 </template>
 
 <script setup>
-const query = gql`
-        query MyQuery {
-  recipes {
-    avg_rating
-    description
-    featured_image_url
+const query = gql`query MyQuery {
+  recipes(where: {user: {username: {_eq: "cipher"}}}) {
     id
+    featured_image_url
+    description
+    category_id
+    avg_rating
     prep_time
     title
     total_comments
     total_likes
     user {
       username
-      id
     }
   }
-}
-
-`
+}`
 
 const { data } = await useAsyncQuery(query)
 const recipes = ref(data._rawValue.recipes)
