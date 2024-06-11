@@ -74,21 +74,32 @@ const isCurrent = ref(2);
 const changeCurrent = (e) => {
     isCurrent.value = e.target.dataset.id;
 }
+const query = gql`query MyQuery {
+  users_aggregate(where: {username: {_eq: "cipher"}}) {
+    nodes {
+      recipes {
+        category_id
+        id
+        featured_image_url
+        description
+        title
+        prep_time
+        user_id
+        total_likes
+        total_comments
+        avg_rating
+        user {
+          username
+        }
+      }
+    }
+  }
+}
+`
 
-const recipes = ref([
-    { id: 1, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
-    { id: 2, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
-    { id: 3, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
-    { id: 4, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
-    { id: 5, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
-    { id: 6, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
-    { id: 7, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
-    { id: 8, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
-    { id: 9, isBookmarked: true, title: 'Chocolate Cake', author: "Neo", comments: 60, likes: 30, rating: 4.5 },
-    { id: 10, isBookmarked: true, title: 'Spaghetti Carbonara', author: "Neo", comments: 30, likes: 30, rating: 4.5 },
-    { id: 11, isBookmarked: true, title: 'Bruschetta', author: "Neo", comments: 15, likes: 30, rating: 4.5 },
-    { id: 12, isBookmarked: true, title: 'Mango Smoothie', author: "Neo", comments: 10, likes: 30, rating: 4.5 },
-])
+const { data } = await useAsyncQuery(query)
+const recipes = ref(data._rawValue.users_aggregate.nodes[0].recipes)
+console.log(recipes)
 
 </script>
 
