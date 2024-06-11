@@ -4,16 +4,16 @@
             <div class="prompt w-[80%]  mt-12">
                 <div class="image  inline-block relative min-w-[80vw] max-h-[30%] ">
                     <!-- TODO : whenFetch add asset here -->
-                    <img src="@/static/assets/images/showcase.jpg" alt="showcaseImage"
+                    <img :src="recipe.featured_image_url" alt="showcaseImage"
                         class="block w-full h-[40rem] object-cover rounded-2xl shadow-md">
                     <!-- end:TODO -->
                 </div>
                 <div class="title">
-                    <span class="recipeTitle">Lorem ipsum dolor sit amet consectetur</span>
+                    <span class="recipeTitle">{{ recipe.title }}</span>
 
                 </div>
                 <div class="user">
-                    <UserLogedIn />
+                    <UserLogedIn :recipe="recipe" />
                 </div>
 
             </div>
@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+defineProps(['recipe'])
 
 </script>
 

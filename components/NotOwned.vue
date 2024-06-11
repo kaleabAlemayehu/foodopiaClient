@@ -1,5 +1,5 @@
 <template :data-id="recipe.id">
-    <NuxtLink to="/recipe" class="comments">
+    <NuxtLink :to="`/recipe/${recipe.id}`" class="comments">
         <Icon name="fa-regular:comment" class="chat" />
         <span class="commentNumber">
             {{ recipe.total_comments }}
