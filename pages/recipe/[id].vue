@@ -40,8 +40,7 @@ const comments = ref([{ btn: "btn1", dot: "dot1" },
 onMounted(() => {
     initFlowbite();
 })
-const query = gql`
-query MyQuery($id: Int! , $_eq: Int! , $_eq1: Int!, $_eq2: Int!) {
+const query = gql`query MyQuery($id: Int!, $_eq: Int!, $_eq1: Int!, $_eq2: Int!, $_eq3: Int = 10) {
   recipes_by_pk(id: $id) {
     avg_rating
     category_id
@@ -66,6 +65,11 @@ query MyQuery($id: Int! , $_eq: Int! , $_eq1: Int!, $_eq2: Int!) {
     recipe_images(where: {recipe_id: {_eq: $_eq2}}) {
       image_url
     }
+    steps(where: {recipe_id: {_eq: $_eq3}}, order_by: {step_order: asc}) {
+      step_order
+      description
+      id
+    }
   }
 }
 `
@@ -73,7 +77,7 @@ query MyQuery($id: Int! , $_eq: Int! , $_eq1: Int!, $_eq2: Int!) {
 
 const route = useRoute();
 const recipeId = ref(route.params.id)
-const { data } = await useAsyncQuery(query, { id: recipeId, _eq: recipeId, _eq1: recipeId, _eq2: recipeId })
+const { data } = await useAsyncQuery(query, { id: recipeId, _eq: recipeId, _eq1: recipeId, _eq2: recipeId, _eq3: recipeId })
 const recipe = ref(data._rawValue.recipes_by_pk)
 
 </script>

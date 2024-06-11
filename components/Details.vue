@@ -22,13 +22,13 @@
             <div class="instructions">
                 <p class="insHeader text-5xl">Instruction</p>
                 <ul class="instructionLists list-none text-3xl text-customBlack mt-20 h-min">
-                    <div v-for="ins, index in instructions" :key="ins" class="list m-2 ml-0 py-2 my-8 flex">
+                    <div v-for="ins in recipe.steps" :key="ins" class="list m-2 ml-0 py-2 my-8 flex">
                         <div>
                             <span
                                 class="index p-2 text-customGolden border-2 border-customGolden rounded-full px-4 mr-5">{{
-                                    index }}</span>
+                                    ins.step_order }}</span>
                         </div>
-                        <div class="ins text-justify">{{ ins }}</div>
+                        <div class="ins text-justify">{{ ins.description }}</div>
                     </div>
                 </ul>
 
@@ -38,7 +38,8 @@
                     Ingredients</p>
                 <div
                     class="ingredientList rounded-lg p-3 border-customGolden border-[1px] mb-8  leading-relaxed text-lg px-8">
-                    <div v-for="ing in ingredients" :key="ing" class="">{{ ing }}</div>
+                    <div v-for="ing in recipe.ingredients" :key="ing.name" class="">{{ ing.name }} {{ ing.quantity }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,30 +49,8 @@
 
 <script setup>
 import { ref } from "vue"
-const instructions = ref([
-    "hi there is instruction",
-    "hi there is instruction",
-    "boil water and grid onions",
-    "put onions on the pan",
-    "add some oil",
-    "hi there is instruction",
-    "boil water and grid onions",
-    "put onions on the pan",
-    "add some oil",
-]);
-const ingredients = ref([
-    "onions",
-    "salt",
-    "pepper",
-    "olive oil",
-    "spagetti",
-    "onions",
-    "salt",
-    "pepper",
-    "olive oil",
-    "spagetti",
-
-])
+import RecipeSearch from "~/pages/recipeSearch.vue";
+defineProps(['recipe'])
 </script>
 
 <style scoped></style>
