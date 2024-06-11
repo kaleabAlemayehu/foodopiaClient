@@ -42,8 +42,9 @@
                         <Form />
                     </div>
                     <div v-if="isCurrent == 4" class="homeContent grid grid-cols-[350px_350px_350px] gap-10 my-auto ">
-                        <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe">
-                            <NotOwned :recipe="recipe" />
+                        <Card v-for="bookmarked in bookmarkedRecipe" :key="bookmarked.recipe.id"
+                            :recipe="bookmarked.recipe">
+                            <NotOwned :recipe="bookmarked.recipe" />
                         </Card>
                     </div>
 
@@ -94,12 +95,39 @@ const query = gql`query MyQuery {
       }
     }
   }
+}`;
+const bookmarkedQuery = gql`query MyQuery {
+  bookmarks(where: {user_id: {_eq: 13}}) {
+    recipe {
+      avg_rating
+      category_id
+      description
+      featured_image_url
+      id
+      prep_time
+      title
+      total_comments
+      total_likes
+      user {
+        username
+      }
+    }
+  }
 }
+
+
 `
 
+
+onMounted(async () => {
+    initFlowbite();
+
+})
 const { data } = await useAsyncQuery(query)
+const { data: bookmarkedData } = await useAsyncQuery(bookmarkedQuery);
 const recipes = ref(data._rawValue.users_aggregate.nodes[0].recipes)
-console.log(recipes)
+const bookmarkedRecipe = ref(bookmarkedData._rawValue.bookmarks)
+console.log(bookmarkedRecipe);
 
 </script>
 
