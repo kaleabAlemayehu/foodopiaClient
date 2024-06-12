@@ -1,22 +1,22 @@
 <template>
-    <div>
-        <NavBar>
-            <AnonUser />
-        </NavBar>
-        <ShowCase :recipe="recipe" />
-        <Details :recipe="recipe" />
-        <div class="w-[60%] mx-auto flex flex-col mb-8">
-            <p class="mb-12 text-xl">Comments...</p>
-            <div v-for="comment in recipe.comments" :key="comment.id">
+  <div>
+    <NavBar>
+      <AnonUser />
+    </NavBar>
+    <ShowCase :recipe="recipe" />
+    <Details :recipe="recipe" />
+    <div class="w-[60%] mx-auto flex flex-col mb-8">
+      <p class="mb-12 text-xl">Comments...</p>
+      <div v-for="comment in recipe.comments" :key="comment.id">
 
-                <CommentCard :comment="comment" />
-            </div>
+        <CommentCard :comment="comment" />
+      </div>
 
-        </div>
-        <CommentForm />
-
-        <Footer />
     </div>
+    <CommentForm />
+
+    <Footer />
+  </div>
 </template>
 
 <script setup>
@@ -33,7 +33,7 @@ import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 
 onMounted(() => {
-    initFlowbite();
+  initFlowbite();
 })
 const query = gql`query MyQuery($id: Int!, $_eq: Int!, $_eq1: Int!, $_eq2: Int!, $_eq3: Int!) {
   recipes_by_pk(id: $id) {
@@ -45,6 +45,7 @@ const query = gql`query MyQuery($id: Int!, $_eq: Int!, $_eq1: Int!, $_eq2: Int!,
     title
     user {
       username
+      id
     }
     ingredients(where: {recipe_id: {_eq: $_eq}}) {
       name

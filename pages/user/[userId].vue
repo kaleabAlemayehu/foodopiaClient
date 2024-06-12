@@ -1,7 +1,7 @@
 <template>
     <div>
         <NavBar>
-            <UserLogedIn />
+            <UserLogedIn :recipe="recipes[0]" />
             <button type="button"
                 class="relative top-1 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 ">Logout</button>
         </NavBar>
@@ -29,6 +29,8 @@
                         <span class="menuItem ml-9" data-id="4">Bookmarked</span>
                     </div>
                 </div>
+
+
                 <div class="content row-span-4 flex justify-center items-center overflow-auto">
                     <div v-if="isCurrent == 1" class="homeContent grid grid-cols-[350px_350px_350px] gap-10 my-auto ">
                         <Card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe">
@@ -71,15 +73,12 @@ import { initFlowbite } from 'flowbite'
 onMounted(() => {
     initFlowbite();
 })
-const isCurrent = ref(2);
+const isCurrent = ref(1);
 const changeCurrent = (e) => {
     isCurrent.value = e.target.dataset.id;
 }
-const query = gql`query MyQuery {
-  users_aggregate(where: {username: {_eq: "cipher"}}) {
-    nodes {
-      recipes {
-        category_id
+const query = gql`query MyQuery($_eq: Int!) {
+  recipes(where: {user_id: {_eq: $_eq}}) {
         id
         featured_image_url
         description
@@ -91,13 +90,12 @@ const query = gql`query MyQuery {
         avg_rating
         user {
           username
+          id
         }
-      }
-    }
   }
 }`;
-const bookmarkedQuery = gql`query MyQuery {
-  bookmarks(where: {user_id: {_eq: 13}}) {
+const bookmarkedQuery = gql`query MyQuery($_eq: Int!) {
+  bookmarks(where: {user_id: {_eq: $_eq}}) {
     recipe {
       avg_rating
       category_id
@@ -110,11 +108,11 @@ const bookmarkedQuery = gql`query MyQuery {
       total_likes
       user {
         username
+        id
       }
     }
   }
 }
-
 
 `
 
@@ -123,11 +121,14 @@ onMounted(async () => {
     initFlowbite();
 
 })
-const { data } = await useAsyncQuery(query)
-const { data: bookmarkedData } = await useAsyncQuery(bookmarkedQuery);
-const recipes = ref(data._rawValue.users_aggregate.nodes[0].recipes)
+const route = useRoute();
+const userId = ref(route.params.userId)
+const { data } = await useAsyncQuery(query, { _eq: userId, })
+const { data: bookmarkedData } = await useAsyncQuery(bookmarkedQuery, { _eq: userId, });
+// // console.log(data._rawalue.recipes);
+// console.log(bookmarkedData._rawValue.bookmarks);
 const bookmarkedRecipe = ref(bookmarkedData._rawValue.bookmarks)
-console.log(bookmarkedRecipe);
+const recipes = ref(data._rawValue.recipes)
 
 </script>
 

@@ -20,7 +20,7 @@
                 <div class="rating flex justify-evenly text-xl font-thin h-min my-4 mx-8">
                     <Icon name="fa-regular:star" class="sta text-customGolden my-auto text-xl" />
                     <span class="ratingNumber">
-                        {{ recipe.avg_rating }}username
+                        {{ recipe.avg_rating }}
                     </span>
                 </div>
                 <div class="interactions col-span-3 flex justify-around items-center text-base h-min mx-2 my-8">
