@@ -12,7 +12,7 @@
                     {{ recipe.title }}
                 </NuxtLink>
 
-                <NuxtLink :to="`/recipeSearch/${recipe.user.username}`"
+                <NuxtLink :to="`/search/${recipe.user.id}`"
                     class="user col-span-2 flex justify-start items-center text-lg h-min my-4 mx-4">
                     <Icon name="fa-regular:user" class=" text-customBlack mr-4" />
                     <span class="userName">{{ recipe.user.username }}</span>
