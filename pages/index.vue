@@ -12,10 +12,11 @@ import { initFlowbite } from 'flowbite'
 onMounted(() => {
     initFlowbite();
 })
-const query = gql`
-        query MyQuery {
-  recipes {
+const query = gql`query MyQuery($_in: [Int!]) {
+  recipes(where: {category_id: {_in: $_in}}) {
     avg_rating
+    category_id
+    created_at
     description
     featured_image_url
     id
@@ -23,20 +24,39 @@ const query = gql`
     title
     total_comments
     total_likes
+    updated_at
     user {
       username
       id
     }
   }
 }
-
 `
+const categories = ref([])
+const recipes = ref([]);
+const fetchRecipes = async () => {
+    const { data } = await useAsyncQuery(query, { _in: categories.value });
+    recipes.value = data._rawValue.recipes || [];
+    console.log(recipes.value);
+};
 
-const { data } = await useAsyncQuery(query)
-const recipes = ref(data._rawValue.recipes)
+
+// var { data } = await useAsyncQuery(query, { _in: catagories.value })
+// const recipes = ref(data._rawValue.recipes)
+
 const changeCurrent = (e) => {
-    e.target.classList.toggle("current");
-}
+    const categoryId = parseInt(e.target.dataset.id);
+    if (!categories.value.includes(categoryId)) {
+        categories.value.push(categoryId);
+    } else {
+        categories.value.splice(categories.value.indexOf(categoryId), 1);
+    }
+    e.target.classList.toggle('current');
+    fetchRecipes();
+    console.log(categories)
+};
+
+watch(categories, fetchRecipes, { immediate: true });
 </script>
 
 
@@ -52,14 +72,13 @@ const changeCurrent = (e) => {
                 Explore our huge selection of delicious recipe ideas
             </div>
             <div class="catagories">
-                <div class="choice all" @click="changeCurrent">All</div>
-                <div class="choice breakfast" @click="changeCurrent">Breakfast</div>
-                <div class="choice current lunch" @click="changeCurrent">Lunch</div>
-                <div class="choice  dinner" @click="changeCurrent">Dinner</div>
-                <div class="choice   dessert" @click="changeCurrent">Dessert</div>
-                <div class="choice drinks" @click="changeCurrent">Drinks</div>
-                <div class="choice snacks" @click="changeCurrent">Snacks</div>
-                <div class="choice seasonal" @click="changeCurrent">Seasonal</div>
+                <div data-id="5" class="choice breakfast" @click="changeCurrent">Breakfast</div>
+                <div data-id="6" class="choice  lunch" @click="changeCurrent">Lunch</div>
+                <div data-id="7" class="choice  dinner" @click="changeCurrent">Dinner</div>
+                <div data-id="8" class="choice   dessert" @click="changeCurrent">Dessert</div>
+                <div data-id="9" class="choice drinks" @click="changeCurrent">Drinks</div>
+                <div data-id="10" class="choice snacks" @click="changeCurrent">Snacks</div>
+                <div data-id="11" class="choice seasonal" @click="changeCurrent">Seasonal</div>
             </div>
         </div>
         <div class="contents">
