@@ -49,7 +49,7 @@
 
 <script setup>
 import { ref } from "vue"
-import RecipeSearch from "~/pages/recipeSearch.vue";
+import RecipeSearch from "~/pages/search/[userId].vue";
 defineProps(['recipe'])
 </script>
 
