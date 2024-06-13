@@ -5,7 +5,7 @@
             {{ recipe.total_comments }}
         </span>
     </NuxtLink>
-    <div class="likes">
+    <div class="likes" :class="{ marked: like.marked }" @click="addLike">
         <Icon name="fa6-regular:heart" class="heart" />
         <span class="likeNumber">
             {{ recipe.total_likes }}
@@ -22,12 +22,22 @@
 <script setup>
 import { defineProps } from 'vue';
 defineProps(["recipe"])
+defineEmits(["interaction"])
 const bookmark = ref({ marked: false })
 const addBookmark = (e) => {
     e.preventDefault();
     console.log(e)
     bookmark.value.marked = !(bookmark.value.marked)
     console.log(bookmark.value)
+    emit("interaction", "bookmark", { recipe_id: recipe.recipe_id, user_id: recipe.user.id })
+}
+const like = ref({ marked: false })
+const addLike = (e) => {
+    e.preventDefault();
+    console.log(e)
+    like.value.marked = !(like.value.marked)
+    console.log(like.value)
+    emit("interaction", "like", { recipe_id: recipe.recipe_id, user_id: recipe.user.id })
 }
 </script>
 
@@ -35,7 +45,7 @@ const addBookmark = (e) => {
 .chat,
 .heart,
 .bookmark {
-    @apply mr-4 text-xl border-[1px];
+    @apply mr-4 text-xl;
     ;
 }
 
