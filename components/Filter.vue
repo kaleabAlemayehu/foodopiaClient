@@ -41,9 +41,7 @@
             <div id="accordion-color-body-2" class="hidden " aria-labelledby="accordion-color-heading-2">
                 <div
                     class="p-5 border border-t-0 border-customWhitishOrange dark:border-gray-700 list-none rounded-b-xl">
-                    <FilterList parameter="test1" />
-                    <FilterList parameter="test1" />
-                    <FilterList parameter="test1" />
+                    <FilterList v-for="ingredient in ingredients" :parameter="ingredient.name" :key="ingredient.id" />
 
                 </div>
             </div>
@@ -66,6 +64,25 @@ onMounted(() => {
     initFlowbite();
 })
 
+const query = gql`
+query MyQuery {
+  ingredients {
+    name
+    quantity
+    id
+  }
+}`;
+
+const ingredients = ref([])
+const { data } = await useAsyncQuery(query);
+ingredients.value = data._rawValue.ingredients || [];
+// const recipes = ref([]);
+// const fetchRecipes = async () => {
+//     console.log(recipes.value);
+// };
+
+
+// watch(categories, fetchRecipes, { immediate: true });
 </script>
 
 <style scoped></style>
