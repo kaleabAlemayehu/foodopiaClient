@@ -33,11 +33,12 @@ const query = gql`query MyQuery($_in: [Int!]) {
 }
 `
 const categories = ref([])
+const time = ref([])
+const ingredient = ref([])
 const recipes = ref([]);
 const fetchRecipes = async () => {
     const { data } = await useAsyncQuery(query, { _in: categories.value });
     recipes.value = data._rawValue.recipes || [];
-    console.log(recipes.value);
 };
 
 
@@ -53,10 +54,35 @@ const changeCurrent = (e) => {
     }
     e.target.classList.toggle('current');
     fetchRecipes();
-    console.log(categories)
 };
 
 watch(categories, fetchRecipes, { immediate: true });
+
+const filterBy = (id, type) => {
+    if (type == "time") {
+        switch (id) {
+            case 1:
+                recipes.value = recipes.value.filter(r => r.prep_time <= 10)
+                break
+            case 2:
+                recipes.value = recipes.value.filter(r => (r.prep_time > 10 && r.prep_time <= 30))
+                break
+            case 3:
+                recipes.value = recipes.value.filter(r => (r.prep_time > 30 && r.prep_time <= 45))
+                break
+            case 4:
+                recipes.value = recipes.value.filter(r => (r.prep_time > 45 && r.prep_time <= 60))
+                break
+            case 5:
+                recipes.value = recipes.value.filter(r => (r.prep_time > 60))
+                break
+        }
+        recipes.value.forEach(r => console.log(r.prep_time))
+    } else if (type == "ingredient") {
+
+    }
+
+}
 </script>
 
 
@@ -88,7 +114,7 @@ watch(categories, fetchRecipes, { immediate: true });
                     <NotOwned :recipe="recipe" />
                 </Card>
             </div>
-            <Filter />
+            <Filter @filterIt="filterBy" />
         </div>
         <Footer />
     </div>
