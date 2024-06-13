@@ -32,15 +32,34 @@ const query = gql`query MyQuery($_in: [Int!]) {
   }
 }
 `
+const ingredientQuery = gql`query MyQuery( $_in: [Int!]) {
+  recipes(where: {id: {_in: $_in}}) {
+    avg_rating
+    category_id
+    created_at
+    description
+    featured_image_url
+    id
+    prep_time
+    title
+    total_comments
+    total_likes
+    updated_at
+    user {
+      id
+      username
+    }
+  }
+}
+
+`
 const categories = ref([])
-const time = ref([])
-const ingredient = ref([])
+const ingredientRecipe = ref([])
 const recipes = ref([]);
-const fetchRecipes = async () => {
-    const { data } = await useAsyncQuery(query, { _in: categories.value });
+const fetchRecipes = async (query, variables) => {
+    const { data } = await useAsyncQuery(query, variables);
     recipes.value = data._rawValue.recipes || [];
 };
-
 
 // var { data } = await useAsyncQuery(query, { _in: catagories.value })
 // const recipes = ref(data._rawValue.recipes)
@@ -53,7 +72,7 @@ const changeCurrent = (e) => {
         categories.value.splice(categories.value.indexOf(categoryId), 1);
     }
     e.target.classList.toggle('current');
-    fetchRecipes();
+    fetchRecipes(query, { _in: categories.value });
 };
 
 watch(categories, fetchRecipes, { immediate: true });
@@ -77,12 +96,17 @@ const filterBy = (id, type) => {
                 recipes.value = recipes.value.filter(r => (r.prep_time > 60))
                 break
         }
-        recipes.value.forEach(r => console.log(r.prep_time))
     } else if (type == "ingredient") {
-
+        if (!ingredientRecipe.value.includes(id)) {
+            ingredientRecipe.value.push(id);
+        } else {
+            ingredientRecipe.value.splice(ingredientRecipe.value.indexOf(id), 1);
+        }
+        fetchRecipes(ingredientQuery, { _in: ingredientRecipe.value })
     }
 
 }
+watch(ingredientRecipe, fetchRecipes, { immediate: true });
 </script>
 
 

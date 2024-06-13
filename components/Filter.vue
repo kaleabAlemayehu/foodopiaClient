@@ -44,7 +44,7 @@
                 <div
                     class="p-5 border border-t-0 border-customWhitishOrange dark:border-gray-700 list-none rounded-b-xl">
                     <FilterList v-for="ingredient in ingredients"
-                        @click="$emit('filterIt', ingredient.id, 'ingredient')"
+                        @click="$emit('filterIt', ingredient.recipe_id, 'ingredient')"
                         :parameter="`${ingredient.name} - ${ingredient.quantity}`" :key="ingredient.id" />
 
                 </div>
@@ -74,6 +74,7 @@ query MyQuery {
     name
     quantity
     id
+    recipe_id
   }
 }`;
 
