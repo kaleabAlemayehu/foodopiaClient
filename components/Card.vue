@@ -25,7 +25,7 @@
                 </div>
                 <div class="interactions col-span-3 flex justify-around items-center text-base h-min mx-2 my-8">
 
-                    <slot />
+                    <slot @interaction="handleInteraction" />
                 </div>
             </div>
 
@@ -35,8 +35,33 @@
 </template>
 
 <script setup>
-defineProps(['recipe'])
+const createBookmark = gql`
+mutation MyMutation($recipe_id: Int!, $user_id: Int!) {
+  insert_bookmarks_one(object: {recipe_id: $recipe_id, user_id: $user_id}) {
+    id
+  }
+}`
+const createLike = gql`
+mutation MyMutation($recipe_id: Int!, $user_id: Int!) {
+  insert_likes(objects: {user_id: $user_id, recipe_id: $recipe_id}) {
+    id
+  }
+}
+`
 
+const addInteraction = async (query, variables) => {
+    const { data } = await useAsyncQuery(query, variables);
+    console.log(data)
+};
+
+defineProps(['recipe'])
+const handleInteraction = (type, data) => {
+    if (type == "bookmark") {
+        addInteraction(createBookmark, data)
+    } else if (type == "like") {
+        addInteraction(createLike, data)
+    }
+}
 </script>
 
 <style>

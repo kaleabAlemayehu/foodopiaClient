@@ -38,7 +38,7 @@
                     Ingredients</p>
                 <div
                     class="ingredientList rounded-lg p-3 border-customGolden border-[1px] mb-8  leading-relaxed text-lg px-8">
-                    <div v-for="ing in recipe.ingredients" :key="ing.name" class="">{{ ing.name }} {{ ing.quantity }}
+                    <div v-for="ing in recipe.ingredients" :key="ing.name" class="">{{ ing.name }} - {{ ing.quantity }}
                     </div>
                 </div>
             </div>
@@ -48,8 +48,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
-import RecipeSearch from "~/pages/search/[userId].vue";
 defineProps(['recipe'])
 </script>
 

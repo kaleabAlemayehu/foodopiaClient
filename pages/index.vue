@@ -31,19 +31,38 @@ const query = gql`query MyQuery($_in: [Int!]) {
     }
   }
 }
-`
+`;
+const ingredientQuery = gql`query MyQuery( $_in: [Int!]) {
+  recipes(where: {id: {_in: $_in}}) {
+    avg_rating
+    category_id
+    created_at
+    description
+    featured_image_url
+    id
+    prep_time
+    title
+    total_comments
+    total_likes
+    updated_at
+    user {
+      id
+      username
+    }
+  }
+}`;
 const categories = ref([])
+const ingredientRecipe = ref([])
 const recipes = ref([]);
-const fetchRecipes = async () => {
+const fetchRecipesCategories = async () => {
     const { data } = await useAsyncQuery(query, { _in: categories.value });
     recipes.value = data._rawValue.recipes || [];
-    console.log(recipes.value);
 };
 
-
-// var { data } = await useAsyncQuery(query, { _in: catagories.value })
-// const recipes = ref(data._rawValue.recipes)
-
+const fetchRecipesIngredients = async () => {
+    const { data } = await useAsyncQuery(ingredientQuery, { _in: ingredientRecipe.value });
+    recipes.value = data._rawValue.recipes || [];
+}
 const changeCurrent = (e) => {
     const categoryId = parseInt(e.target.dataset.id);
     if (!categories.value.includes(categoryId)) {
@@ -52,11 +71,43 @@ const changeCurrent = (e) => {
         categories.value.splice(categories.value.indexOf(categoryId), 1);
     }
     e.target.classList.toggle('current');
-    fetchRecipes();
-    console.log(categories)
+    fetchRecipesCategories();
 };
 
-watch(categories, fetchRecipes, { immediate: true });
+
+
+const filterBy = (id, type) => {
+    if (type == "time") {
+        switch (id) {
+            case 1:
+                recipes.value = recipes.value.filter(r => r.prep_time <= 10)
+                break
+            case 2:
+                recipes.value = recipes.value.filter(r => (r.prep_time > 10 && r.prep_time <= 30))
+                break
+            case 3:
+                recipes.value = recipes.value.filter(r => (r.prep_time > 30 && r.prep_time <= 45))
+                break
+            case 4:
+                recipes.value = recipes.value.filter(r => (r.prep_time > 45 && r.prep_time <= 60))
+                break
+            case 5:
+                recipes.value = recipes.value.filter(r => (r.prep_time > 60))
+                break
+        }
+    } else if (type == "ingredient") {
+        if (!ingredientRecipe.value.includes(id)) {
+            ingredientRecipe.value.push(id);
+        } else {
+            ingredientRecipe.value.splice(ingredientRecipe.value.indexOf(id), 1);
+        }
+
+        fetchRecipesIngredients();
+    }
+    console.log(`id ${id}\n ${type}`)
+}
+watch(ingredientRecipe, fetchRecipesIngredients, { immediate: true });
+watch(categories, fetchRecipesCategories, { immediate: true });
 </script>
 
 
@@ -88,7 +139,7 @@ watch(categories, fetchRecipes, { immediate: true });
                     <NotOwned :recipe="recipe" />
                 </Card>
             </div>
-            <Filter />
+            <Filter @filterIt="filterBy" />
         </div>
         <Footer />
     </div>

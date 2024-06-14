@@ -19,9 +19,11 @@
             <div id="accordion-color-body-1" class="hidden" aria-labelledby="accordion-color-heading-1">
                 <div
                     class="p-5 border border-b-0 border-customWhitishOrange dark:border-gray-700 dark:bg-gray-900 list-none">
-                    <FilterList parameter="test1" />
-                    <FilterList parameter="test1" />
-                    <FilterList parameter="test1" />
+                    <FilterList @click="$emit('filterIt', 1, 'time')" :id="1" parameter="less than 10 min" />
+                    <FilterList @click="$emit('filterIt', 2, 'time')" :id="2" parameter="11 - 30 min" />
+                    <FilterList @click="$emit('filterIt', 3, 'time')" :id="3" parameter="31 - 45 min" />
+                    <FilterList @click="$emit('filterIt', 4, 'time')" :id="4" parameter="46 - 60 min" />
+                    <FilterList @click="$emit('filterIt', 5, 'time')" :id="5" parameter="60 min +" />
 
                 </div>
             </div>
@@ -41,9 +43,10 @@
             <div id="accordion-color-body-2" class="hidden " aria-labelledby="accordion-color-heading-2">
                 <div
                     class="p-5 border border-t-0 border-customWhitishOrange dark:border-gray-700 list-none rounded-b-xl">
-                    <FilterList parameter="test1" />
-                    <FilterList parameter="test1" />
-                    <FilterList parameter="test1" />
+                    <FilterList v-for="ingredient in ingredients"
+                        @click="$emit('filterIt', ingredient.recipe_id, 'ingredient')"
+                        :parameter="`${ingredient.name} - ${ingredient.quantity}`" :key="ingredient.id"
+                        :id="`ing${ingredient.id}`" />
 
                 </div>
             </div>
@@ -60,12 +63,33 @@
 import FilterList from './FilterList.vue';
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
-
+defineEmits(["filterIt"])
 // initialize components based on data attribute selectors
 onMounted(() => {
     initFlowbite();
 })
 
+const query = gql`
+query MyQuery {
+  ingredients {
+    name
+    quantity
+    id
+    recipe_id
+  }
+}`;
+
+
+const ingredients = ref([])
+const { data } = await useAsyncQuery(query);
+ingredients.value = data._rawValue.ingredients || [];
+// const recipes = ref([]);
+// const fetchRecipes = async () => {
+//     console.log(recipes.value);
+// };
+
+
+// watch(categories, fetchRecipes, { immediate: true });
 </script>
 
 <style scoped></style>
