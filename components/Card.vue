@@ -41,6 +41,13 @@ mutation MyMutation($recipe_id: Int!, $user_id: Int!) {
     id
   }
 }`
+const createLike = gql`
+mutation MyMutation($recipe_id: Int!, $user_id: Int!) {
+  insert_likes(objects: {user_id: $user_id, recipe_id: $recipe_id}) {
+    id
+  }
+}
+`
 
 const addInteraction = async (query, variables) => {
     const { data } = await useAsyncQuery(query, variables);
@@ -51,6 +58,8 @@ defineProps(['recipe'])
 const handleInteraction = (type, data) => {
     if (type == "bookmark") {
         addInteraction(createBookmark, data)
+    } else if (type == "like") {
+        addInteraction(createLike, data)
     }
 }
 </script>

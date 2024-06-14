@@ -31,7 +31,7 @@ const query = gql`query MyQuery($_in: [Int!]) {
     }
   }
 }
-`
+`;
 const ingredientQuery = gql`query MyQuery( $_in: [Int!]) {
   recipes(where: {id: {_in: $_in}}) {
     avg_rating
@@ -50,20 +50,19 @@ const ingredientQuery = gql`query MyQuery( $_in: [Int!]) {
       username
     }
   }
-}
-
-`
+}`;
 const categories = ref([])
 const ingredientRecipe = ref([])
 const recipes = ref([]);
-const fetchRecipes = async (query, variables) => {
-    const { data } = await useAsyncQuery(query, variables);
+const fetchRecipesCategories = async () => {
+    const { data } = await useAsyncQuery(query, { _in: categories.value });
     recipes.value = data._rawValue.recipes || [];
 };
 
-// var { data } = await useAsyncQuery(query, { _in: catagories.value })
-// const recipes = ref(data._rawValue.recipes)
-
+const fetchRecipesIngredients = async () => {
+    const { data } = await useAsyncQuery(ingredientQuery, { _in: ingredientRecipe.value });
+    recipes.value = data._rawValue.recipes || [];
+}
 const changeCurrent = (e) => {
     const categoryId = parseInt(e.target.dataset.id);
     if (!categories.value.includes(categoryId)) {
@@ -72,10 +71,10 @@ const changeCurrent = (e) => {
         categories.value.splice(categories.value.indexOf(categoryId), 1);
     }
     e.target.classList.toggle('current');
-    fetchRecipes(query, { _in: categories.value });
+    fetchRecipesCategories();
 };
 
-watch(categories, fetchRecipes, { immediate: true });
+
 
 const filterBy = (id, type) => {
     if (type == "time") {
@@ -102,11 +101,13 @@ const filterBy = (id, type) => {
         } else {
             ingredientRecipe.value.splice(ingredientRecipe.value.indexOf(id), 1);
         }
-        fetchRecipes(ingredientQuery, { _in: ingredientRecipe.value })
-    }
 
+        fetchRecipesIngredients();
+    }
+    console.log(`id ${id}\n ${type}`)
 }
-watch(ingredientRecipe, fetchRecipes, { immediate: true });
+watch(ingredientRecipe, fetchRecipesIngredients, { immediate: true });
+watch(categories, fetchRecipesCategories, { immediate: true });
 </script>
 
 
