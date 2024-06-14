@@ -38,10 +38,10 @@
                         </Card>
                     </div>
                     <div class="my-auto" v-else-if="isCurrent == 2">
-                        <Form />
+                        <RecipeForm />
                     </div>
                     <div class="my-auto" v-else-if="isCurrent == 3">
-                        <Form />
+                        <RecipeForm />
                     </div>
                     <div v-if="isCurrent == 4" class="homeContent grid grid-cols-[350px_350px_350px] gap-10 my-auto ">
                         <Card v-for="bookmarked in bookmarkedRecipe" :key="bookmarked.recipe.id"
@@ -66,7 +66,7 @@ import NavBar from '~/components/NavBar.vue';
 import AnonUser from '~/components/AnonUser.vue';
 import Owned from "~/components/Owned.vue";
 import Card from "~/components/Card.vue";
-import Form from "~/components/Form.vue";
+import RecipeForm from "~/components/RecipeForm.vue";
 import Footer from "~/components/Footer.vue";
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
@@ -112,9 +112,7 @@ const bookmarkedQuery = gql`query MyQuery($_eq: Int!) {
       }
     }
   }
-}
-
-`
+}`
 
 
 onMounted(async () => {
@@ -125,11 +123,9 @@ const route = useRoute();
 const userId = ref(route.params.userId)
 const { data } = await useAsyncQuery(query, { _eq: userId, })
 const { data: bookmarkedData } = await useAsyncQuery(bookmarkedQuery, { _eq: userId, });
-// // console.log(data._rawalue.recipes);
-// console.log(bookmarkedData._rawValue.bookmarks);
 const bookmarkedRecipe = ref(bookmarkedData._rawValue.bookmarks)
 const recipes = ref(data._rawValue.recipes)
-
+telegram
 </script>
 
 <style>
