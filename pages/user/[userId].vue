@@ -125,7 +125,6 @@ const { data } = await useAsyncQuery(query, { _eq: userId, })
 const { data: bookmarkedData } = await useAsyncQuery(bookmarkedQuery, { _eq: userId, });
 const bookmarkedRecipe = ref(bookmarkedData._rawValue.bookmarks)
 const recipes = ref(data._rawValue.recipes)
-telegram
 </script>
 
 <style>

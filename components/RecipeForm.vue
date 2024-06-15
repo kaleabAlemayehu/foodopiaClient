@@ -2,16 +2,18 @@
     <form class="w-[60vw] mx-auto">
         <div class="my-5">
             <label for="title" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Title</label>
-            <input type="text" id="title"
+            <input type="text" id="title" v-model="title" v-bind="titleAttrs"
                 class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div class="err">{{ errors.title }}</div>
         </div>
 
         <div class="mb-5">
             <label for="description"
                 class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Description</label>
-            <textarea id="description" rows="4"
+            <textarea id="description" rows="4" v-model="description" v-bind="descriptionAttrs"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-customWhite rounded-lg border border-customWhite focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customOrang dark:focus:border-customOrang"
                 placeholder="Leave a comment..."></textarea>
+            <div class="err">{{ errors.description }}</div>
         </div>
         <div class="mb-5">
             <label for="preparation"
@@ -98,25 +100,37 @@
             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Seasonal</span>
         </label>
         <div class="my-5">
-            <label for=" ingredient" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
-                <span class="text-xs text-gray-500 dark:text-gray-300">(separate them by
-                    comma)</span></label>
-            <input type="text" id="ingredient"
-                class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div class="my-5" v-for="ing in ings" :key="ing">
+                <label :for="`ing${ing}`"
+                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
+                    <span class="text-xs text-gray-500 dark:text-gray-300">(separate amount by
+                        hyphen)</span></label>
+                <input type="text" id="`ing${ing}`"
+                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <button type="button" @click="add(ings)"
+                class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <Icon name="mi:add" />
+            </button>
+            <button type="button" @click="remove(ings)"
+                class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <Icon name="mi:remove" />
+            </button>
         </div>
         <div class=" mb-5">
 
             <div class="my-5" v-for="step in steps" :key="step">
-                <label :for="step" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Instruction
+                <label :for="`step${step}`"
+                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Instruction
                     {{ step }}</label>
-                <input type="text" :id="step"
+                <input type="text" :id="`step${step}`"
                     class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
-            <button type="button" @click="addStep"
+            <button type="button" @click="add(steps)"
                 class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <Icon name="mi:add" />
             </button>
-            <button type="button" @click="removeStep"
+            <button type="button" @click="remove(steps)"
                 class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <Icon name="mi:remove" />
             </button>
@@ -131,19 +145,42 @@
 
 <script setup>
 import { reactive } from 'vue';
-import { onMounted } from 'vue'
-import { initFlowbite } from 'flowbite'
+import { onMounted } from 'vue';
+import { initFlowbite } from 'flowbite';
+import { useForm } from 'vee-validate';
+import * as yup from "yup"
+import { toTypedSchema } from '@vee-validate/yup';
+
+const schema = toTypedSchema(yup.object({
+    title: yup.string().required(),
+    description: yup.string().required(),
+
+}))
+const { errors, defineField } = useForm(
+    {
+        validationSchema: schema,
+    }
+)
+
+const [title, titleAttrs] = defineField("title");
+const [description, descriptionAttrs] = defineField("description");
+
 onMounted(() => {
     initFlowbite();
 })
+const ings = reactive([1, 2, 3])
 
 const steps = reactive([1, 2, 3])
-const removeStep = () => {
-    steps.pop()
+const remove = (value) => {
+    value.pop()
 }
-const addStep = () => {
-    steps.push(steps.length + 1)
+const add = (value) => {
+    value.push(value.length + 1)
 }
 </script>
 
-<style></style>
+<style>
+.err {
+    @apply text-xs text-red-600 dark:text-gray-300;
+}
+</style>
