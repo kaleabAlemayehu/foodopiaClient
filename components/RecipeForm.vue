@@ -98,25 +98,37 @@
             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Seasonal</span>
         </label>
         <div class="my-5">
-            <label for=" ingredient" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
-                <span class="text-xs text-gray-500 dark:text-gray-300">(separate them by
-                    comma)</span></label>
-            <input type="text" id="ingredient"
-                class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div class="my-5" v-for="ing in ings" :key="ing">
+                <label :for="`ing${ing}`"
+                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
+                    <span class="text-xs text-gray-500 dark:text-gray-300">(separate amount by
+                        hyphen)</span></label>
+                <input type="text" id="`ing${ing}`"
+                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <button type="button" @click="add(ings)"
+                class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <Icon name="mi:add" />
+            </button>
+            <button type="button" @click="remove(ings)"
+                class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <Icon name="mi:remove" />
+            </button>
         </div>
         <div class=" mb-5">
 
             <div class="my-5" v-for="step in steps" :key="step">
-                <label :for="step" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Instruction
+                <label :for="`step${step}`"
+                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Instruction
                     {{ step }}</label>
-                <input type="text" :id="step"
+                <input type="text" :id="`step${step}`"
                     class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
-            <button type="button" @click="addStep"
+            <button type="button" @click="add(steps)"
                 class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <Icon name="mi:add" />
             </button>
-            <button type="button" @click="removeStep"
+            <button type="button" @click="remove(steps)"
                 class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <Icon name="mi:remove" />
             </button>
@@ -136,13 +148,14 @@ import { initFlowbite } from 'flowbite'
 onMounted(() => {
     initFlowbite();
 })
+const ings = reactive([1, 2, 3])
 
 const steps = reactive([1, 2, 3])
-const removeStep = () => {
-    steps.pop()
+const remove = (value) => {
+    value.pop()
 }
-const addStep = () => {
-    steps.push(steps.length + 1)
+const add = (value) => {
+    value.push(value.length + 1)
 }
 </script>
 
