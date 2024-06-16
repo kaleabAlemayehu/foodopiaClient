@@ -1,9 +1,10 @@
 <template>
-    <form class="w-[60vw] mx-auto">
+    <form class="w-[60vw] mx-auto" @submit.prevent="handleSubmit(onSubmit)">
         <div class="my-5">
             <label for="title" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Title</label>
             <input type="text" id="title" v-model="title" v-bind="titleAttrs"
-                class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Title ...">
             <div class="err">{{ errors.title }}</div>
         </div>
 
@@ -12,23 +13,25 @@
                 class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Description</label>
             <textarea id="description" rows="4" v-model="description" v-bind="descriptionAttrs"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-customWhite rounded-lg border border-customWhite focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customOrang dark:focus:border-customOrang"
-                placeholder="Leave a comment..."></textarea>
+                placeholder="Description ..."></textarea>
             <div class="err">{{ errors.description }}</div>
         </div>
         <div class="mb-5">
-            <label for="preparation"
-                class="block mb-2 text-sm font-medium text-customBlack dark:text-white">preparation</label>
-            <input type="text" id="preparation"
-                class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <label for="preparation" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">preparation
+                time</label>
+            <input type="text" id="preparation" v-model="preparation" v-bind="preparationAttrs"
+                class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Preparation time in minutes ...">
+            <div class="err">{{ errors.preparation }}</div>
         </div>
         <div class="mb-5">
-            <label class="block mb-2 text-sm font-medium text-customBlack dark:text-white" for="primaryPicture">Upload
-                Primary Picture</label>
+            <label class="block mb-2 text-sm font-medium text-customBlack dark:text-white" for="featuredImage">Upload
+                Featured Picture</label>
             <input
                 class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                aria-describedby="user_avatar_help" id="primaryPicture" type="file">
-            <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Primary
-                Picture</div>
+                aria-describedby="user_avatar_help" id="featuredImage" type="file" @change="handleFileChange">
+
+            <div class="err">{{ errors.featureImage }}</div>
         </div>
         <div class="mb-5">
             <label class="block mb-2 text-sm font-medium text-customBlack dark:text-white" for="addtionalPic">Upload
@@ -106,7 +109,8 @@
                     <span class="text-xs text-gray-500 dark:text-gray-300">(separate amount by
                         hyphen)</span></label>
                 <input type="text" id="`ing${ing}`"
-                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    :placeholder="`ingredient ${ing} ...`">
             </div>
             <button type="button" @click="add(ings)"
                 class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -124,7 +128,8 @@
                     class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Instruction
                     {{ step }}</label>
                 <input type="text" :id="`step${step}`"
-                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    :placeholder="`Instruction ${step} ...`">
             </div>
             <button type="button" @click="add(steps)"
                 class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -135,7 +140,7 @@
                 <Icon name="mi:remove" />
             </button>
         </div>
-        <button type="button"
+        <button type="submit"
             class="text-white bg-customOrang hover:bg-customOrang focus:outline-none focus:ring-4 focus:ring-customWhitishOrange font-medium rounded-full text-sm px-5 py-2.5 text-center mx-auto mt-3 mb-5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
 
 
@@ -144,27 +149,73 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { useForm } from 'vee-validate';
 import * as yup from "yup"
 import { toTypedSchema } from '@vee-validate/yup';
+const featuredImage = ref("");
+const file = ref(null)
+const base64Str = ref(null)
+const filePath = ref(null)
 
 const schema = toTypedSchema(yup.object({
     title: yup.string().required(),
     description: yup.string().required(),
+    preparation: yup.number().required().positive().integer(),
+
+
 
 }))
-const { errors, defineField } = useForm(
+const { errors, defineField, handleSubmit, } = useForm(
     {
         validationSchema: schema,
     }
 )
 
 const [title, titleAttrs] = defineField("title");
-const [description, descriptionAttrs] = defineField("description");
+const [description, descriptionAttrs] = defineField("description")
+const [preparation, preparationAttrs] = defineField("preparation")
 
+
+
+const handleFileChange = async (event) => {
+    file.value = event.target.files[0];
+    const reader = new FileReader();
+
+    if (file.value) {
+        reader.readAsArrayBuffer(file.value);
+    }
+    reader.onload = () => {
+        base64Str.value = btoa(reader.result);
+    };
+
+    reader.onerror = () => {
+        console.log('Unable to parse file');
+    };
+
+    // const formData = new
+    //     formData.append('images', files[0]);
+
+    // fetch("http://localhost:9000/upload", {
+    //     method: 'POST',
+    //     body: formData,
+    // })
+    //     .then(response => response.json())
+    //     .then((data) => {
+    //         if (data.imageUrls[0] !== '') {
+    //             console.log(data.imageUrls[0]);
+    //             featuredImage.value = data.imageUrls[0];
+    //         }
+    //     })
+    //     .catch(err => console.error(err));
+
+}
+
+// const onSubmit = (values) => {
+//     console.log('Form Submitted', values);
+// };
 onMounted(() => {
     initFlowbite();
 })
