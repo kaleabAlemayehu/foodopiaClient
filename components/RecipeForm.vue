@@ -1,5 +1,5 @@
 <template>
-    <form class="w-[60vw] mx-auto" @submit.prevent="handleSubmit(onSubmit)">
+    <form class="w-[60vw] mx-auto" @submit.prevent="onSubmit">
         <div class="my-5">
             <label for="title" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Title</label>
             <input type="text" id="title" v-model="title" v-bind="titleAttrs"
@@ -149,16 +149,23 @@
 </template>
 
 <script setup>
+const imageUpload = gql`
+mutation MyMutation($base64Str: String!, $name: String!) {
+  imageUpload(base64Str: $base64Str, name: $name)
+}
+`
 import { reactive, ref } from 'vue';
 import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { useForm } from 'vee-validate';
+import { useMutation } from '#imports';
 import * as yup from "yup"
 import { toTypedSchema } from '@vee-validate/yup';
 const featuredImage = ref("");
 const file = ref(null)
 const base64Str = ref(null)
 const filePath = ref(null)
+
 
 const schema = toTypedSchema(yup.object({
     title: yup.string().required(),
@@ -168,7 +175,7 @@ const schema = toTypedSchema(yup.object({
 
 
 }))
-const { errors, defineField, handleSubmit, } = useForm(
+const { errors, defineField } = useForm(
     {
         validationSchema: schema,
     }
@@ -179,46 +186,43 @@ const [description, descriptionAttrs] = defineField("description")
 const [preparation, preparationAttrs] = defineField("preparation")
 
 
-
-const handleFileChange = async (event) => {
-    file.value = event.target.files[0];
-    const reader = new FileReader();
-
-    if (file.value) {
-        reader.readAsArrayBuffer(file.value);
+const uploadImage = async (image) => {
+    try {
+        const variables = { name: image.value.name, base64Str: base64Str.value }
+        const { mutate } = useMutation(imageUpload, { variables })
+        const data = await mutate()
+        console.log(data)
+    } catch (er) {
+        console.log(er)
     }
-    reader.onload = () => {
-        base64Str.value = btoa(reader.result);
-    };
 
-    reader.onerror = () => {
-        console.log('Unable to parse file');
-    };
 
-    // const formData = new
-    //     formData.append('images', files[0]);
-
-    // fetch("http://localhost:9000/upload", {
-    //     method: 'POST',
-    //     body: formData,
-    // })
-    //     .then(response => response.json())
-    //     .then((data) => {
-    //         if (data.imageUrls[0] !== '') {
-    //             console.log(data.imageUrls[0]);
-    //             featuredImage.value = data.imageUrls[0];
-    //         }
-    //     })
-    //     .catch(err => console.error(err));
 
 }
 
-// const onSubmit = (values) => {
-//     console.log('Form Submitted', values);
-// };
+
+const handleFileChange = (event) => {
+    file.value = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file.value);
+    reader.onload = () => {
+        base64Str.value = reader.result.split(',')[1]; // Remove the data URL part
+    };
+    reader.onerror = () => {
+        console.log('Unable to parse file');
+    };
+}
+
+
 onMounted(() => {
+
     initFlowbite();
 })
+
+const onSubmit = () => {
+    uploadImage(file)
+}
+
 const ings = reactive([1, 2, 3])
 
 const steps = reactive([1, 2, 3])
