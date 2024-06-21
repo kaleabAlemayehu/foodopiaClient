@@ -149,10 +149,12 @@
 </template>
 
 <script setup>
-const imageUpload = gql`
-mutation MyMutation($base64Str: String!, $name: String!) {
-  imageUpload(base64Str: $base64Str, name: $name)
+const imageUpload = gql`mutation MyMutation($base64Str: String !, $name: String!) {
+  imageUpload(name: $name, base64Str: $base64Str) {
+    image_url
+  }
 }
+
 `
 import { reactive, ref } from 'vue';
 import { onMounted } from 'vue';
@@ -191,11 +193,12 @@ const uploadImage = async (image) => {
         const variables = { name: image.value.name, base64Str: base64Str.value }
         const { mutate } = useMutation(imageUpload, { variables })
         const data = await mutate()
-        console.log(data)
+        featuredImage.value = data;
     } catch (er) {
         console.log(er)
     }
 
+    console.log(featuredImage.value)
 
 
 }
