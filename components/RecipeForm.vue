@@ -38,17 +38,8 @@
                 Addtional Picture</label>
             <input
                 class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                aria-describedby="addtionalOne" id="addtionalPic" type="file">
+                aria-describedby="addtionalOne" id="addtionalPic" type="file" @change="handleAddtional">
             <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="addtionalOne">
-                Addtional Picture</div>
-        </div>
-        <div class="mb-5">
-            <label class="block mb-2 text-sm font-medium text-customBlack dark:text-white" for="addtionalPic2">Upload
-                Addtional Picture</label>
-            <input
-                class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite 50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                aria-describedby="addtionalTwo" id="primaryPicture" type="file">
-            <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="addtionalTwo">
                 Addtional Picture</div>
         </div>
 
@@ -165,8 +156,11 @@ import * as yup from "yup"
 import { toTypedSchema } from '@vee-validate/yup';
 const featuredImage = ref("");
 const file = ref(null)
+const addtionalOne = ref(null)
+const fileUrl = ref(null)
+const addtionalUrl = ref(null)
 const base64Str = ref(null)
-const filePath = ref(null)
+const addtionalBase64Str = ref(null)
 
 
 const schema = toTypedSchema(yup.object({
@@ -188,19 +182,21 @@ const [description, descriptionAttrs] = defineField("description")
 const [preparation, preparationAttrs] = defineField("preparation")
 
 
-const uploadImage = async (image) => {
+const uploadImage = async (image, base64Str) => {
     try {
-        const variables = { name: image.value.name, base64Str: base64Str.value }
+        const variables = { name: image.name, base64Str: base64Str }
         const { mutate } = useMutation(imageUpload, { variables })
-        const data = await mutate()
-        featuredImage.value = data;
+        const { data } = await mutate()
+        if (data && data.imageUpload && data.imageUpload.image_url) {
+            return data.imageUpload.image_url;
+        } else {
+            console.log('No image URL found in the response');
+            return null;
+        }
     } catch (er) {
         console.log(er)
+        return null
     }
-
-    console.log(featuredImage.value)
-
-
 }
 
 
@@ -216,14 +212,29 @@ const handleFileChange = (event) => {
     };
 }
 
+const handleAddtional = (event) => {
+    addtionalOne.value = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(addtionalOne.value);
+    reader.onload = () => {
+        addtionalBase64Str.value = reader.result.split(',')[1]; // Remove the data URL part
+    };
+    reader.onerror = () => {
+        console.log('Unable to parse file');
+    };
+}
+
 
 onMounted(() => {
 
     initFlowbite();
 })
 
-const onSubmit = () => {
-    uploadImage(file)
+const onSubmit = async () => {
+    fileUrl.value = await uploadImage(file.value, base64Str.value)
+    addtionalUrl.value = await uploadImage(addtionalOne.value, addtionalBase64Str.value)
+    console.log(fileUrl.value);
+    console.log(addtionalUrl.value);
 }
 
 const ings = reactive([1, 2, 3])
