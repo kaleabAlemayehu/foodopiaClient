@@ -1,5 +1,5 @@
 <template>
-    <form class="w-[60vw] mx-auto" @submit.prevent="handleSubmit(onSubmit)">
+    <form class="w-[60vw] mx-auto" @submit.prevent="onSubmit">
         <div class="my-5">
             <label for="title" class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Title</label>
             <input type="text" id="title" v-model="title" v-bind="titleAttrs"
@@ -38,17 +38,8 @@
                 Addtional Picture</label>
             <input
                 class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                aria-describedby="addtionalOne" id="addtionalPic" type="file">
+                aria-describedby="addtionalOne" id="addtionalPic" type="file" @change="handleAddtional">
             <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="addtionalOne">
-                Addtional Picture</div>
-        </div>
-        <div class="mb-5">
-            <label class="block mb-2 text-sm font-medium text-customBlack dark:text-white" for="addtionalPic2">Upload
-                Addtional Picture</label>
-            <input
-                class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite 50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                aria-describedby="addtionalTwo" id="primaryPicture" type="file">
-            <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="addtionalTwo">
                 Addtional Picture</div>
         </div>
 
@@ -149,16 +140,28 @@
 </template>
 
 <script setup>
+const imageUpload = gql`mutation MyMutation($base64Str: String !, $name: String!) {
+  imageUpload(name: $name, base64Str: $base64Str) {
+    image_url
+  }
+}
+
+`
 import { reactive, ref } from 'vue';
 import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { useForm } from 'vee-validate';
+import { useMutation } from '#imports';
 import * as yup from "yup"
 import { toTypedSchema } from '@vee-validate/yup';
 const featuredImage = ref("");
 const file = ref(null)
+const addtionalOne = ref(null)
+const fileUrl = ref(null)
+const addtionalUrl = ref(null)
 const base64Str = ref(null)
-const filePath = ref(null)
+const addtionalBase64Str = ref(null)
+
 
 const schema = toTypedSchema(yup.object({
     title: yup.string().required(),
@@ -168,7 +171,7 @@ const schema = toTypedSchema(yup.object({
 
 
 }))
-const { errors, defineField, handleSubmit, } = useForm(
+const { errors, defineField } = useForm(
     {
         validationSchema: schema,
     }
@@ -179,46 +182,61 @@ const [description, descriptionAttrs] = defineField("description")
 const [preparation, preparationAttrs] = defineField("preparation")
 
 
+const uploadImage = async (image, base64Str) => {
+    try {
+        const variables = { name: image.name, base64Str: base64Str }
+        const { mutate } = useMutation(imageUpload, { variables })
+        const { data } = await mutate()
+        if (data && data.imageUpload && data.imageUpload.image_url) {
+            return data.imageUpload.image_url;
+        } else {
+            console.log('No image URL found in the response');
+            return null;
+        }
+    } catch (er) {
+        console.log(er)
+        return null
+    }
+}
 
-const handleFileChange = async (event) => {
+
+const handleFileChange = (event) => {
     file.value = event.target.files[0];
     const reader = new FileReader();
-
-    if (file.value) {
-        reader.readAsArrayBuffer(file.value);
-    }
+    reader.readAsDataURL(file.value);
     reader.onload = () => {
-        base64Str.value = btoa(reader.result);
+        base64Str.value = reader.result.split(',')[1]; // Remove the data URL part
     };
-
     reader.onerror = () => {
         console.log('Unable to parse file');
     };
-
-    // const formData = new
-    //     formData.append('images', files[0]);
-
-    // fetch("http://localhost:9000/upload", {
-    //     method: 'POST',
-    //     body: formData,
-    // })
-    //     .then(response => response.json())
-    //     .then((data) => {
-    //         if (data.imageUrls[0] !== '') {
-    //             console.log(data.imageUrls[0]);
-    //             featuredImage.value = data.imageUrls[0];
-    //         }
-    //     })
-    //     .catch(err => console.error(err));
-
 }
 
-// const onSubmit = (values) => {
-//     console.log('Form Submitted', values);
-// };
+const handleAddtional = (event) => {
+    addtionalOne.value = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(addtionalOne.value);
+    reader.onload = () => {
+        addtionalBase64Str.value = reader.result.split(',')[1]; // Remove the data URL part
+    };
+    reader.onerror = () => {
+        console.log('Unable to parse file');
+    };
+}
+
+
 onMounted(() => {
+
     initFlowbite();
 })
+
+const onSubmit = async () => {
+    fileUrl.value = await uploadImage(file.value, base64Str.value)
+    addtionalUrl.value = await uploadImage(addtionalOne.value, addtionalBase64Str.value)
+    console.log(fileUrl.value);
+    console.log(addtionalUrl.value);
+}
+
 const ings = reactive([1, 2, 3])
 
 const steps = reactive([1, 2, 3])
