@@ -29,7 +29,8 @@
                 Featured Picture</label>
             <input
                 class="block w-full text-sm text-customBlack border border-gray-300 rounded-lg cursor-pointer bg-customWhite dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                aria-describedby="user_avatar_help" id="featuredImage" type="file" @change="handleFileChange">
+                aria-describedby="user_avatar_help" id="featuredImage" type="file" @change="handleFileChange"
+                v-validate="'image'">
 
             <div class="err">{{ errors.featureImage }}</div>
         </div>
@@ -43,67 +44,17 @@
                 Addtional Picture</div>
         </div>
 
-
-        <label class="inline-flex items-center mb-5 cursor-pointer mx-5">
-            <input type="checkbox" value="" class="sr-only peer">
-            <div
-                class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang transition-all">
-            </div>
-            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">BreakFast</span>
-        </label>
-        <label class="inline-flex items-center mb-5 cursor-pointer mx-5">
-            <input type="checkbox" value="lunch" class="sr-only peer">
-            <div
-                class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang transition-all">
-            </div>
-            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Lunch</span>
-        </label>
-        <label class="inline-flex items-center mb-5 cursor-pointer mx-5">
-            <input type="checkbox" value="dinner" class="sr-only peer">
-            <div
-                class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang transition-all">
-            </div>
-            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Dinner</span>
-        </label>
-        <label class="inline-flex items-center mb-5 cursor-pointer mx-5">
-            <input type="checkbox" value="dessert" class="sr-only peer">
-            <div
-                class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang transition-all">
-            </div>
-            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Dessert</span>
-        </label>
-        <label class="inline-flex items-center mb-5 cursor-pointer mx-5">
-            <input type="checkbox" value="drinks" class="sr-only peer">
-            <div
-                class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang transition-all">
-            </div>
-            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Drinks</span>
-        </label>
-        <label class="inline-flex items-center mb-5 cursor-pointer mx-5">
-            <input type="checkbox" value="snacks" class="sr-only peer">
-            <div
-                class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang transition-all">
-            </div>
-            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Snacks</span>
-        </label>
-        <label class="inline-flex items-center mb-5 cursor-pointer mx-5">
-            <input type="checkbox" value="seasonal" class="sr-only peer">
-            <div
-                class="relative w-11 h-6 bg-customWhite peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-customWhitishOrange dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-customOrang transition-all">
-            </div>
-            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Seasonal</span>
-        </label>
         <div class="my-5">
-            <div class="my-5" v-for="ing in ings" :key="ing">
-                <label :for="`ing${ing}`"
+            <div class="my-5" v-for="ing, index in ings" :key="ing.name">
+                <label :for="ing.label"
                     class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
                     <span class="text-xs text-gray-500 dark:text-gray-300">(separate amount by
                         hyphen)</span></label>
-                <input type="text" id="`ing${ing}`"
+                <input type="text" :id="ing.label"
                     class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    :placeholder="`ingredient ${ing} ...`">
+                    :placeholder="`ingredient ${index} ...`" v-model="ing.name">
             </div>
-            <button type="button" @click="add(ings)"
+            <button type="button" @click="addIng"
                 class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <Icon name="mi:add" />
             </button>
@@ -152,9 +103,7 @@ import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { useForm } from 'vee-validate';
 import { useMutation } from '#imports';
-import * as yup from "yup"
-import { toTypedSchema } from '@vee-validate/yup';
-const featuredImage = ref("");
+import { integer, required } from '@vee-validate/rules';
 const file = ref(null)
 const addtionalOne = ref(null)
 const fileUrl = ref(null)
@@ -163,17 +112,14 @@ const base64Str = ref(null)
 const addtionalBase64Str = ref(null)
 
 
-const schema = toTypedSchema(yup.object({
-    title: yup.string().required(),
-    description: yup.string().required(),
-    preparation: yup.number().required().positive().integer(),
 
-
-
-}))
 const { errors, defineField } = useForm(
     {
-        validationSchema: schema,
+        validationSchema: {
+            title: required,
+            description: required,
+            preparation: required && integer,
+        }
     }
 )
 
@@ -236,8 +182,29 @@ const onSubmit = async () => {
     console.log(fileUrl.value);
     console.log(addtionalUrl.value);
 }
+const ings = ref([{
+    name: "ing1",
+    label: "Ing 1",
+    rules: { required }
+}])
+const ingValues = reactive({
+    ing1: ''
+})
 
-const ings = reactive([1, 2, 3])
+const addIng = () => {
+    const newIndex = ings.value.length + 1;
+    const ingName = `ing${newIndex}`;
+    ings.value.push({
+        name: ingName,
+        label: `Ing ${newIndex}`,
+        rules: { required }
+    })
+    ingValues[ingName] = '';
+    defineField(ingName, ingValues[ingName], { required })
+}
+ings.value.forEach(ing => {
+    defineField(ing.name, ingValues[ing.name], ing.rules)
+})
 
 const steps = reactive([1, 2, 3])
 const remove = (value) => {

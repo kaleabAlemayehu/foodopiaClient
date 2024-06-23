@@ -11,7 +11,7 @@ importers:
       '@nuxtjs/google-fonts':
         specifier: ^3.2.0
         version: 3.2.0(rollup@4.18.0)
-      '@vee-validate/yup':
+      '@vee-validate/rules':
         specifier: ^4.13.1
         version: 4.13.1(vue@3.4.27)
       flowbite:
@@ -1086,8 +1086,8 @@ packages:
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0
 
-  '@vee-validate/yup@4.13.1':
-    resolution: {integrity: sha512-XS057kHcf4uFew708haHVxCjqJ9OYXV57KmOj/R9fnuh76i54F79DCRzm4FDAevOJzkuo7rNBYOSTplY4iXPrQ==}
+  '@vee-validate/rules@4.13.1':
+    resolution: {integrity: sha512-qqL+Ltqs9/SafTZg6haiSt+nkC1gs7GdrnuiQKoI0au6qrRBMqqXfWcY1GK3bNH8uSAX2GfTaZieqpsbOJ7yZQ==}
 
   '@vercel/nft@0.26.5':
     resolution: {integrity: sha512-NHxohEqad6Ra/r4lGknO52uc/GrWILXAMs1BB4401GTqww0fw1bAqzpG1XHuDO+dprg4GvsD9ZLLSsdo78p9hQ==}
@@ -5422,11 +5422,9 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  '@vee-validate/yup@4.13.1(vue@3.4.27)':
+  '@vee-validate/rules@4.13.1(vue@3.4.27)':
     dependencies:
-      type-fest: 4.20.0
       vee-validate: 4.13.1(vue@3.4.27)
-      yup: 1.4.0
     transitivePeerDependencies:
       - vue
 
