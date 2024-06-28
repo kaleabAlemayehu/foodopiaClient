@@ -42,44 +42,45 @@
             <ErrorMessage class="err" name="additionalImage" />
         </div>
 
-        <!-- <div class="my-5">
-            <div class="my-5" v-for="ing, index in ings" :key="ing.name">
-                <label :for="ing.label"
-                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
-                    <span class="text-xs text-gray-500 dark:text-gray-300">(separate amount by
-                        hyphen)</span></label>
-                <input type="text" :id="ing.label"
-                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    :placeholder="`ingredient ${index} ...`" v-model="ing.name">
-            </div>
-            <button type="button" @click="addIng"
-                class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <Icon name="mi:add" />
-            </button>
-            <button type="button" @click="remove(ings)"
-                class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <Icon name="mi:remove" />
-            </button>
-        </div>
-        <div class=" mb-5">
+        <div class="my-5">
+            <FieldArray name="ingredients" v-slot="{ fields, push, remove }">
+                <div class="my-5 flex justify-evenly" v-for="entry, index in fields" :key="index">
+                    <div>
 
-            <div class="my-5" v-for="step in steps" :key="step">
-                <label :for="`step${step}`"
-                    class="block mb-2 text-sm font-medium text-customBlack dark:text-white">Instruction
-                    {{ step }}</label>
-                <input type="text" :id="`step${step}`"
-                    class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    :placeholder="`Instruction ${step} ...`">
-            </div>
-            <button type="button" @click="add(steps)"
-                class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <Icon name="mi:add" />
-            </button>
-            <button type="button" @click="remove(steps)"
-                class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <Icon name="mi:remove" />
-            </button>
-        </div> -->
+                        <label :for="`ingredient${index}`"
+                            class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
+                            <span class="text-xs text-gray-500 dark:text-gray-300">(separate amount by
+                                hyphen)</span></label>
+                        <Field as="input" type="text" :id="`ingredient${index}`" :name="`ingredients[${index}].name`"
+                            class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            :placeholder="`ingredient ${index} ...`" rules="required" />
+                        <ErrorMessage class="err" :name="`ingredients[${index}].name`" />
+                    </div>
+                    <div class="">
+
+                        <label :for="`amount${index}`"
+                            class="block mb-2 text-sm font-medium text-customBlack dark:text-white">ingredient
+                            <span class="text-xs text-gray-500 dark:text-gray-300">(separate amount by
+                                hyphen)</span></label>
+                        <Field as="input" type="text" :id="`amount${index}`" :name="`ingredients[${index}].amount`"
+                            class="block w-full p-4 text-gray-900 border border-customGray rounded-lg bg-customWhite text-base focus:ring-customOrang focus:border-customOrang dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            :placeholder="`ingredient ${index} ...`" rules="required" />
+                        <ErrorMessage class="err" :name="`ingredients[${index}].amount`" />
+
+                    </div>
+
+                    <button type="button" @click="remove(index)"
+                        class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <Icon name="mi:remove" />
+                    </button>
+                </div>
+                <button type="button" @click="push({})"
+                    class="text-white bg-customOrang hover:bg-customOrang focus:ring-4 focus:outline-none focus:ring-customWhitishOrange font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <Icon name="mi:add" />
+                </button>
+            </FieldArray>
+        </div>
+
         <button type="submit"
             class="text-white bg-customOrang hover:bg-customOrang focus:outline-none focus:ring-4 focus:ring-customWhitishOrange font-medium rounded-full text-sm px-5 py-2.5 text-center mx-auto mt-3 mb-5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
 
@@ -99,7 +100,7 @@
 <script>
 import { reactive, ref, onMounted, defineComponent } from 'vue';
 import { initFlowbite } from 'flowbite';
-import { configure, ErrorMessage, Form, Field, defineRule } from 'vee-validate';
+import { configure, ErrorMessage, Form, Field, defineRule, FieldArray } from 'vee-validate';
 import { useMutation } from '#imports';
 import { integer, required, image, size, email } from '@vee-validate/rules';
 export default defineComponent({
@@ -137,7 +138,18 @@ export default defineComponent({
             }
         }
 
+        const addIngredient = (values) => {
+            if (!values.ingredients) {
+                values.ingredients = [{}]
+            } else {
+                values.ingredients = [...values.ingredients, {}];
 
+            }
+        };
+
+        const removeIngredient = (index, values) => {
+            values.ingredients = values.ingredients.filter((_, i) => i !== index);
+        };
         const handleFileChange = (event) => {
             file.value = event.target.files[0];
             const reader = new FileReader();
@@ -163,6 +175,7 @@ export default defineComponent({
         }
 
 
+
         onMounted(() => {
 
             initFlowbite();
@@ -177,50 +190,22 @@ export default defineComponent({
         })
 
         const onSubmit = async (value) => {
-            alert(JSON.stringify(value, null, " "))
+            alert(JSON.stringify(value, null, 2))
         }
-        // const ings = ref([{
-        //     name: "ing1",
-        //     label: "Ing 1",
-        //     rules: { required }
-        // }])
-        // const ingValues = reactive({
-        //     ing1: ''
-        // })
 
-        // const addIng = () => {
-        //     const newIndex = ings.value.length + 1;
-        //     const ingName = `ing${newIndex}`;
-        //     ings.value.push({
-        //         name: ingName,
-        //         label: `Ing ${newIndex}`,
-        //         rules: { required }
-        //     })
-        //     ingValues[ingName] = '';
-        //     defineField(ingName, ingValues[ingName], { required })
-        // }
-        // ings.value.forEach(ing => {
-        //     defineField(ing.name, ingValues[ing.name], ing.rules)
-        // })
-
-        // const steps = reactive([1, 2, 3])
-        // const remove = (value) => {
-        //     value.pop()
-        // }
-        // const add = (value) => {
-        //     value.push(value.length + 1)
-        // }
 
         return {
             onSubmit,
             handleAddtional,
             handleFileChange,
+            addIngredient,
         }
     },
     components: {
         Form,
         Field,
         ErrorMessage,
+        FieldArray,
     }
 });
 
