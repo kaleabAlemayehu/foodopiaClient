@@ -11,14 +11,8 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        customOrang: "#EA6036",
-        customWhitishOrange: "#EB9F7E",
-        customWhite: "#FFF3E0",
-        customGolden: "#EAB839",
-        customWhitishGolden: "#F2D280",
-        customBlack: "#2C263F",
-        customGray: "#F3E7D7",
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"],
       },
     },
   },
