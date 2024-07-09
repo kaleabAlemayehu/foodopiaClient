@@ -1,40 +1,31 @@
 <template>
-    <div>
-        <Navbar />
-        <Banner />
-        <section class="my-12 max-w-screen-xl mx-auto px-6">
-            <!-- food Menu tab -->
-            <div class="flex items-center justify-center space-x-6">
-                <p :class="menuTab === 'Breakfast' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
-                    @click="handleMenuTabs('Breakfast')">Breakfast</p>
-                <p :class="menuTab === 'Lunch' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
-                    @click="handleMenuTabs('Lunch')">Lunch</p>
-                <p :class="menuTab === 'Dinner' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
-                    @click="handleMenuTabs('Dinner')">Dinner</p>
-                <p :class="menuTab === 'Dessert' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
-                    @click="handleMenuTabs('Dessert')">Dessert</p>
-            </div>
+    <section class="my-12 max-w-screen-xl mx-auto px-6">
+        <!-- food Menu tab -->
+        <div class="flex items-center justify-center space-x-6">
+            <p :class="menuTab === 'Breakfast' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
+                @click="handleMenuTabs('Breakfast')">Breakfast</p>
+            <p :class="menuTab === 'Lunch' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
+                @click="handleMenuTabs('Lunch')">Lunch</p>
+            <p :class="menuTab === 'Dinner' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
+                @click="handleMenuTabs('Dinner')">Dinner</p>
+        </div>
 
-            <!-- all foods -->
-            <div v-if="loading" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
-                <Skeleton v-for="n in 3" :key="n" />
+        <!-- all foods -->
+        <div v-if="loading" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
+            <Skeleton v-for="n in 3" :key="n" />
 
 
-            </div>
-            <div v-else class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
-                <FoodItem v-for="item in filteredFoods" :key="item.id" v-bind="item" />
-            </div>
-        </section>
-
-    </div>
+        </div>
+        <div v-else class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
+            <FoodItem v-for="item in filteredFoods" :key="item.id" v-bind="item" />
+        </div>
+    </section>
 </template>
 
 <script setup>
-import Navbar from '~/components/Navbar.vue';
-import Banner from '~/components/Banner.vue';
-import FoodItem from '~/components/FoodItem.vue';
-import Skeleton from '~/components/Skeleton.vue';
 import { ref, onMounted, computed } from 'vue';
+import FoodItem from '../components/FoodItem.vue';
+import Skeleton from '../components/Skeleton.vue';
 const foods = ref([{
     "id": 1,
     "image": "./assets/images/breakfast1.png",
@@ -87,7 +78,6 @@ const foods = ref([{
 
 ])
 
-
 const menuTab = ref('Breakfast');
 const loading = ref(false);
 
@@ -106,6 +96,9 @@ const filteredFoods = computed(() => {
     return foods.value.filter((item) => item.foodType === menuTab.value);
 });
 
+
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Add your styles here */
+</style>
