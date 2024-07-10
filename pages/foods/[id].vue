@@ -1,18 +1,25 @@
 <template>
     <main class="max-w-screen-xl mx-auto px-6 my-16">
         <BackRoute />
+        <span
+            class="bg-red-100 border border-red-500 rounded-full text-primary relative top-32 text-sm poppins px-4 py-1 inline-block mb-4 w-max">10
+            min
+        </span>
         <div v-if="foods">
             <div v-for="food in filteredFoods" :key="food.id" class="flex flex-col justify-center items-center ">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
 
                     <!-- Left side -->
+
                     <div class="order-2 md:order-1 lg:order-1 flex flex-col justify-center">
+
                         <h1
                             class="text-center md:text-left lg:text-left text-3xl lg:text-4xl font-semibold poppins pb-4 text-gray-700 select-none">
                             {{ food.title }}</h1>
                         <p
                             class="text-center md:text-left lg:text-left text-sm poppins text-gray-500 leading-relaxed select-none">
                             {{ food.description }}</p>
+
                         <!-- 
                         Price and quantity 
                         <div class="flex items-center justify-center md:justify-start lg:justify-start space-x-6 pt-8">
@@ -131,7 +138,7 @@ const foods = ref([
         "id": 1,
         "image": "./assets/images/breakfast1.png",
         "title": "shiro wot",
-        "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+        "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it. delicious common food for the common people of ethiopia and it is so easy to prepare it. delicious common food for the common people of ethiopia and it is so easy to prepare it. delicious common food for the common people of ethiopia and it is so easy to prepare it.",
         "price": 60,
         "foodType": "Lunch"
     },
@@ -139,7 +146,7 @@ const foods = ref([
         "id": 2,
         "image": "./static/assets/images/breakfast1.png",
         "title": "shiro wot",
-        "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+        "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.delicious common food for the common people of ethiopia and it is so easy to prepare it. delicious common food for the common people of ethiopia and it is so easy to prepare it. delicious common food for the common people of ethiopia and it is so easy to prepare it. delicious common food for the common people of ethiopia and it is so easy to prepare it.",
         "price": 60,
         "foodType": "Breakfast"
     },
