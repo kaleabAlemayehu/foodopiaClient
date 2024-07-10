@@ -13,17 +13,17 @@
                     <div class="relative flex cursor-pointer">
                         <Dropdown :change-header="changeHeader" />
                     </div>
-                    <User :class='changeHeader ? "text-gray-700" : "text-white"'
-                        class=" w-10 h-10 rounded-full ransition duration-500" />
-                    <p :class="changeHeader ? 'text-gray-700' : 'text-white'"
-                        class=' poppins hidden md:block lg:block ransition duration-500'>
+                    <User :class='changeHeader ? "text-gray-800" : "text-white"'
+                        class=" w-10 h-10 rounded-full transition duration-500" />
+                    <p :class="changeHeader ? 'text-gray-800' : 'text-white'"
+                        class=' poppins hidden md:block lg:block transition duration-500'>
                         username </p>
                     <Logout class="cursor-pointer text-primary my-auto" @click="signOutUser" />
                 </div>
             </div>
             <div v-else>
                 <div class="flex items-center justify-end space-x-6">
-                    <button :class="changeHeader ? 'text-gray-700' : 'text-white'"
+                    <button :class="changeHeader ? 'text-gray-800' : 'text-white'"
                         class="poppins ransition duration-500" @click="navigateTo('/')">Sign In</button>
                     <button
                         class="bg-primary px-6 py-3 text-white poppins rounded-full ring-red-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105"
@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import Logout from '../icons/Logout.vue';
 import User from '../icons/User.vue';
 import Dropdown from './Dropdown.vue';
@@ -43,7 +43,7 @@ import logo from '@/static/assets/images/logo.png';
 
 const changeHeader = ref(false);
 const router = useRouter();
-const user = ref(false)
+const user = ref(true)
 
 
 
@@ -55,7 +55,7 @@ const handleScroll = () => {
     let bodyPosition = document.body.getBoundingClientRect().top;
     console.log(bodyPosition)
 
-    if (bodyPosition < -50) {
+    if (bodyPosition < -80) {
         changeHeader.value = true;
     } else {
         changeHeader.value = false;

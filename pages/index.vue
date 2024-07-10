@@ -5,13 +5,14 @@
         <section class="my-12 max-w-screen-xl mx-auto px-6">
             <!-- food Menu tab -->
             <div class="flex items-center justify-center space-x-6">
-                <p :class="menuTab === 'Breakfast' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
-                    @click="handleMenuTabs('Breakfast')">Breakfast</p>
-                <p :class="menuTab === 'Lunch' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
+                <p :class="menuTab === 'Breakfast' ? 'active_menu_tab  bg-primary ' : 'menu_tab '" class="poppins  "
+                    @click="handleMenuTabs('Breakfast')">Breakfast
+                </p>
+                <p :class="menuTab === 'Lunch' ? 'active_menu_tab  bg-primary' : 'menu_tab '" class="poppins  "
                     @click="handleMenuTabs('Lunch')">Lunch</p>
-                <p :class="menuTab === 'Dinner' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
+                <p :class="menuTab === 'Dinner' ? 'active_menu_tab  bg-primary ' : 'menu_tab'" class="poppins  "
                     @click="handleMenuTabs('Dinner')">Dinner</p>
-                <p :class="menuTab === 'Dessert' ? 'active_menu_tab poppins bg-primary' : 'menu_tab poppins'"
+                <p :class="menuTab === 'Dessert' ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
                     @click="handleMenuTabs('Dessert')">Dessert</p>
             </div>
 
@@ -43,7 +44,7 @@ const foods = ref([{
     "title": "shiro wot",
     "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
     "price": 60,
-    "foodType": "Breakfast"
+    "foodType": "Lunch"
 },
 {
     "id": 2,
@@ -59,7 +60,7 @@ const foods = ref([{
     "title": "shiro wot",
     "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
     "price": 60,
-    "foodType": "Breakfast"
+    "foodType": "Dinner"
 },
 {
     "id": 4,
@@ -75,7 +76,7 @@ const foods = ref([{
     "title": "shiro wot",
     "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
     "price": 60,
-    "foodType": "Breakfast"
+    "foodType": "Lunch"
 },
 {
     "id": 6,
@@ -83,8 +84,106 @@ const foods = ref([{
     "title": "shiro wot",
     "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
     "price": 60,
+    "foodType": "Dinner"
+},
+{
+    "id": 1,
+    "image": "./assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Lunch"
+},
+{
+    "id": 2,
+    "image": "./static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
     "foodType": "Breakfast"
+},
+{
+    "id": 3,
+    "image": "../static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Dinner"
+},
+{
+    "id": 4,
+    "image": "./static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Breakfast"
+},
+{
+    "id": 5,
+    "image": "./static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Lunch"
+},
+{
+    "id": 6,
+    "image": "./static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Dinner"
+},
+{
+    "id": 1,
+    "image": "./assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Lunch"
+},
+{
+    "id": 2,
+    "image": "./static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Breakfast"
+},
+{
+    "id": 3,
+    "image": "../static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Dinner"
+},
+{
+    "id": 4,
+    "image": "./static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Breakfast"
+},
+{
+    "id": 5,
+    "image": "./static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Lunch"
+},
+{
+    "id": 6,
+    "image": "./static/assets/images/breakfast1.png",
+    "title": "shiro wot",
+    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
+    "price": 60,
+    "foodType": "Dinner"
 }
+
+
 
 
 ])
