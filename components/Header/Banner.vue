@@ -1,5 +1,5 @@
 <template>
-    <section class="header-banner h-96 w-full bg-yellow-50 ">
+    <section class="header-banner h-96 w-full bg-white ">
         <div
             class="flex flex-col items-center justify-center h-full bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 border border-gray-200">
             <h1 class="text-center text-3xl md:text-4xl lg:text-5xl poppins font-semibold text-white">
