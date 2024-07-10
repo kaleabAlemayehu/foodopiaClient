@@ -122,8 +122,8 @@
                     </ol>
                 </div>
                 <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
-
             </div>
+            <Carousel />
 
         </div>
     </main>
@@ -135,7 +135,7 @@ import { useRouter, useRoute } from 'vue-router';
 import BackRoute from '~/components/Food/BackRoute.vue';
 import Bookmark from '~/components/icons/Bookmark.vue';
 import Heart from '~/components/icons/Heart.vue';
-
+import Carousel from '~/components/Food/Carousel.vue';
 
 const quantity = ref(1);
 const disabled = ref(false);

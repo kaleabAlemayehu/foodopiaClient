@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
+import "flowbite";
 
 export default defineNuxtConfig({
   devtools: { enabled: false },
@@ -12,7 +13,7 @@ export default defineNuxtConfig({
   typescript: {
     strict: false,
   },
-  css: ["@/static/assets/css/main.css"],
+  css: ["@/static/assets/css/main.css", "flowbite/dist/flowbite.css"],
   apollo: {
     clients: {
       default: {

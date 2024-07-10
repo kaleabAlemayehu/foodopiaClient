@@ -60,7 +60,6 @@ const signOutUser = () => {
 
 const handleScroll = () => {
     let bodyPosition = document.body.getBoundingClientRect().top;
-    console.log(bodyPosition)
 
     if (bodyPosition < -0) {
         changeHeader.value = true;
