@@ -9,10 +9,10 @@
         <div class="flex flex-col items-center my-3 space-y-2">
             <h1 class="text-gray-900 poppins text-lg">{{ title }}</h1>
             <p class="text-gray-500 poppins text-sm text-center">{{ truncatedDescription }}</p>
-            <h2 class="text-gray-900 poppins text-2xl font-bold">${{ price }}</h2>
-            <button
+            <!-- <h2 class="text-gray-900 poppins text-2xl font-bold">${{ price }}</h2>
+           <button
                 class="bg-primary text-white px-8 py-2 focus:outline-none poppins rounded-full mt-24 transform transition duration-300 hover:scale-105"
-                @click="handleRoute">Order Now</button>
+                @click="handleRoute">Order Now</button> -->
         </div>
     </div>
 </template>

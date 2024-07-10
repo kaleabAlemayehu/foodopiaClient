@@ -1,7 +1,7 @@
 <template>
-    <header
-        :class="changeHeader ? 'bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500' : 'bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500'">
-        <nav class="flex items-center max-w-screen-xl mx-auto px-6 py-3">
+    <header :class="{ 'bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500': changeHeader }"
+        class='bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500'>
+        <nav class=" flex items-center max-w-screen-xl mx-auto px-6 py-3">
             <!-- left -->
             <div class="flex flex-grow">
                 <img class="w-36 cursor-pointer" :src="logo" alt="  logo" @click="navigateTo('/')" />
@@ -40,26 +40,32 @@ const changeHeader = ref(false);
 const router = useRouter();
 const user = ref(false)
 
-const onChangeHeader = () => {
-    console.log("the event pop up")
-    if (window.scrollY >= 50) {
+
+
+const signOutUser = () => {
+    console.log()
+}
+
+const handleScroll = () => {
+    let bodyPosition = document.body.getBoundingClientRect().top;
+    console.log(bodyPosition)
+
+    if (bodyPosition < -50) {
         changeHeader.value = true;
     } else {
         changeHeader.value = false;
     }
 };
 
-const signOutUser = () => {
-    console.log()
-}
-
 onMounted(() => {
-    window.addEventListener("scroll", onChangeHeader);
+    document.addEventListener("scroll", handleScroll);
 });
 
-onUnmounted(() => {
-    window.removeEventListener("scroll", onChangeHeader);
+onBeforeUnmount(() => {
+    document.removeEventListener("scroll", handleScroll);
 });
+
+
 const navigateTo = (path) => {
     router.push(path);
 };
