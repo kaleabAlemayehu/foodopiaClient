@@ -23,6 +23,7 @@ import { computed } from 'vue';
 import { defineProps } from 'vue';
 
 const props = defineProps({
+    id: Number,
     image: String,
     title: String,
     description: String,
