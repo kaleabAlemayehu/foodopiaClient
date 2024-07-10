@@ -25,15 +25,17 @@
                 <FoodItem v-for="item in filteredFoods" :key="item.id" v-bind="item" />
             </div>
         </section>
+        <Footer />
 
     </div>
 </template>
 
 <script setup>
-import Navbar from '~/components/Navbar.vue';
-import Banner from '~/components/Banner.vue';
-import FoodItem from '~/components/FoodItem.vue';
-import Skeleton from '~/components/Skeleton.vue';
+import Navbar from '~/components/Navbar/Navbar.vue';
+import Banner from '~/components/Header/Banner.vue';
+import FoodItem from '~/components/Showcase/FoodItem.vue';
+import Skeleton from '~/components/Showcase/Skeleton.vue';
+import Footer from '~/components/Footer/Footer.vue';
 import { ref, onMounted, computed } from 'vue';
 const foods = ref([{
     "id": 1,

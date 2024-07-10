@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import Down from './icons/Down.vue';
+import Down from '../icons/Down.vue';
 // No additional setup needed for this example
 </script>
 

@@ -24,8 +24,8 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import FoodItem from '../components/FoodItem.vue';
-import Skeleton from '../components/Skeleton.vue';
+import FoodItem from '../components/Showcase/FoodItem.vue';
+import Skeleton from '../components/Showcase/Skeleton.vue';
 const foods = ref([{
     "id": 1,
     "image": "./assets/images/breakfast1.png",

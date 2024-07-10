@@ -1,0 +1,20 @@
+<template>
+    <div class="flex items-center pt-8">
+        <div class="flex flex-grow">
+            <span class="poppins text-gray-500">Developed by Kaleab Alemayehu</span>
+        </div>
+
+        <div class="flex justify-end items-center space-x-6">
+            <span class="poppins text-white cursor-pointer">Privacy Policy</span>
+            <span class="poppins text-white cursor-pointer">Terms of Use</span>
+        </div>
+    </div>
+</template>
+
+<script setup>
+
+</script>
+
+<style scoped>
+/* Add any additional styles here */
+</style>

@@ -5,7 +5,7 @@
             class="bg-red-100 border border-red-500 rounded-full text-primary text-sm poppins px-4 py-1 inline-block mb-4 ">{{
                 foodType }}</span>
         <img class="w-64 mx-auto transform transition duration-300 hover:scale-105"
-            src="../public/assets/images/breakfast1.png" alt="notdisplayed" />
+            src="../../public/assets/images/breakfast1.png" alt="notdisplayed" />
         <div class="flex flex-col items-center my-3 space-y-2 transform transition duration-300 hover:scale-105">
             <h1 class="text-gray-900 poppins text-lg transform transition duration-300">{{ title }}</h1>
             <p class="text-gray-500 poppins text-sm text-center transform transition duration-300">{{
@@ -56,9 +56,9 @@
 import { useRouter } from 'vue-router';
 import { computed } from 'vue';
 import { defineProps } from 'vue';
-import Heart from './icons/Heart.vue';
-import Comment from './icons/Comment.vue';
-import Star from './icons/Star.vue';
+import Heart from '../icons/Heart.vue';
+import Comment from '../icons/Comment.vue';
+import Star from '../icons/Star.vue';
 
 const props = defineProps({
     id: Number,

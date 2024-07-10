@@ -36,8 +36,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import Logout from './icons/Logout.vue';
-import User from './icons/User.vue';
+import Logout from '../icons/Logout.vue';
+import User from '../icons/User.vue';
 import Dropdown from './Dropdown.vue';
 import logo from '@/static/assets/images/logo.png';
 
