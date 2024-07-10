@@ -43,6 +43,10 @@
                             </button>
                         </div>
                         -->
+                        <button type="button"
+                            class="focus:outline-none text-white bg-primary hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
+                            <Bookmark class="inline text-lg" /> &nbsp; &nbsp; Add Bookmark
+                        </button>
                     </div>
 
                     <!-- Right side -->
@@ -126,7 +130,7 @@
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import BackRoute from '~/components/Food/BackRoute.vue';
-// import Back from '../routes/Back.vue';
+import Bookmark from '~/components/icons/Bookmark.vue';
 
 
 const quantity = ref(1);
