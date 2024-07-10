@@ -2,8 +2,7 @@
     <main class="max-w-screen-xl mx-auto px-6 my-16">
         <BackRoute />
         <div v-if="foods">
-            <div v-for="food in filteredFoods" :key="food.id"
-                class="flex flex-col justify-center items-center h-screen">
+            <div v-for="food in filteredFoods" :key="food.id" class="flex flex-col justify-center items-center ">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
 
                     <!-- Left side -->
@@ -45,7 +44,73 @@
                             class="w-3/4 md:w-3/4 lg:w-full mx-auto" alt="food" />
                     </div>
                 </div>
+                <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
+                <div class="mt-8 self-start ">
+                    <h3 class="font-fancy text-3xl text-primary">Ingredients</h3>
+                    <ul class="list-disc marker:text-gray-800 mt-4 ml-6 text-gray-800 marker:align-middle poppins">
+                        <li class="pl-4">2-3 large eggs</li>
+                        <li class="pl-4 mt-2">Salt, to taste</li>
+                        <li class="pl-4 mt-2">Pepper, to taste</li>
+                        <li class="pl-4 mt-2">1 tablespoon of butter or oil</li>
+                        <li class="pl-4 mt-2">
+                            Optional fillings: cheese, diced vegetables, cooked meats, herbs
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
+                <div class="mt-8">
+                    <h3 class="font-fancy text-3xl text-primary">Instructions</h3>
+                    <ol class="marker:text-gray-800 marker:font-semibold marker:poppins list-decimal mt-4 ml-6">
+                        <li class="pl-4">
+
+                            <p>
+                                <span class="font-bold">Beat the eggs: </span>In a bowl, beat
+                                the eggs with a pinch of salt and pepper until they are well
+                                mixed. You can add a tablespoon of water or milk for a
+                                fluffier texture.
+                            </p>
+                        </li>
+                        <li class="pl-4 mt-2">
+                            <p>
+                                <span class="font-bold">Heat the pan: </span>Place a non-stick
+                                frying pan over medium heat and add butter or oil.
+                            </p>
+                        </li>
+                        <li class="pl-4 mt-2">
+                            <p>
+                                <span class="font-bold">Cook the omelette: </span>Once the
+                                butter is melted and bubbling, pour in the eggs. Tilt the pan
+                                to ensure the eggs evenly coat the surface.
+                            </p>
+                        </li>
+                        <li class="pl-4 mt-2">
+                            <p>
+                                <span class="font-bold">Add fillings (optional): </span>When
+                                the eggs begin to set at the edges but are still slightly
+                                runny in the middle, sprinkle your chosen fillings over one
+                                half of the omelette.
+                            </p>
+                        </li>
+                        <li class="pl-4 mt-2">
+                            <p>
+                                <span class="font-bold">Fold and serve: </span>As the omelette
+                                continues to cook, carefully lift one edge and fold it over
+                                the fillings. Let it cook for another minute, then slide it
+                                onto a plate.
+                            </p>
+                        </li>
+                        <li class="pl-4 mt-2">
+                            <p>
+                                <span class="font-bold">Enjoy: </span>Serve hot, with
+                                additional salt and pepper if needed.
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
+
             </div>
+
         </div>
     </main>
 </template>

@@ -14,9 +14,9 @@
                         <Dropdown :change-header="changeHeader" />
                     </div>
                     <User :class='changeHeader ? "text-gray-800" : "text-white"'
-                        class="  w-10 h-10 rounded-full transition duration-500" />
+                        class="  w-10 h-10 rounded-full transition-colors duration-500" />
                     <p :class="changeHeader ? 'text-gray-800' : 'text-white'"
-                        class='  poppins hidden md:block lg:block transition duration-500'>
+                        class='  poppins hidden md:block lg:block transition-colors duration-500'>
                         username </p>
                     <Logout class="cursor-pointer text-primary my-auto" @click="signOutUser" />
                 </div>
@@ -62,7 +62,7 @@ const handleScroll = () => {
     let bodyPosition = document.body.getBoundingClientRect().top;
     console.log(bodyPosition)
 
-    if (bodyPosition < -80) {
+    if (bodyPosition < -0) {
         changeHeader.value = true;
     } else {
         changeHeader.value = false;
