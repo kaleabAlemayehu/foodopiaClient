@@ -11,23 +11,42 @@
             <p class="text-gray-500 poppins text-sm text-center transform transition duration-300">{{
                 truncatedDescription }}</p>
             <div
-                class="text-gray-900 poppins text-xs flex justify-between gap-4 font-bold self-end mr-12 py-4 transform transition duration-300">
-                <div class="flex">{{ price }}
+                class="text-gray-900 poppins text-xs flex justify-evenly  w-full font-bold   py-8 transform transition duration-300">
+                <div class="flex justify-center">
+
+
+                    <Heart class="w-5 h-5 text-primary" />
                     &nbsp;&nbsp;
-
-                    <Heart class="w-4 h-4 text-primary" />
+                    <div class="m-auto">
+                        {{ price }}
+                    </div>
                 </div>
-                <div class="flex">{{ price }}
-                    &nbsp;
+                <div class="flex justify-center">
 
-                    <Comment class="w-4 h-4 text-primary" />
+
+                    <Comment class="w-5 h-5 text-primary" />
+                    &nbsp;&nbsp;
+                    <div class="m-auto">
+                        {{ price }}
+                    </div>
+
+                </div>
+                <div class="flex justify-center">
+
+
+                    <Star class="w-5 h-5 text-yellow-300" />
+                    &nbsp;&nbsp;
+                    <div class="m-auto">
+                        {{ 5 }}
+                    </div>
+
                 </div>
 
 
             </div>
             <button
                 class="bg-primary text-white px-8 py-2 focus:outline-none poppins rounded-full mt-24 transform transition duration-300 hover:scale-105"
-                @click="handleRoute">Read More </button>
+                @click="handleRoute">View Details </button>
 
         </div>
     </div>
@@ -39,6 +58,7 @@ import { computed } from 'vue';
 import { defineProps } from 'vue';
 import Heart from './icons/Heart.vue';
 import Comment from './icons/Comment.vue';
+import Star from './icons/Star.vue';
 
 const props = defineProps({
     id: Number,
