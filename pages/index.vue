@@ -17,7 +17,7 @@
 
             <!-- all foods -->
             <div v-if="loading" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
-                <Skeleton v-for="n in 3" :key="n" />
+                <Skeleton v-for="n in 9" :key="n" />
 
 
             </div>

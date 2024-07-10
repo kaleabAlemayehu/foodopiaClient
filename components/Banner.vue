@@ -9,8 +9,9 @@
             <div
                 class="rounded-full p-1 box-border mt-8 bg-white overflow-hidden ring-red-300  focus:ring-4 w-96 flex items-center">
                 <input type="text"
-                    class="rounded-full px-4 focus:outline-none outline-none border-none w-full bg-transparent"
+                    class="rounded-full px-4 focus:outline-none focus:border-none border-none focus:shadow-none w-full bg-transparent"
                     placeholder="Search here ......." />
+
                 <button
                     class="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 transform">
                     Search

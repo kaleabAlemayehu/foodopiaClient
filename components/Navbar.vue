@@ -1,6 +1,7 @@
 <template>
-    <header :class="{ 'bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500': changeHeader }"
-        class='bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500'>
+    <header :class="{
+        'bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 border border-gray-200': changeHeader
+    }" class='bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500'>
         <nav class=" flex items-center max-w-screen-xl mx-auto px-6 py-3">
             <!-- left -->
             <div class="flex flex-grow">
@@ -10,10 +11,13 @@
             <div v-if="user">
                 <div class="flex items-center justify-end space-x-4">
                     <div class="relative flex cursor-pointer">
-                        <Dropdown />
+                        <Dropdown :change-header="changeHeader" />
                     </div>
-                    <User class="text-gray-700  w-10 h-10 rounded-full" />
-                    <p class="text-gray-700 poppins hidden md:block lg:block">username</p>
+                    <User :class='changeHeader ? "text-gray-700" : "text-white"'
+                        class=" w-10 h-10 rounded-full ransition duration-500" />
+                    <p :class="changeHeader ? 'text-gray-700' : 'text-white'"
+                        class=' poppins hidden md:block lg:block ransition duration-500'>
+                        username </p>
                     <Logout class="cursor-pointer text-primary my-auto" @click="signOutUser" />
                 </div>
             </div>
@@ -38,7 +42,7 @@ import logo from '@/static/assets/images/logo.png';
 
 const changeHeader = ref(false);
 const router = useRouter();
-const user = ref(false)
+const user = ref(true)
 
 
 
