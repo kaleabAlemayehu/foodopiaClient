@@ -50,7 +50,10 @@
                     </div>
 
                     <!-- Right side -->
-                    <div class="order-1 md:order-2 lg:order-2">
+                    <div class="order-1 md:order-2 lg:order-2 flex flex-col">
+
+                        <Heart class="text-primary text-4xl self-end " />
+
                         <img src="/home/neocipher/Documents/vueProjects/foodopiaClient/public/assets/images/breakfast4.png"
                             class="w-3/4 md:w-3/4 lg:w-full mx-auto" alt="food" />
                     </div>
@@ -131,6 +134,7 @@ import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import BackRoute from '~/components/Food/BackRoute.vue';
 import Bookmark from '~/components/icons/Bookmark.vue';
+import Heart from '~/components/icons/Heart.vue';
 
 
 const quantity = ref(1);
