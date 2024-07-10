@@ -23,7 +23,8 @@
             </div>
             <div v-else>
                 <div class="flex items-center justify-end space-x-6">
-                    <button class="poppins" @click="navigateTo('/')">Sign In</button>
+                    <button :class="changeHeader ? 'text-gray-700' : 'text-white'"
+                        class="poppins ransition duration-500" @click="navigateTo('/')">Sign In</button>
                     <button
                         class="bg-primary px-6 py-3 text-white poppins rounded-full ring-red-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105"
                         @click="navigateTo('/')">Sign Up</button>
@@ -42,7 +43,7 @@ import logo from '@/static/assets/images/logo.png';
 
 const changeHeader = ref(false);
 const router = useRouter();
-const user = ref(true)
+const user = ref(false)
 
 
 
