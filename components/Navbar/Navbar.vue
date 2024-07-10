@@ -14,16 +14,16 @@
                         <Dropdown :change-header="changeHeader" />
                     </div>
                     <User :class='changeHeader ? "text-gray-800" : "text-white"'
-                        class=" w-10 h-10 rounded-full transition duration-500" />
+                        class="  w-10 h-10 rounded-full transition duration-500" />
                     <p :class="changeHeader ? 'text-gray-800' : 'text-white'"
-                        class=' poppins hidden md:block lg:block transition duration-500'>
+                        class='  poppins hidden md:block lg:block transition duration-500'>
                         username </p>
                     <Logout class="cursor-pointer text-primary my-auto" @click="signOutUser" />
                 </div>
             </div>
             <div v-else>
                 <div class="flex items-center justify-end space-x-6">
-                    <button :class="changeHeader ? 'text-gray-800' : 'text-white'"
+                    <button :class="changeHeader && !isHome ? 'text-gray-800' : 'text-white'"
                         class="poppins ransition duration-500" @click="navigateTo('/')">Sign In</button>
                     <button
                         class="bg-primary px-6 py-3 text-white poppins rounded-full ring-red-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105"
@@ -43,10 +43,17 @@ import logo from '@/static/assets/images/logo.png';
 
 const changeHeader = ref(false);
 const router = useRouter();
+const { path } = useRoute();
 const user = ref(true)
 
+const isHome = ref(true)
 
+if (path == '/') {
+    isHome.value = true
 
+} else {
+    isHome.value = false
+}
 const signOutUser = () => {
     console.log()
 }
@@ -64,6 +71,8 @@ const handleScroll = () => {
 
 onMounted(() => {
     document.addEventListener("scroll", handleScroll);
+
+
 });
 
 onBeforeUnmount(() => {

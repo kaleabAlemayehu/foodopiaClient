@@ -1,6 +1,6 @@
 <template>
     <main class="max-w-screen-xl mx-auto px-6 my-16">
-        <Back />
+        <BackRoute />
         <div v-if="foods">
             <div v-for="food in filteredFoods" :key="food.id"
                 class="flex flex-col justify-center items-center h-screen">
@@ -41,8 +41,8 @@
 
                     <!-- Right side -->
                     <div class="order-1 md:order-2 lg:order-2">
-                        <img src="../../public/assets/images/breakfast2.png" class="w-3/4 md:w-3/4 lg:w-full mx-auto"
-                            alt="food" />
+                        <img src="/home/neocipher/Documents/vueProjects/foodopiaClient/public/assets/images/breakfast4.png"
+                            class="w-3/4 md:w-3/4 lg:w-full mx-auto" alt="food" />
                     </div>
                 </div>
             </div>
@@ -53,6 +53,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import BackRoute from '~/components/Food/BackRoute.vue';
 // import Back from '../routes/Back.vue';
 
 
