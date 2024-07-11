@@ -1,7 +1,7 @@
 <template>
     <header :class="{
-        'bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-500 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 border border-gray-200': changeHeader
-    }" class='bg-transparent fixed z-50 top-0 left-0 w-full transition duration-500'>
+        'bg-white fixed z-50 top-0 left-0 w-full shadow-md transition duration-700 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 border border-gray-200': changeHeader
+    }" class='bg-transparent fixed z-50 top-0 left-0 w-full transition duration-700'>
         <nav class=" flex items-center max-w-screen-xl mx-auto px-6 py-3">
             <!-- left -->
             <div class="flex flex-grow">
@@ -61,7 +61,7 @@ const signOutUser = () => {
 const handleScroll = () => {
     let bodyPosition = document.body.getBoundingClientRect().top;
 
-    if (bodyPosition < -0) {
+    if (bodyPosition < -70) {
         changeHeader.value = true;
     } else {
         changeHeader.value = false;

@@ -38,13 +38,20 @@
                 </div>
 
             </div>
-            <!-- <div class="w-full h-px bg-gray-200 mx-auto my-8"></div> -->
-            <Carousel :images="images" />
-            <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
-            <Ingredients />
-            <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
-            <Instructions />
             <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
+            <Carousel :images="images" />
+            <div class="flex justify-center flex-col">
+
+                <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
+                <Ingredients />
+                <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
+                <Instructions />
+                <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
+                <Rating />
+                <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
+                <Comment />
+
+            </div>
 
 
         </div>
@@ -60,7 +67,9 @@ import Heart from '~/components/icons/Heart.vue';
 import Ingredients from '~/components/Food/Ingredients.vue';
 import Instructions from '~/components/Food/Instructions.vue';
 import Carousel from '~/components/Food/Carousel.vue';
-
+import Rating from '~/components/Food/Rating.vue';
+import Comment from '~/components/Form/Comment.vue';
+import Stars from '~/components/Form/Stars.vue';
 const quantity = ref(1);
 const disabled = ref(false);
 const { params } = useRoute();
