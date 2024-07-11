@@ -56,7 +56,34 @@
             </div>
             <div class="mb-5">
 
+
+                <div v-for="ingredient in ingredients" :key="ingredient.id" class=" mb-5 grid grid-cols-2 gap-3">
+                    <div class="">
+                        <label :for="ingredient.name"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingredients {{
+                                ingredient.id }}</label>
+                        <input type="text" :id="ingredient.name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Recipe Title">
+
+
+                    </div>
+                    <div class="">
+                        <label :for="ingredient.amount"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount {{ ingredient.id
+                            }}</label>
+                        <input type="text" :id="ingredient.amount"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Recipe Title">
+
+
+                    </div>
+
+
+                </div>
+
             </div>
+
         </form>
 
     </div>
@@ -74,7 +101,29 @@ instruction
 
 -->
 <script setup>
+import { ref } from 'vue';
+const ingredients = ref([{
+    id: 1,
+    name: "test 1",
+    amount: "2 cup"
+},
+{
+    id: 2,
+    name: "test 1",
+    amount: "2 cup"
+},
+{
+    id: 3,
+    name: "test 1",
+    amount: "2 cup"
+},
+{
+    id: 4,
+    name: "test 1",
+    amount: "2 cup"
+}
 
+])
 </script>
 
 <style scoped></style>
