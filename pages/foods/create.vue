@@ -1,8 +1,10 @@
 <template>
     <div class="mt-24 mb-36 max-w-screen-xl mx-auto px-6">
-        <h2 class="text-center font-bold text-2xl">Edit A Recipe</h2>
-        <FoodForm class="self-start" />
+        <h2 class="text-center font-bold text-2xl">Create A Recipe</h2>>
+
+        <FoodForm />
     </div>
+
 </template>
 
 <script setup>
