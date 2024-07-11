@@ -20,31 +20,9 @@
                             class="text-center md:text-left lg:text-left text-sm poppins text-gray-500 leading-relaxed select-none">
                             {{ food.description }}</p>
 
-                        <!-- 
-                        Price and quantity 
-                        <div class="flex items-center justify-center md:justify-start lg:justify-start space-x-6 pt-8">
-                            <h1 class="text-3xl font-bold text-black poppins select-none">${ calculatePrice().toFixed(2)
-                                }</h1>
-                            Quantity 
-                            <div class="flex items-center border border-gray-200 px-4 py-2 space-x-6 rounded-full">
-                                <AiOutlineMinus @click="decrementQuantity"
-                                    class="text-2xl bg-primary w-8 h-8 rounded-full text-white hover:scale-105 transform transition duration-500 cursor-pointer p-1" />
-                                <span class="text-lg text-gray-700 poppins select-none">{{ quantity }}</span>
-                                <AiOutlinePlus @click="incrementQuantity"
-                                    class="text-2xl bg-primary w-8 h-8 rounded-full text-white hover:scale-105 transform transition duration-500 cursor-pointer p-1" />
-                            </div>
-                        </div>
-                        Add button
-                        <div class="mt-8 flex items-center justify-center md:justify-start lg:justify-start">
-                            <button :disabled="disabled" @click="addToCart" :class="{ 'opacity-30': disabled }"
-                                class="flex items-center space-x-3 bg-primary px-6 py-3 text-white poppins rounded-full ring-red-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105">
-                                <BsCart2 class="text-xl" />
-                                <span>{{ disabled ? 'Added' : 'Add to Cart' }}</span>
-                            </button>
-                        </div>
-                        -->
+
                         <button type="button"
-                            class="focus:outline-none text-white bg-primary hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
+                            class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                             <Bookmark class="inline text-lg" /> &nbsp; &nbsp; Add Bookmark
                         </button>
                     </div>
@@ -58,72 +36,16 @@
                             class="w-3/4 md:w-3/4 lg:w-full mx-auto" alt="food" />
                     </div>
                 </div>
-                <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
-                <div class="mt-8 self-start ">
-                    <h3 class="font-fancy text-3xl text-primary">Ingredients</h3>
-                    <ul class="list-disc marker:text-gray-800 mt-4 ml-6 text-gray-800 marker:align-middle poppins">
-                        <li class="pl-4">2-3 large eggs</li>
-                        <li class="pl-4 mt-2">Salt, to taste</li>
-                        <li class="pl-4 mt-2">Pepper, to taste</li>
-                        <li class="pl-4 mt-2">1 tablespoon of butter or oil</li>
-                        <li class="pl-4 mt-2">
-                            Optional fillings: cheese, diced vegetables, cooked meats, herbs
-                        </li>
-                    </ul>
-                </div>
-                <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
-                <div class="mt-8">
-                    <h3 class="font-fancy text-3xl text-primary">Instructions</h3>
-                    <ol class="marker:text-gray-800 marker:font-semibold marker:poppins list-decimal mt-4 ml-6">
-                        <li class="pl-4">
 
-                            <p>
-                                <span class="font-bold">Beat the eggs: </span>In a bowl, beat
-                                the eggs with a pinch of salt and pepper until they are well
-                                mixed. You can add a tablespoon of water or milk for a
-                                fluffier texture.
-                            </p>
-                        </li>
-                        <li class="pl-4 mt-2">
-                            <p>
-                                <span class="font-bold">Heat the pan: </span>Place a non-stick
-                                frying pan over medium heat and add butter or oil.
-                            </p>
-                        </li>
-                        <li class="pl-4 mt-2">
-                            <p>
-                                <span class="font-bold">Cook the omelette: </span>Once the
-                                butter is melted and bubbling, pour in the eggs. Tilt the pan
-                                to ensure the eggs evenly coat the surface.
-                            </p>
-                        </li>
-                        <li class="pl-4 mt-2">
-                            <p>
-                                <span class="font-bold">Add fillings (optional): </span>When
-                                the eggs begin to set at the edges but are still slightly
-                                runny in the middle, sprinkle your chosen fillings over one
-                                half of the omelette.
-                            </p>
-                        </li>
-                        <li class="pl-4 mt-2">
-                            <p>
-                                <span class="font-bold">Fold and serve: </span>As the omelette
-                                continues to cook, carefully lift one edge and fold it over
-                                the fillings. Let it cook for another minute, then slide it
-                                onto a plate.
-                            </p>
-                        </li>
-                        <li class="pl-4 mt-2">
-                            <p>
-                                <span class="font-bold">Enjoy: </span>Serve hot, with
-                                additional salt and pepper if needed.
-                            </p>
-                        </li>
-                    </ol>
-                </div>
-                <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
             </div>
+            <!-- <div class="w-full h-px bg-gray-200 mx-auto my-8"></div> -->
             <Carousel />
+            <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
+            <Ingredients />
+            <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
+            <Instructions />
+            <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
+
 
         </div>
     </main>
@@ -135,6 +57,8 @@ import { useRouter, useRoute } from 'vue-router';
 import BackRoute from '~/components/Food/BackRoute.vue';
 import Bookmark from '~/components/icons/Bookmark.vue';
 import Heart from '~/components/icons/Heart.vue';
+import Ingredients from '~/components/Food/Ingredients.vue';
+import Instructions from '~/components/Food/Instructions.vue';
 import Carousel from '~/components/Food/Carousel.vue';
 
 const quantity = ref(1);
