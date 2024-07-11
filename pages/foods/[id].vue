@@ -39,7 +39,7 @@
 
             </div>
             <!-- <div class="w-full h-px bg-gray-200 mx-auto my-8"></div> -->
-            <Carousel />
+            <Carousel :images="images" />
             <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
             <Ingredients />
             <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
@@ -93,7 +93,23 @@ const foods = ref([
 
 
 ])
-
+const images = ref([
+    {
+        url: "/assets/images/additional1.jpg"
+    },
+    {
+        url: "/assets/images/additional2.jpg"
+    },
+    {
+        url: "/assets/images/breakfast2.png"
+    },
+    {
+        url: "/assets/images/breakfast3.png"
+    },
+    {
+        url: "/assets/images/breakfast4.png"
+    },
+])
 const filteredFoods = computed(() => {
     return foods.value.filter(item => item.id == params.id);
 });
