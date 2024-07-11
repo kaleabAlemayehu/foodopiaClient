@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form class="max-w-2xl mx-auto my-16">
+        <form class="max-w-2xl mx-auto my-16 transition duration-700">
 
             <div class="mb-5">
                 <label for="base-input"
@@ -57,7 +57,8 @@
             <div class="mb-5">
 
 
-                <div v-for="ingredient in ingredients" :key="ingredient.id" class=" mb-5 grid grid-cols-2 gap-3">
+                <div v-for="ingredient in ingredients" :key="ingredient.id"
+                    class=" mb-5 flex justify-evenly items-center gap-3 transition duration-700">
                     <div class="">
                         <label :for="ingredient.name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingredients {{
@@ -72,9 +73,13 @@
                         <label :for="ingredient.amount"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount {{ ingredient.id
                             }}</label>
-                        <input type="text" :id="ingredient.amount"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Recipe Title">
+                        <div class="flex gap-4">
+
+                            <input type="text" :id="ingredient.amount"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Recipe Title">
+                            <Cross class="inline text-primary w-8 h-8 my-auto " @click="ingredients.pop()" />
+                        </div>
 
 
                     </div>
@@ -106,6 +111,7 @@ instruction
 <script setup>
 import { ref } from 'vue';
 import Add from '../icons/Add.vue';
+import Cross from '../icons/Cross.vue';
 const ingredients = ref([{
     id: 1,
     name: "test 1",
