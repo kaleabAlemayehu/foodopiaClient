@@ -1,10 +1,11 @@
-<template>
-    <div>
-        <slot />
-    </div>
+<template class="">
+
+    <slot />
 </template>
 
 <script setup>
+
+
 
 </script>
 

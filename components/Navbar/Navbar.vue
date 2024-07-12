@@ -24,10 +24,10 @@
             <div v-else>
                 <div class="flex items-center justify-end space-x-6">
                     <button :class="changeHeader && !isHome ? 'text-gray-800' : 'text-white'"
-                        class="poppins ransition duration-500" @click="navigateTo('/')">Sign In</button>
+                        class="poppins ransition duration-500" @click="navigateTo('/auth/signin')">Sign In</button>
                     <button
                         class="bg-primary px-6 py-3 text-white poppins rounded-full ring-red-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105"
-                        @click="navigateTo('/')">Sign Up</button>
+                        @click="navigateTo('/auth/signup')">Sign Up</button>
                 </div>
             </div>
         </nav>
@@ -44,7 +44,7 @@ import logo from '@/static/assets/images/logo.png';
 const changeHeader = ref(false);
 const router = useRouter();
 const { path } = useRoute();
-const user = ref(true)
+const user = ref(false)
 
 const isHome = ref(true)
 

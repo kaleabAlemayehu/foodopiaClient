@@ -12,7 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.orderContainer::-webkit-scrollbar,
+
 body::-webkit-scrollbar {
   display: none;
 }
