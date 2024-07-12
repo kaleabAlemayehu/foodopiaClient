@@ -44,7 +44,7 @@ import logo from '@/static/assets/images/logo.png';
 const changeHeader = ref(false);
 const router = useRouter();
 const { path } = useRoute();
-const user = ref(false)
+const user = ref(true)
 
 const isHome = ref(true)
 
