@@ -13,18 +13,16 @@
                     <div class="relative flex cursor-pointer">
                         <Dropdown :change-header="changeHeader" />
                     </div>
-                    <User :class='changeHeader ? "text-gray-800" : "text-white"'
-                        class="  w-10 h-10 rounded-full transition-colors duration-500" />
-                    <p :class="changeHeader ? 'text-gray-800' : 'text-white'"
-                        class='  poppins hidden md:block lg:block transition-colors duration-500'>
+                    <User class="text-gray-800  w-10 h-10 rounded-full transition-colors duration-500" />
+                    <p class=' text-gray-800 poppins hidden md:block lg:block transition-colors duration-500'>
                         username </p>
                     <Logout class="cursor-pointer text-primary my-auto" @click="signOutUser" />
                 </div>
             </div>
             <div v-else>
                 <div class="flex items-center justify-end space-x-6">
-                    <button :class="changeHeader && !isHome ? 'text-gray-800' : 'text-white'"
-                        class="poppins ransition duration-500" @click="navigateTo('/auth/signin')">Sign In</button>
+                    <button class=" text-gray-800 poppins ransition duration-500"
+                        @click="navigateTo('/auth/signin')">Sign In</button>
                     <button
                         class="bg-primary px-6 py-3 text-white poppins rounded-full ring-red-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105"
                         @click="navigateTo('/auth/signup')">Sign Up</button>
