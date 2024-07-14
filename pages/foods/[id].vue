@@ -20,11 +20,24 @@
                             class="text-center md:text-left lg:text-left text-sm poppins text-gray-500 leading-relaxed select-none">
                             {{ food.description }}</p>
 
+                        <div v-if="user" class="flex mt-8 gap-8">
+                            <button type="button"
+                                class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
+                                <Edit class="inline text-sm" /> &nbsp; &nbsp; Edit
+                            </button>
+                            <button type="button"
+                                class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
+                                <Trash class="inline text-sm" /> &nbsp; &nbsp; Delete
+                            </button>
 
-                        <button type="button"
-                            class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
-                            <Bookmark class="inline text-lg" /> &nbsp; &nbsp; Add Bookmark
-                        </button>
+                        </div>
+                        <div v-else class="mt-8">
+
+                            <button type="button"
+                                class=" focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
+                                <Bookmark class="inline text-lg" /> &nbsp; &nbsp; Add Bookmark
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Right side -->
@@ -70,6 +83,9 @@ import Carousel from '~/components/Food/Carousel.vue';
 import Rating from '~/components/Food/Rating.vue';
 import Comment from '~/components/Form/Comment.vue';
 import Stars from '~/components/Form/Stars.vue';
+import Edit from '~/components/icons/Edit.vue';
+import Trash from '~/components/icons/Trash.vue';
+const user = ref(true)
 const quantity = ref(1);
 const disabled = ref(false);
 const { params } = useRoute();
