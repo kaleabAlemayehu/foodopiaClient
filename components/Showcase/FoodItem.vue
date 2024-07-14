@@ -37,7 +37,7 @@
                     <Star class="w-5 h-5 text-yellow-300" />
                     &nbsp;&nbsp;
                     <div class="m-auto">
-                        {{ 5.0 }}
+                        {{ 4.50 }}
                     </div>
 
                 </div>
