@@ -18,8 +18,6 @@
             <!-- all foods -->
             <div v-if="loading" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
                 <Skeleton v-for="n in 9" :key="n" />
-
-
             </div>
             <div v-else class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
                 <FoodItem v-for="item in filteredFoods" :key="item.id" v-bind="item" />
@@ -186,17 +184,21 @@ const foods = ref([{
 
 
 const menuTab = ref('Breakfast');
-const loading = ref(false);
+const loading = ref(true);
 
 onMounted(() => {
     loading.value = true;
     setTimeout(() => {
         loading.value = false;
-    }, 3000);
+    }, 1500);
 });
 
 const handleMenuTabs = (type) => {
     menuTab.value = type;
+    loading.value = true;
+    setTimeout(() => {
+        loading.value = false;
+    }, 1500);
 };
 
 const filteredFoods = computed(() => {

@@ -58,7 +58,7 @@
                     <!-- Modal footer -->
                     <div
                         class="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button data-modal-hide="default-modal" type="button"
+                        <button data-modal-hide="crud-modal" type="button"
                             class="text-white  bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                             <Filter class="inline" /> Filter
                         </button>
