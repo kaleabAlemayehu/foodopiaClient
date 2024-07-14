@@ -47,6 +47,21 @@
                             </div>
                         </ul>
                     </div>
+                    <div class="p-4 md:p-5 space-y-4 ">
+                        <h4 class="text-md font-semibold text-gray-900 dark:text-white">
+                            Filter By User
+                        </h4>
+                        <ul class="h-36 overflow-y-auto">
+
+                            <div v-for="user in 17" :key="user" class="flex px-4 py-2 items-center me-4">
+                                <input checked :id="`red-checkbox-${user}`" type="checkbox" value=""
+                                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label :for="`red-checkbox-${user}`"
+                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">user{{ user
+                                    }}</label>
+                            </div>
+                        </ul>
+                    </div>
                     <div class="p-4 md:p-5 space-y-4 border-t border-gray-200">
                         <h4 class="text-md font-semibold text-gray-900 dark:text-white">
                             Filter By Preparation Time
