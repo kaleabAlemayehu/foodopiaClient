@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Form class="max-w-2xl mx-auto my-16 transition duration-700 poppins">
+        <Form class="max-w-2xl mx-auto my-16 transition duration-700 poppins" :initial-values="initialValues">
 
             <div class="mb-5">
                 <label for="title"
@@ -32,6 +32,7 @@
                         <div class="">
                             <label :for="`ingredient${index}.name`"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingredient {{ index
+                                    + 1
                                 }}
                             </label>
                             <Field type="text" :id="`ingredient${index}.name`" :name="`ingredients[${index}].name`"
@@ -42,7 +43,8 @@
                         </div>
                         <div class="">
                             <label :for="`ingredients[${index}].amount`"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount {{ index + 1
+                                }}
                             </label>
                             <div class="flex gap-4">
 
@@ -77,7 +79,7 @@
                             <div class="flex gap-4">
 
                                 <Field type="text" :id="`instructions[${index}].name`" as="textarea"
-                                    :name="`instructions[${index}].name`"
+                                    :name="`instructions[${index}].name`" rules="required"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     :placeholder="`Instruction ${index + 1}`" />
                                 <Cross class="inline text-primary w-8 h-8 my-auto " @click="remove(index)" />
@@ -147,6 +149,7 @@ import Add from '../icons/Add.vue';
 import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
 import { alpha_spaces, alpha_num, alpha_dash, required, integer } from '@vee-validate/rules';
+import Ingredients from '../Food/Ingredients.vue';
 
 onMounted(() => {
     configure({
@@ -158,28 +161,24 @@ onMounted(() => {
     defineRule("alphabetWithDash", alpha_dash)
     defineRule("integer", integer)
 })
-const ingredients = ref([{
-    id: 1,
-    name: "test 1",
-    amount: "2 cup"
-},
-{
-    id: 2,
-    name: "test 1",
-    amount: "2 cup"
-},
-{
-    id: 3,
-    name: "test 1",
-    amount: "2 cup"
-},
-{
-    id: 4,
-    name: "test 1",
-    amount: "2 cup"
-}
+const initialValues = {
 
-])
+    ingredients: [{
+        name: '',
+        amount: ''
+    }, {
+        name: '',
+        amount: ''
+    },],
+    instructions: [
+        {
+            name: ""
+        },
+        {
+            name: ""
+        }
+    ]
+}
 const instructions = ref(["test this  and this", "test that also"])
 </script>
 
