@@ -1,36 +1,37 @@
 <template>
     <div>
-        <form class="max-w-2xl mx-auto my-16 transition duration-700 poppins">
+        <Form class="max-w-2xl mx-auto my-16 transition duration-700 poppins">
 
             <div class="mb-5">
-                <label for="base-input"
+                <label for="title"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white poppins">Title</label>
-                <input type="text" id="base-input"
+                <Field as="input" type="text" name='title' id="title" rules="required|alphabetWithSpace"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Recipe Title">
-
+                    placeholder="Recipe Title" />
+                <ErrorMessage name="title" class="err" />
 
             </div>
             <div class="mb-5">
 
 
-                <label for="message"
+                <label for="description"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                <textarea id="message" rows="4"
+                <Field id="description" rows="4" as="textarea" type="text" name='description'
+                    rules="required|alphabetWithSpace"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Describe The Recipe..."></textarea>
+                    placeholder="Describe The Recipe..." />
+                <ErrorMessage name="description" class="err" />
             </div>
 
 
-            <div class="mb-5">
 
+            <div class="mb-5">
 
                 <div v-for="ingredient, index in ingredients" :key="ingredient.id"
                     class=" mb-5 flex justify-evenly items-center gap-3 transition duration-700">
                     <div class="">
                         <label :for="ingredient.name"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingredients {{
-                                index + 1 }}</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingredients </label>
                         <input type="text" :id="ingredient.name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             :placeholder="`Ingredient ${index + 1}`">
@@ -39,9 +40,7 @@
                     </div>
                     <div class="">
                         <label :for="ingredient.amount"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount {{ index
-                                + 1
-                            }}</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount </label>
                         <div class="flex gap-4">
 
                             <input type="text" :id="ingredient.amount"
@@ -87,11 +86,13 @@
                 </button>
             </div>
             <div class="mb-5">
-                <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preparation
+                <label for="preparationTime"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preparation
                     Time</label>
-                <input type="number" id="base-input"
+                <Field type="number" id="preparationTime" as="input" name='preparationTime' rules="required|integer"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Enter Preparation Time">
+                    placeholder="Enter Preparation Time" />
+                <ErrorMessage name="preparationTime" class="err" />
 
 
             </div>
@@ -126,27 +127,28 @@
             dark:focus:ring-red-900"> Submit
 
             </button>
-
-        </form>
+        </Form>
 
     </div>
 </template>
-<!-- 
-title
-description
-preparation time
-images
-catagories
-ingredients
-instruction
 
-
-
--->
 <script setup>
 import { ref } from 'vue';
 import Add from '../icons/Add.vue';
 import Cross from '../icons/Cross.vue';
+import { configure, Form, Field, ErrorMessage, defineRule } from 'vee-validate';
+import { alpha_spaces, alpha_num, alpha_dash, required, integer } from '@vee-validate/rules';
+
+onMounted(() => {
+    configure({
+        validateOnInput: true,
+    })
+    defineRule("required", required)
+    defineRule("alphabetWithNum", alpha_num)
+    defineRule("alphabetWithSpace", alpha_spaces)
+    defineRule("alphabetWithDash", alpha_dash)
+    defineRule("integer", integer)
+})
 const ingredients = ref([{
     id: 1,
     name: "test 1",
@@ -172,4 +174,8 @@ const ingredients = ref([{
 const instructions = ref(["test this  and this", "test that also"])
 </script>
 
-<style scoped></style>
+<style scoped>
+.err {
+    @apply text-xs text-red-600 dark:text-gray-300;
+}
+</style>

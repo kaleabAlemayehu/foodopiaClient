@@ -38,7 +38,7 @@
 <script setup>
 import { ref } from 'vue';
 const min = ref(0);
-const max = ref(10000);
+const max = ref(100);
 const minPrice = ref(0);
 const maxPrice = ref(1000);
 const minThumb = ref(0);
@@ -46,22 +46,30 @@ const maxThumb = ref(0);
 const minActive = ref(true)
 const maxActive = ref(true)
 const minTrigger = () => {
-    minActive.value = true;
-    maxActive.value = false;
-    minThumb.value = Math.min(minPrice.value, maxPrice.value - 500);
-    minThumb.value = ((minPrice.value - min.value) / (max.value - min.value)) * 100;
+    if (minPrice >= 0) {
+
+        minThumb.value = Math.min(minPrice.value, maxPrice.value - 500);
+        minThumb.value = ((minPrice.value - min.value) / (max.value - min.value)) * 100;
+    }
 }
 
 const maxTrigger = () => {
-    maxActive.value = true;
-    minActive.value = false;
-    maxThumb.value = Math.max(maxPrice.value, minPrice.value + 500);
-    maxThumb.value = 100 - (((maxPrice.value - min.value) / (max.value - min.value)) * 100);
+    if (maxPrice <= 1000) {
+
+        maxThumb.value = Math.max(maxPrice.value, minPrice.value + 500);
+        maxThumb.value = 100 - (((maxPrice.value - min.value) / (max.value - min.value)) * 100);
+    }
 }
 minTrigger();
 maxTrigger();
 </script>
 
 <style scoped>
+input[type=range]::-webkit-slider-thumb {
+    pointer-events: all;
+    width: 24px;
+    height: 24px;
+    -webkit-appearance: none;
+  }
 /* Additional custom styles if needed */
 </style>
