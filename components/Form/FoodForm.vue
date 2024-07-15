@@ -110,28 +110,31 @@
             <div class="mb-5">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload
                     file</label>
-                <input
+                <Field as="input" name="images" rules="required|image|size:1500"
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    aria-describedby="user_avatar_help" id="user_avatar" multiple type="file">
+                    aria-describedby="user_avatar_help" id="user_avatar" multiple type="file" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Select Multiple
-                    Picutures Of The Food, <span class="font-bold text-xs">The First Image Will Be Taken As ThumbNail
+                    Picutures Of The Food, <span class="font-bold text-xs">The First Image Will Be Taken As
+                        ThumbNail
                         Image.</span></div>
+                <ErrorMessage name="images" class="err" />
             </div>
             <div class="mb-5">
-                <label for="catagories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
-                    Recipe Catagories</label>
-                <select id="catagories"
+                <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                    Recipe Catagory</label>
+                <Field id="category" as="select" name="category" rules="required"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="" disabled>Select Food Category</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Drink">Drink</option>
+                    <option value="Snack">Snack</option>
+                    <option value="Seasonal">Seasonal</option>
 
-                    <option>Breakfast</option>
-                    <option>Lunch</option>
-                    <option>Dinner</option>
-                    <option>Dessert</option>
-                    <option>Drink</option>
-                    <option>Snacks</option>
-                    <option>Seasonal</option>
-
-                </select>
+                </Field>
+                <ErrorMessage name="category" class="err" />
             </div>
             <button type="submit" class="w-full focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300
             font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700
@@ -148,7 +151,7 @@ import { ref } from 'vue';
 import Add from '../icons/Add.vue';
 import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
-import { alpha_spaces, alpha_num, alpha_dash, required, integer } from '@vee-validate/rules';
+import { alpha_spaces, alpha_num, alpha_dash, required, integer, image, size } from '@vee-validate/rules';
 import Ingredients from '../Food/Ingredients.vue';
 
 onMounted(() => {
@@ -160,6 +163,8 @@ onMounted(() => {
     defineRule("alphabetWithSpace", alpha_spaces)
     defineRule("alphabetWithDash", alpha_dash)
     defineRule("integer", integer)
+    defineRule("image", image)
+    defineRule("size", size)
 })
 const initialValues = {
 
