@@ -151,20 +151,8 @@ import { ref } from 'vue';
 import Add from '../icons/Add.vue';
 import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
-// onMounted(() => {
-//     configure({
-//         validateOnInput: true,
-//     })
-//     defineRule("required", required)
-//     defineRule("alphabetWithNum", alpha_num)
-//     defineRule("alphabetWithSpace", alpha_spaces)
-//     defineRule("alphabetWithDash", alpha_dash)
-//     defineRule("integer", integer)
-//     defineRule("image", image)
-//     defineRule("size", size)
-// })
-const initialValues = {
 
+const initialValues = {
     ingredients: [{
         name: '',
         amount: ''
