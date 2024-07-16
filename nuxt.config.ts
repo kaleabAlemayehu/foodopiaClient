@@ -4,12 +4,7 @@ import "flowbite";
 
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/google-fonts",
-    "nuxt-icon",
-    "@nuxtjs/apollo",
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/google-fonts", "@nuxtjs/apollo"],
   typescript: {
     strict: false,
   },

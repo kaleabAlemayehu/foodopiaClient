@@ -169,7 +169,6 @@ const initialValues = {
         }
     ]
 }
-const instructions = ref(["test this  and this", "test that also"])
 </script>
 
 <style scoped>
