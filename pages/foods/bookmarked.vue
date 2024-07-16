@@ -6,8 +6,12 @@
             <div v-if="loading" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
                 <Skeleton v-for="n in 9" :key="n" />
             </div>
-            <div v-else class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
-                <FoodItem v-for="item in foods" :key="item.id" v-bind="item" />
+            <div v-else>
+
+                <div v-if="foods.length > 0" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
+                    <FoodItem v-for="item in foods" :key="item.id" v-bind="item" />
+                </div>
+                <Empty v-else />
             </div>
             <div class="flex justify-center mt-12">
                 <!-- Previous Button -->
@@ -37,6 +41,7 @@
 <script setup>
 import Skeleton from '~/components/Showcase/Skeleton.vue';
 import FoodItem from '~/components/Showcase/FoodItem.vue';
+import Empty from '~/components/Food/Empty.vue';
 const loading = ref(true)
 const foods = ref([{
     "id": 1,
