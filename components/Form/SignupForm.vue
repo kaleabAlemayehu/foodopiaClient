@@ -13,7 +13,7 @@
                             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Create an account
                         </h1>
-                        <Form class="space-y-4 md:space-y-6" action="#" @submit="onSubmit">
+                        <Form class="space-y-4 md:space-y-6" @submit="onSubmit">
                             <div>
                                 <label for="username"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
@@ -69,7 +69,36 @@
 
 <script setup>
 import { Field, Form, ErrorMessage } from 'vee-validate';
+import { CREATE_ACCOUNT, LOGIN } from "../../helpers/queries/auth.js"
 
+
+const onSubmit = async (values) => {
+    const { mutate, onDone, onError } = await useMutation(CREATE_ACCOUNT, () => ({
+        variables: {
+            email: values.email,
+            username: values.username,
+            password: values.password,
+        }
+    }))
+    console.log(mutate())
+}
+
+/**
+ * 
+ * 
+ * 
+ * thought process
+ * the error says "Missing 'Authorization' or 'Cookie' header in JWT authentication mode"
+ * testcase
+ * frontend 
+ *      maybe it because of my configuration of apollo on nuxt
+ * backend
+ *      there is some thing i should know about hasura role 
+ *      should i create a table called role ?
+ *         reference https://hasura.io/blog/using-hasura-as-baas-for-nuxt
+ *      isthere anything that i should do to the defined action to accept that?
+ * 
+ */
 </script>
 
 <style scoped>

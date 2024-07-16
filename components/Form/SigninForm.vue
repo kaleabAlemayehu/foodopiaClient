@@ -13,7 +13,7 @@
                             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Sign in to your account
                         </h1>
-                        <Form class="space-y-4 md:space-y-6" action="#">
+                        <Form class="space-y-4 md:space-y-6" @submit="onSubmit">
                             <div>
                                 <label for="email"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
@@ -58,6 +58,7 @@
 
 <script setup>
 import { ErrorMessage, Field, Form } from 'vee-validate';
+
 
 
 </script>

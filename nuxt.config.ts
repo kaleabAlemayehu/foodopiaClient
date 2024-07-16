@@ -10,6 +10,10 @@ export default defineNuxtConfig({
   },
   css: ["@/static/assets/css/main.css", "flowbite/dist/flowbite.css"],
   apollo: {
+    autoImports: true,
+    authType: "Bearer",
+    authHeader: "Authorization",
+    tokenStorage: "cookie",
     clients: {
       default: {
         httpEndpoint: "http://localhost:8080/v1/graphql",
