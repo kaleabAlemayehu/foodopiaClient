@@ -42,7 +42,8 @@ import Skeleton from '~/components/Showcase/Skeleton.vue';
 import FoodItem from '~/components/Showcase/FoodItem.vue';
 import Empty from '~/components/Food/Empty.vue';
 const loading = ref(true)
-const foods = ref([{
+const foods = ref([])
+const food = ref([{
     "id": 1,
     "image": "./assets/images/breakfast1.png",
     "title": "shiro wot",

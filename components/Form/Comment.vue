@@ -2,13 +2,15 @@
     <div>
 
         <Stars />
-        <div
-            class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 max-w-[700px]">
+        <Form
+            class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 max-w-[700px]"
+            @submit="onSubmit">
             <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
                 <label for="comment" class="sr-only">Your comment</label>
-                <textarea id="comment" rows="4"
+                <Field id="comment" rows="4" name="comment" rules="required" as="textarea"
                     class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                    placeholder="Write a comment..." required></textarea>
+                    placeholder="Write a comment..." required />
+                <ErrorMessage name="comment" class="err" />
             </div>
             <div class="flex items-center justify-between px-3 py-2 border-t dark:border-red-600">
                 <button type="submit"
@@ -16,14 +18,20 @@
                     Post comment
                 </button>
 
+
             </div>
-        </div>
+        </Form>
     </div>
 </template>
 
 <script setup>
 import Stars from './Stars.vue';
+import { Form, Field, ErrorMessage } from "vee-validate";
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.err {
+    @apply text-xs text-red-600 dark:text-gray-300;
+}
+</style>

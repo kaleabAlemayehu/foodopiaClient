@@ -2,6 +2,7 @@
     <div>
         <!-- https://lottie.host/0314f139-afa2-4233-971c-50696f6ff4a9/gKkB580Boy.json -->
         <client-only>
+            <p class="text-lg text-center font-light ">Opps.. Nothing Here..!</p>
             <Vue3Lottie animationLink="https://lottie.host/0314f139-afa2-4233-971c-50696f6ff4a9/gKkB580Boy.json"
                 :height="600" :width="800" />
         </client-only>
