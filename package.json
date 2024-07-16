@@ -17,6 +17,7 @@
     "vee-validate": "^4.13.1",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2",
+    "vue3-lottie": "^3.3.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
