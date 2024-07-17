@@ -13,9 +13,18 @@
                     <div class="relative flex cursor-pointer">
                         <Dropdown :change-header="changeHeader" />
                     </div>
-                    <User class="text-gray-800  w-10 h-10 rounded-full transition-colors duration-500" />
-                    <p class=' text-gray-800 poppins hidden md:block lg:block transition-colors duration-500'>
-                        {{ user.username }} </p>
+                    <NuxtLink to="/foods" class="cursor-pointer">
+
+
+                        <User class="text-gray-800  w-10 h-10 rounded-full transition-colors duration-500" />
+
+                    </NuxtLink>
+                    <NuxtLink to="/foods" class="cursor-pointer">
+
+                        <p class=' text-gray-800 poppins hidden md:block lg:block transition-colors duration-500'>
+                            {{ user.username }} </p>
+
+                    </NuxtLink>
                     <Logout class="cursor-pointer text-primary my-auto" @click="signOutUser" />
                 </div>
             </div>
