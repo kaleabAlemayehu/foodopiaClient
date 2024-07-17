@@ -109,8 +109,8 @@
             </div>
             <div class="mb-5">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload
-                    file</label>
-                <Field as="input" name="images" rules="required|image|size:1500"
+                    Image</label>
+                <Field as="input" name="images" rules="required|image|size:1500" @change="handleFileChange"
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     aria-describedby="user_avatar_help" id="user_avatar" multiple type="file" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Select Multiple
@@ -118,6 +118,17 @@
                         ThumbNail
                         Image.</span></div>
                 <ErrorMessage name="images" class="err" />
+                <div class="flex flex-wrap" id="image_preview">
+                    <div v-for="(image, index) in images" :key="index" class="relative w-1/2 p-2">
+                        <img :src="image.url" class="w-full h-auto object-cover rounded" :alt="image.name" />
+                        <div
+                            class="absolute inset-0 flex items-center justify-center bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60  opacity-0 hover:opacity-100 transition-opacity duration-500">
+                            <button class="text-white bg-trasparent p-2 rounded" @click="removeImage(index)">
+                                <Cancle class="w-8 h-8 bg-transparent" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="mb-5">
                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
@@ -151,7 +162,21 @@ import { ref } from 'vue';
 import Add from '../icons/Add.vue';
 import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
+import Cancle from '../icons/Cancle.vue';
+const handleFileChange = (event) => {
+    const files = Array.from(event.target.files);
+    images.value = files.map((file) => ({
+        name: file.name,
+        url: URL.createObjectURL(file),
+        file,
+    }));
+};
 
+const removeImage = (index) => {
+    images.value.splice(index, 1);
+    console.log(images.value)
+};
+const images = ref([])
 const initialValues = {
     ingredients: [{
         name: '',
