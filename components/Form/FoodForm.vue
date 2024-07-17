@@ -163,6 +163,8 @@ import Add from '../icons/Add.vue';
 import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
 import Cancle from '../icons/Cancle.vue';
+import { jwtDecode } from 'jwt-decode';
+const user = ref(false)
 const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     images.value = files.map((file) => ({
@@ -172,6 +174,9 @@ const handleFileChange = (event) => {
     }));
 };
 
+const onSubmit = () => {
+
+}
 const removeImage = (index) => {
     images.value.splice(index, 1);
     console.log(images.value)
@@ -194,6 +199,15 @@ const initialValues = {
         }
     ]
 }
+
+onMounted(() => {
+    const token = useCookie("token");
+    if (token.value && token.value != null) {
+        user.value = jwtDecode(token.value)
+    } else {
+        navigateTo('/')
+    }
+})
 </script>
 
 <style scoped>

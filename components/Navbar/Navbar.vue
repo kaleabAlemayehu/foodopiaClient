@@ -81,7 +81,6 @@ onMounted(() => {
     const token = useCookie("token")
     if (token.value && token.value !== null) {
         user.value = jwtDecode(token.value)
-        console.log(user.value)
     } else {
         user.value = false;
     }

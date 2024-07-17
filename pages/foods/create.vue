@@ -11,6 +11,16 @@
 <script setup>
 import BackRoute from '~/components/Food/BackRoute.vue';
 import FoodForm from '~/components/Form/FoodForm.vue';
+import { jwtDecode } from 'jwt-decode';
+const user = ref(false)
+onMounted(() => {
+    const token = useCookie("token");
+    if (token.value && token.value != null) {
+        user.value = jwtDecode(token.value)
+    } else {
+        navigateTo('/')
+    }
+})
 
 </script>
 
