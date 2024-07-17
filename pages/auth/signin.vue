@@ -11,6 +11,13 @@ import SigninForm from '../../components/Form/SigninForm.vue';
 definePageMeta({
     layout: "auth"
 })
+onMounted(() => {
+    const token = useCookie("token")
+
+    if (token.value && token.value !== "") {
+        navigateTo('/')
+    }
+})
 
 </script>
 

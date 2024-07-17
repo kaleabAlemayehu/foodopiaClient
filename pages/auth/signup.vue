@@ -13,6 +13,14 @@ import { definePageMeta } from '#imports';
 definePageMeta({
     layout: "auth"
 })
+onMounted(() => {
+    const token = useCookie("token")
+
+    if (token.value && token.value !== "") {
+        navigateTo('/')
+    }
+})
+
 </script>
 
 <style scoped></style>
