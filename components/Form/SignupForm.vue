@@ -81,13 +81,13 @@ const onSubmit = async (values) => {
             password: values.password,
         }
     }))
-    console.log(mutate({
+    mutate({
         variables: {
             email: values.email,
             username: values.username,
             password: values.password,
         }
-    }))
+    })
     onError(err => {
         error.value = err;
     })
@@ -97,15 +97,12 @@ const onSubmit = async (values) => {
         if (!result.data.signup.error) {
             // create a cookie
             const token = useCookie("token", {
-
                 maxAge: 60 * 60 * 24 * 7,
-
             }
             )
             // add token to a cookie
             token.value = result.data.signup.token;
             navigateTo("/");
-
         }
 
     })

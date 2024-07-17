@@ -32,6 +32,7 @@
                                     required="" />
                                 <ErrorMessage name="password" class="err" />
                             </div>
+                            <div class="err text-center">{{ error }}</div>
                             <div class="flex items-center justify-between mb-3 ">
 
                                 <a href="#"
@@ -58,8 +59,42 @@
 
 <script setup>
 import { ErrorMessage, Field, Form } from 'vee-validate';
+import { LOGIN } from "../../helpers/queries/auth.js"
+const error = ref(null)
 
+const onSubmit = (values) => {
+    const { mutate, onDone, onError } = useMutation(LOGIN, () => ({
+        variables: {
+            email: values.email,
+            password: values.password,
+        }
+    }))
+    mutate(
+        {
+            variables: {
+                email: values.email,
+                username: values.username,
+                password: values.password,
+            }
+        }
+    )
 
+    onDone((result) => {
+        error.value = result.data.login.error
+        if (!result.data.login.error) {
+            const token = useCookie("token", {
+                maxAge: 60 * 60 * 24 * 7,
+            })
+            token.value = result.data.login.token;
+            navigateTo('/')
+        }
+    })
+
+    onError(err => {
+        error.value = err;
+    })
+
+}
 
 </script>
 
