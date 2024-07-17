@@ -6,6 +6,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     // `client` can be used to differentiate logic on a per client basis.
 
     // apply apollo client token
-    token.value = token.value ? `Bearer ${cookie.value}` : ``;
+    token.value = cookie.value ? `Bearer ${cookie.value}` : ``;
   });
 });

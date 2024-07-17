@@ -13,6 +13,7 @@ export const CREATE_ACCOUNT = gql`
       id
       token
       username
+      error
     }
   }
 `;
@@ -24,6 +25,7 @@ export const LOGIN = gql`
       id
       token
       username
+      error
     }
   }
 `;

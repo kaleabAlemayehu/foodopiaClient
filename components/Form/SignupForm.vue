@@ -50,6 +50,7 @@
                                     required="" />
                                 <ErrorMessage name="confirm-password" class="err" />
                             </div>
+                            <div class="err text-center">{{ error }}</div>
                             <button type="submit"
                                 class="w-full  text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Create
                                 an account</button>
@@ -70,35 +71,46 @@
 <script setup>
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import { CREATE_ACCOUNT, LOGIN } from "../../helpers/queries/auth.js"
-
+const error = ref(null)
 
 const onSubmit = async (values) => {
-    const { mutate, onDone, onError } = await useMutation(CREATE_ACCOUNT, () => ({
+    const { mutate, onDone, onError } = useMutation(CREATE_ACCOUNT, () => ({
         variables: {
             email: values.email,
             username: values.username,
             password: values.password,
         }
     }))
-    console.log(mutate())
+    console.log(mutate({
+        variables: {
+            email: values.email,
+            username: values.username,
+            password: values.password,
+        }
+    }))
+    onError(err => {
+        error.value = err;
+    })
+    onDone((result) => {
+        // display error
+        error.value = result.data.signup.error;
+        if (!result.data.signup.error) {
+            // create a cookie
+            const token = useCookie("token", {
+
+                maxAge: 60 * 60 * 24 * 7,
+
+            }
+            )
+            // add token to a cookie
+            token.value = result.data.signup.token;
+            navigateTo("/");
+
+        }
+
+    })
 }
 
-/**
- * 
- * 
- * 
- * thought process
- * the error says "Missing 'Authorization' or 'Cookie' header in JWT authentication mode"
- * testcase
- * frontend 
- *      maybe it because of my configuration of apollo on nuxt
- * backend
- *      there is some thing i should know about hasura role 
- *      should i create a table called role ?
- *         reference https://hasura.io/blog/using-hasura-as-baas-for-nuxt
- *      isthere anything that i should do to the defined action to accept that?
- * 
- */
 </script>
 
 <style scoped>

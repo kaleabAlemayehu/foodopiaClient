@@ -15,7 +15,7 @@
                     </div>
                     <User class="text-gray-800  w-10 h-10 rounded-full transition-colors duration-500" />
                     <p class=' text-gray-800 poppins hidden md:block lg:block transition-colors duration-500'>
-                        username </p>
+                        {{ user.username }} </p>
                     <Logout class="cursor-pointer text-primary my-auto" @click="signOutUser" />
                 </div>
             </div>
@@ -38,11 +38,12 @@ import Logout from '../icons/Logout.vue';
 import User from '../icons/User.vue';
 import Dropdown from './Dropdown.vue';
 import logo from '@/static/assets/images/logo.png';
-
+import { jwtDecode } from 'jwt-decode';
 const changeHeader = ref(false);
 const router = useRouter();
 const { path } = useRoute();
 const user = ref(false)
+
 
 const isHome = ref(true)
 
@@ -68,7 +69,13 @@ const handleScroll = () => {
 
 onMounted(() => {
     document.addEventListener("scroll", handleScroll);
-
+    const token = useCookie("token")
+    if (token.value && token.value !== null) {
+        user.value = jwtDecode(token.value)
+        console.log(user.value)
+    } else {
+        user.value = false;
+    }
 
 });
 
