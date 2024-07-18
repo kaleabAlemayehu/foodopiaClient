@@ -6,7 +6,7 @@
             <div class="mb-5">
                 <label for="title"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white poppins">Title</label>
-                <Field as="input" type="text" name='title' id="title" rules="required|alphabetWithSpace"
+                <Field as="input" type="text" name='title' id="title" rules="required"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Recipe Title" />
                 <ErrorMessage name="title" class="err" />
@@ -17,8 +17,7 @@
 
                 <label for="description"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                <Field id="description" rows="4" as="textarea" type="text" name='description'
-                    rules="required|alphabetWithSpace"
+                <Field id="description" rows="4" as="textarea" type="text" name='description' rules="required"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Describe The Recipe..." />
                 <ErrorMessage name="description" class="err" />
@@ -280,7 +279,15 @@ const onSubmit = async (values) => {
                                 }
                             })
                             onDone(result => {
-                                //    add notification popups
+                                // TODO   add notification popups ( here or down there ↓)
+                                // reset the values
+                                values.title = ""
+                                values.description = ""
+                                values.ingredients = [{ name: "", amount: "" }, { name: "", amount: "" }]
+                                values.instructions = [{ name: "" }, { name: "" }]
+                                values.preparationTime = ""
+                                values.images = ""
+                                values.category = ""
                             })
                             onError(err => {
                                 error.value = err.message;
@@ -303,7 +310,7 @@ const onSubmit = async (values) => {
                                 }
                             })
                             onDone((result) => {
-                                // add notification popups
+                                // TODO add notification popups (here or up there ↑)
                             })
                             onError(err => {
                                 error.value = err.message;
@@ -317,6 +324,9 @@ const onSubmit = async (values) => {
                         error.value = err.message;
                         return;
                     })
+                } else {
+                    // TODO add image upload to images url table
+
                 }
 
             })

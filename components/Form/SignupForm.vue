@@ -102,7 +102,9 @@ const onSubmit = async (values) => {
             )
             // add token to a cookie
             token.value = result.data.signup.token;
+            // TODO: add notification popup
             navigateTo("/");
+
         }
 
     })

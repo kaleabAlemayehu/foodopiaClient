@@ -63,7 +63,9 @@ if (path == '/') {
     isHome.value = false
 }
 const signOutUser = () => {
-    console.log()
+    const token = useCookie("token")
+    token.value = null;
+    navigateTo("/")
 }
 
 const handleScroll = () => {
@@ -92,9 +94,8 @@ onBeforeUnmount(() => {
 });
 
 
-const navigateTo = (path) => {
-    router.push(path);
-};
+
+
 </script>
 
 <style scoped>

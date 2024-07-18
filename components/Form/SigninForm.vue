@@ -86,6 +86,7 @@ const onSubmit = (values) => {
                 maxAge: 60 * 60 * 24 * 7,
             })
             token.value = result.data.login.token;
+            // TODO add notification popup
             navigateTo('/')
         }
     })
