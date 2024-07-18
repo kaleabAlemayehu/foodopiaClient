@@ -218,7 +218,7 @@ const removeImage = (index) => {
 
 
 
-const onSubmit = async (values) => {
+const onSubmit = async (values, { resetForm }) => {
 
     if (values.instructions.length && values.ingredients.length) {
 
@@ -281,7 +281,7 @@ const onSubmit = async (values) => {
                             onDone(result => {
                                 // TODO   add notification popups ( here or down there ↓)
                                 // reset the values
-                                values = null
+                                resetForm()
                             })
                             onError(err => {
                                 error.value = err.message;
@@ -305,7 +305,7 @@ const onSubmit = async (values) => {
                             })
                             onDone((result) => {
                                 // TODO add notification popups (here or up there ↑)
-                                values = null
+                                resetForm
                             })
                             onError(err => {
                                 error.value = err.message;
@@ -332,7 +332,7 @@ const onSubmit = async (values) => {
 
                             onDone(result => {
                                 console.log(result)
-                                values = null
+                                resetForm()
                             })
                             onError(err => {
                                 error.value = err.message
