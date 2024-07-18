@@ -137,13 +137,13 @@
                 <Field id="category" as="select" name="category" rules="required"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="" disabled>Select Food Category</option>
-                    <option value="Breakfast">Breakfast</option>
-                    <option value="Lunch">Lunch</option>
-                    <option value="Dinner">Dinner</option>
-                    <option value="Dessert">Dessert</option>
-                    <option value="Drink">Drink</option>
-                    <option value="Snack">Snack</option>
-                    <option value="Seasonal">Seasonal</option>
+                    <option :value="1">Breakfast</option>
+                    <option :value="2">Lunch</option>
+                    <option :value="3">Dinner</option>
+                    <option :value="4">Dessert</option>
+                    <option :value="5">Snack</option>
+                    <option :value="6">Drink</option>
+                    <option :value="7">Seasonal</option>
 
                 </Field>
                 <ErrorMessage name="category" class="err" />
@@ -169,7 +169,7 @@ import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
 import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
-import { UPLOAD_IMAGE } from '~/helpers/queries/food';
+import { CREATE_FOOD, UPLOAD_IMAGE } from '~/helpers/queries/food';
 const imageUrls = ref([])
 const error = ref(false)
 
@@ -193,9 +193,7 @@ const initialValues = {/*
 const user = ref(false)
 const images = ref([])
 const handleFileChange = (event) => {
-
     const files = Array.from(event.target.files);
-
     images.value = files.map((file) => {
         const obj = {
             name: file.name,
@@ -219,14 +217,13 @@ const removeImage = (index) => {
     images.value.splice(index, 1);
 };
 
-const uploadImage = async (image) => {
-};
+
 
 const onSubmit = async (values) => {
     // userId
     // console.log(user.value.id)
     // upload images to the server
-    images.value.forEach((image) => {
+    images.value.forEach((image, index) => {
         const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
             variables: {
                 fileName: image.name,
@@ -240,10 +237,41 @@ const onSubmit = async (values) => {
             }
         })
         onDone(result => {
-            imageUrls.value.push(result.data?.imageUpload)
+            imageUrls.value.push(result.data.imageUpload)
+            if (index == 0) {
+
+                // create a recipe
+                const { mutate, onDone, onError } = useMutation(CREATE_FOOD, () => ({
+                    variables: {
+                        title: values.title,
+                        description: values.description,
+                        featured_image_url: imageUrls.value[0].imageUrl,
+                        prep_time: values.preparationTime,
+                        category_id: values.category,
+                    }
+                }))
+                mutate({
+                    variables: {
+                        title: values.title,
+                        description: values.description,
+                        featured_image_url: imageUrls?.value[0].imageUrl,
+                        prep_time: values.preparationTime,
+                        category_id: values.category,
+                    }
+                })
+                onDone(result => {
+                    console.log(result)
+                })
+                onError(err => {
+                    error.value = err.message;
+                    return;
+                })
+            }
+
         })
         onError(err => {
             error.value = err.message;
+            return
         })
     })
 
