@@ -113,7 +113,7 @@
                     Image</label>
                 <Field as="input" name="images" rules="required|image|size:1500" @change="handleFileChange"
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    aria-describedby="user_avatar_help" id="user_avatar" multiple type="file" />
+                    aria-describedby="user_avatar_help" id="user_avatar" multiple type="file" accept="image/*" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Select Multiple
                     Picutures Of The Food, <span class="font-bold text-xs">The First Image Will Be Taken As
                         ThumbNail
@@ -148,6 +148,10 @@
                 </Field>
                 <ErrorMessage name="category" class="err" />
             </div>
+            <div v-if="error" class="mb-5">
+                {{ error }}
+
+            </div>
             <button type="submit" class="w-full focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300
             font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700
             dark:focus:ring-red-900"> Submit
@@ -165,6 +169,27 @@ import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
 import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
+import { UPLOAD_IMAGE } from '~/helpers/queries/food';
+const imageUrls = ref([])
+const error = ref(false)
+
+const initialValues = {/*
+    ingredients: [{
+        name: '',
+        amount: ''
+    }, {
+        name: '',
+        amount: ''
+    },],
+    instructions: [
+        {
+            name: ""
+        },
+        {
+            name: ""
+        }
+    ]*/
+}
 const user = ref(false)
 const images = ref([])
 const handleFileChange = (event) => {
@@ -190,32 +215,45 @@ const handleFileChange = (event) => {
 
     });
 };
-
-const onSubmit = () => {
-
-    console.log(images.value)
-}
 const removeImage = (index) => {
     images.value.splice(index, 1);
-    console.log(images.value)
 };
-const initialValues = {
-    ingredients: [{
-        name: '',
-        amount: ''
-    }, {
-        name: '',
-        amount: ''
-    },],
-    instructions: [
-        {
-            name: ""
-        },
-        {
-            name: ""
-        }
-    ]
+
+const uploadImage = async (image) => {
+};
+
+const onSubmit = async (values) => {
+    // userId
+    // console.log(user.value.id)
+    // upload images to the server
+    images.value.forEach((image) => {
+        const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
+            variables: {
+                fileName: image.name,
+                base64Str: image.base64,
+            }
+        }))
+        mutate({
+            variables: {
+                fileName: image.name,
+                base64Str: image.base64,
+            }
+        })
+        onDone(result => {
+            imageUrls.value.push(result.data?.imageUpload)
+        })
+        onError(err => {
+            error.value = err.message;
+        })
+    })
+
+
+
+
 }
+// make it it this function or it doesn't work on another fuction
+
+
 
 onMounted(() => {
     const token = useCookie("token");
