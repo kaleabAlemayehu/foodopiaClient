@@ -168,7 +168,7 @@ import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
 import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
-import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT, INSERT_INSTRUCTION } from '~/helpers/queries/food';
+import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT, INSERT_INSTRUCTION, INSERT_IMAGE } from '~/helpers/queries/food';
 const imageUrls = ref([])
 const error = ref(false)
 
@@ -281,13 +281,7 @@ const onSubmit = async (values) => {
                             onDone(result => {
                                 // TODO   add notification popups ( here or down there ↓)
                                 // reset the values
-                                values.title = ""
-                                values.description = ""
-                                values.ingredients = [{ name: "", amount: "" }, { name: "", amount: "" }]
-                                values.instructions = [{ name: "" }, { name: "" }]
-                                values.preparationTime = ""
-                                values.images = ""
-                                values.category = ""
+                                values = null
                             })
                             onError(err => {
                                 error.value = err.message;
@@ -311,10 +305,37 @@ const onSubmit = async (values) => {
                             })
                             onDone((result) => {
                                 // TODO add notification popups (here or up there ↑)
+                                values = null
                             })
                             onError(err => {
                                 error.value = err.message;
 
+                            })
+                        })
+
+                        // TODO add image upload to images url table
+                        imageUrls.value.forEach((image, index) => {
+                            const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
+                                variables: {
+                                    is_featured: index == 0 ? true : false,
+                                    image_url: image.imageUrl,
+                                    recipe_id: recipeId,
+                                }
+                            }))
+                            mutate({
+                                variables: {
+                                    is_featured: index == 0 ? true : false,
+                                    image_url: image.imageUrl,
+                                    recipe_id: recipeId,
+                                }
+                            })
+
+                            onDone(result => {
+                                console.log(result)
+                                values = null
+                            })
+                            onError(err => {
+                                error.value = err.message
                             })
                         })
 
@@ -324,10 +345,9 @@ const onSubmit = async (values) => {
                         error.value = err.message;
                         return;
                     })
-                } else {
-                    // TODO add image upload to images url table
-
                 }
+
+
 
             })
             onError(err => {

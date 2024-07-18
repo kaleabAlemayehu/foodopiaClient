@@ -81,3 +81,25 @@ export const INSERT_INSTRUCTION = gql`
     }
   }
 `;
+
+export const INSERT_IMAGE = gql`
+  mutation InsertImages(
+    $is_featured: Boolean!
+    $image_url: String!
+    $recipe_id: Int!
+  ) {
+    insert_recipe_images_one(
+      object: {
+        image_url: $image_url
+        is_featured: $is_featured
+        recipe_id: $recipe_id
+      }
+    ) {
+      id
+      image_url
+      is_featured
+      recipe_id
+      user_id
+    }
+  }
+`;
