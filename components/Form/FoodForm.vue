@@ -1,6 +1,7 @@
 <template>
     <div>
-        <Form class="max-w-2xl mx-auto my-16 transition duration-700 poppins" :initial-values="initialValues">
+        <Form class="max-w-2xl mx-auto my-16 transition duration-700 poppins" :initial-values="initialValues"
+            @submit="onSubmit">
 
             <div class="mb-5">
                 <label for="title"
@@ -165,23 +166,39 @@ import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 've
 import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
 const user = ref(false)
+const images = ref([])
 const handleFileChange = (event) => {
+
     const files = Array.from(event.target.files);
-    images.value = files.map((file) => ({
-        name: file.name,
-        url: URL.createObjectURL(file),
-        file,
-    }));
+
+    images.value = files.map((file) => {
+        const obj = {
+            name: file.name,
+            url: URL.createObjectURL(file),
+            file,
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            obj.base64 = reader.result.split(',')[1]; // Remove the data URL part
+        };
+        reader.onerror = () => {
+            console.log('Unable to parse file');
+        };
+
+        return obj;
+
+    });
 };
 
 const onSubmit = () => {
 
+    console.log(images.value)
 }
 const removeImage = (index) => {
     images.value.splice(index, 1);
     console.log(images.value)
 };
-const images = ref([])
 const initialValues = {
     ingredients: [{
         name: '',
