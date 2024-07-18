@@ -148,7 +148,7 @@
                 </Field>
                 <ErrorMessage name="category" class="err" />
             </div>
-            <div v-if="error" class="mb-5">
+            <div v-if="error" class="mb-5 err">
                 {{ error }}
 
             </div>
@@ -169,7 +169,7 @@ import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
 import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
-import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT } from '~/helpers/queries/food';
+import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT, INSERT_INSTRUCTION } from '~/helpers/queries/food';
 const imageUrls = ref([])
 const error = ref(false)
 
@@ -282,13 +282,33 @@ const onSubmit = async (values) => {
                             console.log(result)
                         })
                         onError(err => {
-                            error.value = err.message
+                            error.value = err.message;
                         })
                     })
                     // add instruction 
-                    // values.instructions.forEach(instruction => {
-                    //     const { mutate, onDone, onError} = useMutation()
-                    // })
+                    values.instructions.forEach((instruction, index) => {
+                        const { mutate, onDone, onError } = useMutation(INSERT_INSTRUCTION, () => ({
+                            variables: {
+                                description: instruction.name,
+                                recipe_id: recipeId,
+                                step_order: index,
+                            }
+                        }))
+                        mutate({
+                            variables: {
+                                description: instruction.name,
+                                recipe_id: recipeId,
+                                step_order: index,
+                            }
+                        })
+                        onDone((result) => {
+                            console.log(result)
+                        })
+                        onError(err => {
+                            error.value = err.message;
+
+                        })
+                    })
 
 
                 })

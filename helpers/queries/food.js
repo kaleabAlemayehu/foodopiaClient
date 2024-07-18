@@ -59,3 +59,25 @@ export const INSERT_INGREDIENT = gql`
     }
   }
 `;
+
+export const INSERT_INSTRUCTION = gql`
+  mutation InsertInstruction(
+    $description: String!
+    $recipe_id: Int!
+    $step_order: Int!
+  ) {
+    insert_steps_one(
+      object: {
+        description: $description
+        recipe_id: $recipe_id
+        step_order: $step_order
+      }
+    ) {
+      description
+      id
+      recipe_id
+      step_order
+      user_id
+    }
+  }
+`;
