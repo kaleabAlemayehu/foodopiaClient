@@ -41,3 +41,21 @@ export const CREATE_FOOD = gql`
     }
   }
 `;
+
+export const INSERT_INGREDIENT = gql`
+  mutation InsertIngredient(
+    $name: String!
+    $quantity: String!
+    $recipe_id: Int!
+  ) {
+    insert_ingredients_one(
+      object: { name: $name, quantity: $quantity, recipe_id: $recipe_id }
+    ) {
+      id
+      name
+      quantity
+      recipe_id
+      user_id
+    }
+  }
+`;

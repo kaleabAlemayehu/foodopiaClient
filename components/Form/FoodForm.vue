@@ -169,11 +169,11 @@ import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
 import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
-import { CREATE_FOOD, UPLOAD_IMAGE } from '~/helpers/queries/food';
+import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT } from '~/helpers/queries/food';
 const imageUrls = ref([])
 const error = ref(false)
 
-const initialValues = {/*
+const initialValues = {
     ingredients: [{
         name: '',
         amount: ''
@@ -188,7 +188,7 @@ const initialValues = {/*
         {
             name: ""
         }
-    ]*/
+    ]
 }
 const user = ref(false)
 const images = ref([])
@@ -238,6 +238,7 @@ const onSubmit = async (values) => {
         })
         onDone(result => {
             imageUrls.value.push(result.data.imageUpload)
+            // create recipe 
             if (index == 0) {
 
                 // create a recipe
@@ -260,7 +261,36 @@ const onSubmit = async (values) => {
                     }
                 })
                 onDone(result => {
-                    console.log(result)
+                    const recipeId = result.data.insert_recipes_one.id;
+                    // add ingredient
+                    values.ingredients.forEach(ingredient => {
+                        const { mutate, onDone, onError } = useMutation(INSERT_INGREDIENT, () => ({
+                            variables: {
+                                name: ingredient.name,
+                                quantity: ingredient.amount,
+                                recipe_id: recipeId,
+                            }
+                        }))
+                        mutate({
+                            variables: {
+                                name: ingredient.name,
+                                quantity: ingredient.amount,
+                                recipe_id: recipeId,
+                            }
+                        })
+                        onDone(result => {
+                            console.log(result)
+                        })
+                        onError(err => {
+                            error.value = err.message
+                        })
+                    })
+                    // add instruction 
+                    // values.instructions.forEach(instruction => {
+                    //     const { mutate, onDone, onError} = useMutation()
+                    // })
+
+
                 })
                 onError(err => {
                     error.value = err.message;
