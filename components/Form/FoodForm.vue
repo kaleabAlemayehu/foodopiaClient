@@ -3,7 +3,7 @@
         <Form class="max-w-2xl mx-auto my-16 transition duration-700 poppins" :initial-values="initialValues"
             @submit="onSubmit">
 
-            <div class="mb-5">
+            <div class=" mb-5">
                 <label for="title"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white poppins">Title</label>
                 <Field as="input" type="text" name='title' id="title" rules="required"
@@ -156,6 +156,8 @@
             dark:focus:ring-red-900"> Submit
 
             </button>
+
+
         </Form>
 
     </div>
@@ -282,6 +284,7 @@ const onSubmit = async (values, { resetForm }) => {
                                 // TODO   add notification popups ( here or down there ↓)
                                 // reset the values
                                 resetForm()
+                                images.value = []
                             })
                             onError(err => {
                                 error.value = err.message;
@@ -305,7 +308,8 @@ const onSubmit = async (values, { resetForm }) => {
                             })
                             onDone((result) => {
                                 // TODO add notification popups (here or up there ↑)
-                                resetForm
+                                resetForm()
+                                images.value = []
                             })
                             onError(err => {
                                 error.value = err.message;
@@ -333,6 +337,7 @@ const onSubmit = async (values, { resetForm }) => {
                             onDone(result => {
                                 console.log(result)
                                 resetForm()
+                                images.value = []
                             })
                             onError(err => {
                                 error.value = err.message
@@ -356,12 +361,9 @@ const onSubmit = async (values, { resetForm }) => {
             })
         })
     } else {
-        error.value = "There Must Be At Least One Instruction And One Ingredient!"
+        error.value = " There Must Be At Least One Instruction And One Ingredient!"
     }
 }
-
-
-
 onMounted(() => {
     const token = useCookie("token");
     if (token.value && token.value != null) {
