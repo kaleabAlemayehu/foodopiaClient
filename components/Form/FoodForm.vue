@@ -55,8 +55,6 @@
                                 <Cross class="inline text-primary w-8 h-8 my-auto " @click="remove(index)" />
                             </div>
                             <ErrorMessage :name="`ingredients[${index}].amount`" class="err" />
-
-
                         </div>
                     </div>
                     <button type="button" @click="push({})"
@@ -109,7 +107,7 @@
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="thumbnail">Upload
                     ThumbNail
                     Image</label>
-                <Field as="input" name="thumbnail" rules="required|image|size:1500" @change="handleThumbNail"
+                <Field as="input" name="thumbnail" rules="required|image|size:2000" @change="handleThumbNail"
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     aria-describedby="user_avatar_help" id="thumbnail" type="file" accept="image/*" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">ThumbNail Image </div>
@@ -129,7 +127,7 @@
             <div class="mb-5">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload
                     Image</label>
-                <Field as="input" name="images" rules="required|image|size:1500" @change="handleFileChange"
+                <Field as="input" name="images" rules="required|image|size:2000" @change="handleFileChange"
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     aria-describedby="user_avatar_help" id="user_avatar" multiple type="file" accept="image/*" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Select Multiple
@@ -190,7 +188,7 @@ import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
 import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT, INSERT_INSTRUCTION, INSERT_IMAGE } from '~/helpers/queries/food';
 const imageUrls = ref([])
-const thumbnailUrl = ref([])
+const thumbnailUrl = ref()
 const error = ref(false)
 const count = ref(0)
 const initialValues = {
@@ -282,7 +280,7 @@ const onSubmit = async (values, { resetForm }) => {
                 }
             })
             onDone(result => {
-                thumbnailUrl.value.push(result.data.imageUpload)
+                thumbnailUrl.value = result.data.imageUpload
                 thumbnailImage.value = []
 
                 // create a recipe
@@ -290,7 +288,7 @@ const onSubmit = async (values, { resetForm }) => {
                     variables: {
                         title: values.title,
                         description: values.description,
-                        featured_image_url: thumbnailUrl.value[0].imageUrl,
+                        featured_image_url: thumbnailUrl.value.imageUrl,
                         prep_time: values.preparationTime,
                         category_id: values.category,
                     }
@@ -299,13 +297,14 @@ const onSubmit = async (values, { resetForm }) => {
                     variables: {
                         title: values.title,
                         description: values.description,
-                        featured_image_url: thumbnailUrl?.value[0].imageUrl,
+                        featured_image_url: thumbnailUrl.value.imageUrl,
                         prep_time: values.preparationTime,
                         category_id: values.category,
                     }
                 })
                 onDone(result => {
                     const recipeId = result.data.insert_recipes_one.id;
+                    console.log(result.data.insert_recipes_one.featured_image_url)
                     // add ingredient
                     values.ingredients.forEach(ingredient => {
                         const { mutate, onDone, onError } = useMutation(INSERT_INGREDIENT, () => ({
@@ -360,30 +359,30 @@ const onSubmit = async (values, { resetForm }) => {
                     })
 
                     // TODO add thumbnailimage upload to images url table
-                    thumbnailUrl.value.forEach((image,) => {
-                        const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
-                            variables: {
-                                is_featured: true,
-                                image_url: image.imageUrl,
-                                recipe_id: recipeId,
-                            }
-                        }))
-                        mutate({
-                            variables: {
-                                is_featured: true,
-                                image_url: image.imageUrl,
-                                recipe_id: recipeId,
-                            }
-                        })
 
-                        onDone(result => {
-                            resetForm()
-
-                        })
-                        onError(err => {
-                            error.value = err.message
-                        })
+                    const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
+                        variables: {
+                            is_featured: true,
+                            image_url: thumbnailUrl.value.imageUrl,
+                            recipe_id: recipeId,
+                        }
+                    }))
+                    mutate({
+                        variables: {
+                            is_featured: true,
+                            image_url: thumbnailUrl.value.imageUrl,
+                            recipe_id: recipeId,
+                        }
                     })
+
+                    onDone(result => {
+                        resetForm()
+
+                    })
+                    onError(err => {
+                        error.value = err.message
+                    })
+
                     // upload images to the server
                     // get the number of the images
                     count.value = images.value.length

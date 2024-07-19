@@ -32,7 +32,7 @@ configure({
     const messages = {
       required: `This field is required.`,
       email: `${context.field} must be a valid email address.`,
-      size: `${context.field} is must be less than 1.5MB.`,
+      size: `${context.field} is must be less than 2MB.`,
       image: `This field must be an image.`,
       integer: `${context.field} is must be an integer.`,
       alpha_dash: `${context.field} is must content only alphabets and dashes.`,
