@@ -104,8 +104,27 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Enter Preparation Time" />
                 <ErrorMessage name="preparationTime" class="err" />
-
-
+            </div>
+            <div class="mb-5">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="thumbnail">Upload
+                    ThumbNail
+                    Image</label>
+                <Field as="input" name="thumbnail" rules="required|image|size:1500" @change="handleThumbNail"
+                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    aria-describedby="user_avatar_help" id="thumbnail" type="file" accept="image/*" />
+                <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">ThumbNail Image </div>
+                <ErrorMessage name="thumbnail" class="err" />
+                <div class="flex flex-wrap" id="image_preview">
+                    <div v-for="(image, index) in thumbnailImage" :key="index" class="relative w-1/2 p-2">
+                        <img :src="image.url" class="w-full h-auto object-cover rounded" :alt="image.name" />
+                        <div
+                            class="absolute inset-0 flex items-center justify-center bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60  opacity-0 hover:opacity-100 transition-opacity duration-500">
+                            <button class="text-white bg-trasparent p-2 rounded" @click="removeThumbNail(index)">
+                                <Cancle class="w-8 h-8 bg-transparent" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="mb-5">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload
@@ -114,9 +133,7 @@
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     aria-describedby="user_avatar_help" id="user_avatar" multiple type="file" accept="image/*" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Select Multiple
-                    Picutures Of The Food, <span class="font-bold text-xs">The First Image Will Be Taken As
-                        ThumbNail
-                        Image.</span></div>
+                    Picutures Of The Food As You Want!</div>
                 <ErrorMessage name="images" class="err" />
                 <div class="flex flex-wrap" id="image_preview">
                     <div v-for="(image, index) in images" :key="index" class="relative w-1/2 p-2">
@@ -130,6 +147,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="mb-5">
                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
                     Recipe Catagory</label>
@@ -193,6 +211,28 @@ const initialValues = {
 }
 const user = ref(false)
 const images = ref([])
+const thumbnailImage = ref([])
+const handleThumbNail = (event) => {
+    const files = Array.from(event.target.files);
+    thumbnailImage.value = files.map((file) => {
+        const obj = {
+            name: file.name,
+            url: URL.createObjectURL(file),
+            file,
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            obj.base64 = reader.result.split(',')[1]; // Remove the data URL part
+        };
+        reader.onerror = () => {
+            console.log('Unable to parse file');
+        };
+
+        return obj;
+
+    });
+}
 const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     images.value = files.map((file) => {
@@ -216,6 +256,9 @@ const handleFileChange = (event) => {
 };
 const removeImage = (index) => {
     images.value.splice(index, 1);
+};
+const removeThumbNail = (index) => {
+    thumbnailImage.value.splice(index, 1);
 };
 
 
