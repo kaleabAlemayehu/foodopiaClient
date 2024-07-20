@@ -1,6 +1,6 @@
 <template>
     <div class="bg-gray-50 h-screen  flex justify-center items-center overflow-auto">
-        <BackRoute class=" self-start pt-24 " />
+        <BackRoute class=" self-start pt-24  w-min" />
         <SigninForm />
     </div>
 </template>

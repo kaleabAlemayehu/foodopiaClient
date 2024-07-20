@@ -1,6 +1,6 @@
 <template>
     <main class="max-w-screen-xl mx-auto px-6 my-16">
-        <BackRoute />
+        <BackRoute class="w-min" />
         <span
             class="bg-red-100 border border-red-500 rounded-full text-primary relative top-32 text-sm poppins px-4 py-1 inline-block mb-4 w-max">10
             min
