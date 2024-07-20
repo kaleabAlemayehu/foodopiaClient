@@ -103,3 +103,22 @@ export const INSERT_IMAGE = gql`
     }
   }
 `;
+
+export const GET_RECIPE_BY_CATEGORIES = gql`
+  query GetRecipes($offset: Int!, $_eq: Int!) {
+    recipes(limit: 9, offset: $offset, where: { category_id: { _eq: $_eq } }) {
+      avg_rating
+      category_id
+      created_at
+      description
+      featured_image_url
+      id
+      prep_time
+      title
+      total_comments
+      total_likes
+      updated_at
+      user_id
+    }
+  }
+`;

@@ -4,34 +4,33 @@
         <section class="my-12 max-w-screen-xl mx-auto px-6">
             <!-- food Menu tab -->
             <div class="flex items-center justify-center space-x-6">
-                <p :class="menuTab === 'Breakfast' ? 'active_menu_tab  bg-primary ' : 'menu_tab '" class="poppins  "
-                    @click="handleMenuTabs('Breakfast')">Breakfast
+                <p :class="menuTab === 1 ? 'active_menu_tab  bg-primary ' : 'menu_tab '" class="poppins  "
+                    @click="handleMenuTabs(1)">Breakfast
                 </p>
-                <p :class="menuTab === 'Lunch' ? 'active_menu_tab  bg-primary' : 'menu_tab '" class="poppins  "
-                    @click="handleMenuTabs('Lunch')">Lunch</p>
-                <p :class="menuTab === 'Dinner' ? 'active_menu_tab  bg-primary ' : 'menu_tab'" class="poppins  "
-                    @click="handleMenuTabs('Dinner')">Dinner</p>
-                <p :class="menuTab === 'Dessert' ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
-                    @click="handleMenuTabs('Dessert')">Dessert</p>
-                <p :class="menuTab === 'Drink' ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
-                    @click="handleMenuTabs('Drink')">Drink</p>
-                <p :class="menuTab === 'Snack' ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
-                    @click="handleMenuTabs('Snack')">Snack</p>
+                <p :class="menuTab === 2 ? 'active_menu_tab  bg-primary' : 'menu_tab '" class="poppins  "
+                    @click="handleMenuTabs(2)">Lunch</p>
+                <p :class="menuTab === 3 ? 'active_menu_tab  bg-primary ' : 'menu_tab'" class="poppins  "
+                    @click="handleMenuTabs(3)">Dinner</p>
+                <p :class="menuTab === 4 ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
+                    @click="handleMenuTabs(4)">Dessert</p>
+                <p :class="menuTab === 5 ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
+                    @click="handleMenuTabs(5)">Snack</p>
+                <p :class="menuTab === 6 ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
+                    @click="handleMenuTabs(6)">Drink</p>
             </div>
 
             <!-- all foods -->
-            <div v-if="loading" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
+            <div v-if="Loading" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
                 <Skeleton v-for="n in 9" :key="n" />
             </div>
-            <div v-else>
-                <div v-if="filteredFoods.length > 0"
-                    class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
+            <div v-else-if="foods.length && !Loading"
+                class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
 
-                    <FoodItem v-for="item in filteredFoods" :key="item.id" v-bind="item" />
-                </div>
-                <Empty v-else />
-
+                <FoodItem v-for="item in foods" :key="item.id" v-bind="item" :recipe="item" />
             </div>
+            <Empty v-else />
+
+
             <div class="flex justify-center mt-12">
                 <!-- Previous Button -->
                 <a href="#"
@@ -64,179 +63,42 @@ import FoodItem from '~/components/Showcase/FoodItem.vue';
 import Skeleton from '~/components/Showcase/Skeleton.vue';
 import Empty from '~/components/Food/Empty.vue';
 import { ref, onMounted, computed } from 'vue';
-const foods = ref([{
-    "id": 1,
-    "image": "./assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Lunch"
-},
-{
-    "id": 2,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Breakfast"
-},
-{
-    "id": 3,
-    "image": "../static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Dinner"
-},
-{
-    "id": 4,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Breakfast"
-},
-{
-    "id": 5,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Lunch"
-},
-{
-    "id": 6,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Dinner"
-},
-{
-    "id": 1,
-    "image": "./assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Lunch"
-},
-{
-    "id": 2,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Breakfast"
-},
-{
-    "id": 3,
-    "image": "../static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Dinner"
-},
-{
-    "id": 4,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Breakfast"
-},
-{
-    "id": 5,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Lunch"
-},
-{
-    "id": 6,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Dinner"
-},
-{
-    "id": 1,
-    "image": "./assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Lunch"
-},
-{
-    "id": 2,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Breakfast"
-},
-{
-    "id": 3,
-    "image": "../static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Dinner"
-},
-{
-    "id": 4,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Breakfast"
-},
-{
-    "id": 5,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Lunch"
-},
-{
-    "id": 6,
-    "image": "./static/assets/images/breakfast1.png",
-    "title": "shiro wot",
-    "description": "delicious common food for the common people of ethiopia and it is so easy to prepare it.",
-    "price": 60,
-    "foodType": "Dinner"
+import { GET_RECIPE_BY_CATEGORIES } from '~/helpers/queries/food';
+const foods = ref([])
+const Loading = ref(true);
+const offset = ref(0)
+const _eq = ref(1)
+const fetchFood = async () => {
+    const { data } = await useAsyncQuery(GET_RECIPE_BY_CATEGORIES, { offset: offset.value, _eq: _eq.value })
+    foods.value = data?._value?.recipes || []
+    // Loading.value = loading
+    // console.log(result?._value?.recipes)
 }
-
-
-
-
-])
-
-
-const menuTab = ref('Breakfast');
-const loading = ref(true);
+const menuTab = ref(1);
 
 onMounted(() => {
-    loading.value = true;
-    setTimeout(() => {
-        loading.value = false;
-    }, 1500);
+    fetchFood()
+
 });
 
 const handleMenuTabs = (type) => {
     menuTab.value = type;
-    loading.value = true;
+    _eq.value = type;
+    Loading.value = true;
     setTimeout(() => {
-        loading.value = false;
+        Loading.value = false;
     }, 1500);
 };
 
 const filteredFoods = computed(() => {
     return foods.value.filter((item) => item.foodType === menuTab.value);
 });
-
+watch(menuTab, fetchFood, { immediate: true })
+watch(foods, () => {
+    setTimeout(() => {
+        Loading.value = false;
+    }, 1500);
+}, { immediate: true })
 </script>
 
 <style scoped></style>

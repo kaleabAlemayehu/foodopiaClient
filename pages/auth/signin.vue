@@ -13,7 +13,6 @@ definePageMeta({
 })
 onMounted(() => {
     const token = useCookie("token")
-
     if (token.value && token.value !== "") {
         navigateTo('/')
     }
