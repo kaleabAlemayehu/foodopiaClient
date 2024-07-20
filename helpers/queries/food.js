@@ -105,8 +105,17 @@ export const INSERT_IMAGE = gql`
 `;
 
 export const GET_RECIPE_BY_CATEGORIES = gql`
-  query GetRecipes($offset: Int!, $_eq: Int!) {
-    recipes(limit: 9, offset: $offset, where: { category_id: { _eq: $_eq } }) {
+  query GetRecipe($offset: Int!, $_eq: Int!, $limit: Int!) {
+    recipes_aggregate(where: { category_id: { _eq: $_eq } }) {
+      aggregate {
+        count
+      }
+    }
+    recipes(
+      limit: $limit
+      offset: $offset
+      where: { category_id: { _eq: $_eq } }
+    ) {
       avg_rating
       category_id
       created_at
