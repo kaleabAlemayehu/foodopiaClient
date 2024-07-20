@@ -3,6 +3,7 @@ import { defineNuxtConfig } from "nuxt/config";
 import "flowbite";
 
 export default defineNuxtConfig({
+  ssr: false,
   devtools: { enabled: false },
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/google-fonts", "@nuxtjs/apollo"],
   typescript: {

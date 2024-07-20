@@ -53,7 +53,6 @@ const router = useRouter();
 const { path } = useRoute();
 const user = ref(false)
 
-
 const isHome = ref(true)
 
 if (path == '/') {
@@ -65,6 +64,8 @@ if (path == '/') {
 const signOutUser = () => {
     const token = useCookie("token")
     token.value = null;
+    user.value = false;
+    console.log("It clicked")
     navigateTo("/")
 }
 

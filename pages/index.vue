@@ -13,6 +13,10 @@
                     @click="handleMenuTabs('Dinner')">Dinner</p>
                 <p :class="menuTab === 'Dessert' ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
                     @click="handleMenuTabs('Dessert')">Dessert</p>
+                <p :class="menuTab === 'Drink' ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
+                    @click="handleMenuTabs('Drink')">Drink</p>
+                <p :class="menuTab === 'Snack' ? 'active_menu_tab  bg-primary' : 'menu_tab'" class="poppins  "
+                    @click="handleMenuTabs('Snack')">Snack</p>
             </div>
 
             <!-- all foods -->
