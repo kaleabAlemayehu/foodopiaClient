@@ -8,7 +8,7 @@
                 <!-- Item 1 -->
                 <div v-for="e, index in images" :key="index" class=" hidden duration-700 ease-in-out"
                     data-carousel-item>
-                    <img :src="e.url"
+                    <img :src="e.image_url"
                         class="absolute block w-fit h-fit object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                         alt="it doesn't show the image">
                 </div>
@@ -54,12 +54,20 @@
 <script setup>
 import { initCarousels } from 'flowbite';
 import { onMounted, defineProps } from 'vue';
-
+import { FETCH_ADDITIONAL_IMAGES } from '~/helpers/queries/food';
+const images = ref([])
+const fetchAdditionalImages = async () => {
+    const { data } = await useAsyncQuery(FETCH_ADDITIONAL_IMAGES, { _eq: props.id })
+    images.value = data?._value?.recipe_images
+    console.log(images.value)
+}
 onMounted(() => {
     initCarousels()
+    fetchAdditionalImages()
+    console.log("propvalue: ", props.images)
 })
 const props = defineProps({
-    images: Array,
+    id: Number,
 })
 
 </script>

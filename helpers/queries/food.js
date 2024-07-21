@@ -150,4 +150,16 @@ export const FETCH_RECIPE_BY_ID = gql`
     }
   }
 `;
+
+export const FETCH_ADDITIONAL_IMAGES = gql`
+  query GetAdditionalImages($_eq: Int!) {
+    recipe_images(where: { recipe_id: { _eq: $_eq } }) {
+      id
+      image_url
+      is_featured
+      recipe_id
+      user_id
+    }
+  }
+`;
 // export const GET_BOOKMARKED_RECIPES = gql``;

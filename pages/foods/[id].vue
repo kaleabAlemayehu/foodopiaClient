@@ -51,7 +51,7 @@
 
             </div>
             <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
-            <Carousel :images="images" />
+            <Carousel :id="id" />
             <div class="flex justify-center flex-col mb-5">
 
                 <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
@@ -85,34 +85,17 @@ import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import Trash from '~/components/icons/Trash.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID } from '~/helpers/queries/food';
+import { FETCH_RECIPE_BY_ID, FETCH_ADDITIONAL_IMAGES } from '~/helpers/queries/food';
+import { image } from '@vee-validate/rules';
 const user = ref(true)
 const food = ref({});
 const disabled = ref(false);
 const { params } = useRoute();
 const router = useRouter();
 const id = params.id;
-const images = ref([
-    {
-        url: "/assets/images/additional1.jpg"
-    },
-    {
-        url: "/assets/images/additional2.jpg"
-    },
-    {
-        url: "/assets/images/breakfast2.png"
-    },
-    {
-        url: "/assets/images/breakfast3.png"
-    },
-    {
-        url: "/assets/images/breakfast4.png"
-    },
-])
 const fetchFood = async () => {
     const { data } = await useAsyncQuery(FETCH_RECIPE_BY_ID, { id: id })
     food.value = data?._value?.recipes_by_pk || {}
-
 }
 
 onMounted(() => {
@@ -123,6 +106,7 @@ onMounted(() => {
         user.value = false;
     }
     fetchFood()
+
     console.log("uservalue: ", user.value)
 })
 
