@@ -20,7 +20,7 @@
                             class="text-center md:text-left lg:text-left text-sm poppins text-gray-500 leading-relaxed select-none">
                             {{ food.description }}</p>
 
-                        <div v-if="user" class="flex mt-8 gap-8">
+                        <div v-if="user && user.id == food.user_id" class="flex mt-8 gap-8">
                             <button type="button"
                                 class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                                 <Edit class="inline text-sm" /> &nbsp; &nbsp; Edit
