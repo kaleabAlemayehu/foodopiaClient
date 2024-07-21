@@ -7,7 +7,7 @@
         <img class="w-64 mx-auto transform transition duration-300 hover:scale-105" :src="recipe.featured_image_url"
             alt="notdisplayed" />
         <div class="flex flex-col items-center my-3 space-y-2 transform transition duration-300 hover:scale-105">
-            <h1 class="text-gray-900 poppins text-lg transform transition duration-300">{{ title }}</h1>
+            <h1 class="text-gray-900 poppins text-lg transform transition duration-300">{{ recipe.title }}</h1>
             <p class="text-gray-500 poppins text-sm text-center transform transition duration-300">{{
                 recipe.description }}</p>
             <div
@@ -72,7 +72,9 @@ const props = defineProps(["recipe"]);
 const router = useRouter();
 
 const handleRoute = () => {
-    router.push(`/foods/${props.id}`);
+    console.log(props.recipe.id)
+    router.push(`/foods/${props.recipe.id}`);
+
 };
 
 const truncatedDescription = computed(() => props.description.slice(0, 50));

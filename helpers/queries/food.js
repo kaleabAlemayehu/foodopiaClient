@@ -131,3 +131,23 @@ export const GET_RECIPE_BY_CATEGORIES = gql`
     }
   }
 `;
+
+export const FETCH_RECIPE_BY_ID = gql`
+  query GetRecipeById($id: Int!) {
+    recipes_by_pk(id: $id) {
+      avg_rating
+      category_id
+      created_at
+      description
+      featured_image_url
+      id
+      prep_time
+      title
+      total_comments
+      total_likes
+      updated_at
+      user_id
+    }
+  }
+`;
+// export const GET_BOOKMARKED_RECIPES = gql``;
