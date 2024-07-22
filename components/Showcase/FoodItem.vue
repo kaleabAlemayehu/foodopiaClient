@@ -37,7 +37,7 @@
                     <Star class="w-5 h-5 text-yellow-300" />
                     &nbsp;&nbsp;
                     <div class="m-auto">
-                        {{ recipe.avg_rating }}
+                        {{ parseFloat(recipe.avg_rating).toFixed(1) }}
                     </div>
 
                 </div>
