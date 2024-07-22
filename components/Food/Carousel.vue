@@ -2,20 +2,20 @@
     <div>
 
 
-        <div id="default-carousel" class="relative h-full w-full " data-carousel="slide">
+        <div id="default-carousel" class="relative h-full w-full " data-carousel="static">
             <!-- Carousel wrapper -->
             <div class="relative h-96 overflow-hidden rounded-lg md:h-[600px]">
                 <!-- Item 1 -->
-                <div v-for="e, index in images" :key="index" class=" hidden duration-700 ease-in-out"
+                <div v-for="image, index in images" :key="index" class=" hidden duration-700 ease-in-out"
                     data-carousel-item>
-                    <img :src="e.image_url"
-                        class="absolute block w-fit h-fit object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                    <img :src="image.image_url"
+                        class="absolute block h-full w-full  object-contain -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                         alt="it doesn't show the image">
                 </div>
             </div>
             <!-- Slider indicators -->
             <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                <button v-for="e, index in images" :key="index" type="button" class="w-3 h-3 rounded-full"
+                <button v-for="image, index in images" :key="index" type="button" class="w-3 h-3 rounded-full"
                     aria-current="true" aria-label="Slide 1" :data-carousel-slide-to="`${index}`"></button>
 
             </div>
@@ -59,13 +59,21 @@ const images = ref([])
 const fetchAdditionalImages = async () => {
     const { data } = await useAsyncQuery(FETCH_ADDITIONAL_IMAGES, { _eq: props.id })
     images.value = data?._value?.recipe_images
-    console.log(images.value)
+    console.log(data?._value?.recipe_images)
+    // wait for the images to render and initilize carousel
+    setTimeout(() => {
+        initCarousels()
+
+    }, 3000)
+
 }
 onMounted(() => {
-    initCarousels()
     fetchAdditionalImages()
-    console.log("propvalue: ", props.images)
+
+
+
 })
+
 const props = defineProps({
     id: Number,
 })
