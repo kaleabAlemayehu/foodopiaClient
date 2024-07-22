@@ -90,7 +90,7 @@ import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE, IS_LIKED } from '~/helpers/queries/food';
+import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE, IS_LIKED, DELETE_LIKE } from '~/helpers/queries/food';
 const user = ref(true)
 const food = ref({});
 const liked = ref(false)
@@ -111,6 +111,24 @@ const fetchComment = async () => {
 const toggleHeart = () => {
 
     if (liked.value) {
+        const { mutate, onDone, onError } = useMutation(DELETE_LIKE, () => ({
+            variables: {
+                _eq: id
+            }
+        }))
+        mutate({
+            variables: {
+                _eq: id
+            }
+        })
+        onDone(result => {
+            console.log("unliked")
+            liked.value = false
+            // TODO add notification with toastify
+        })
+        onError(err => {
+            console.log(err)
+        })
 
     } else {
         const { mutate, onDone, onError } = useMutation(ADD_LIKE, () => ({
@@ -124,6 +142,7 @@ const toggleHeart = () => {
             }
         })
         onDone(result => {
+            console.log("liked")
             liked.value = true
             // TODO add notification with toastify
 

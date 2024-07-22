@@ -276,5 +276,16 @@ export const IS_LIKED = gql`
     }
   }
 `;
-
+export const DELETE_LIKE = gql`
+  mutation DeleteLike($_eq: Int!) {
+    delete_likes(where: { recipe_id: { _eq: $_eq } }) {
+      returning {
+        recipe_id
+        id
+        created_at
+        user_id
+      }
+    }
+  }
+`;
 // export const GET_BOOKMARKED_RECIPES = gql``;
