@@ -31,7 +31,8 @@
                         </div>
                         <div v-else class="mt-8">
 
-                            <button type="button" @click="addBookmark()"
+                            <button type="button" @click="addBookmark()" :disabled="disabled"
+                                :class="{ 'cursor-not-allowed bg-red-100': disabled }"
                                 class=" focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                                 <Bookmark class="inline text-lg" /> &nbsp; &nbsp; Add Bookmark
                             </button>
@@ -88,13 +89,14 @@ import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK } from '~/helpers/queries/food';
+import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED } from '~/helpers/queries/food';
 const user = ref(true)
 const food = ref({});
 const reviews = ref([])
 const keyValue = ref(0)
 const disabled = ref(false);
 const { params } = useRoute();
+const bookmarked = ref([0])
 const router = useRouter();
 const id = params.id;
 const fetchComment = async () => {
@@ -110,6 +112,25 @@ const fetchFood = async () => {
 
 }
 
+const isBookmarked = () => {
+    const { onResult, onError, loading } = useQuery(IS_BOOKMARKED, {
+        _eq: user.value.id,
+        _eq1: id
+    })
+
+
+    onResult(({ data }) => {
+        bookmarked.value = data?.bookmarks
+
+
+    })
+
+    onError(err => {
+        console.log(err)
+    })
+
+}
+
 onMounted(() => {
     const token = useCookie("token")
     if (token.value && token.value !== null) {
@@ -119,6 +140,7 @@ onMounted(() => {
     }
     fetchFood()
     fetchComment()
+    isBookmarked()
 
 })
 
@@ -156,13 +178,21 @@ const addBookmark = () => {
     })
     onDone(result => {
         console.log("result", result)
-        console.log("bookmark added")
+        disabled.value = true
+        // TODO add toastify notification
     })
     onError(err => {
         console.error(err)
     })
 }
+watch(() => bookmarked.value, () => {
+    if (bookmarked.value) {
 
+        disabled.value = bookmarked.value.length == 0 ? false : true;
+        console.log("disabledvalue: ", disabled.value)
+    }
+
+})
 </script>
 
 <style scoped>

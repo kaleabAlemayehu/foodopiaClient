@@ -248,4 +248,13 @@ export const ADD_BOOKMARK = gql`
   }
 `;
 
+export const IS_BOOKMARKED = gql`
+  query IsBookmarked($_eq: Int!, $_eq1: Int!) {
+    bookmarks(where: { user_id: { _eq: $_eq }, recipe_id: { _eq: $_eq1 } }) {
+      recipe_id
+      user_id
+    }
+  }
+`;
+
 // export const GET_BOOKMARKED_RECIPES = gql``;
