@@ -55,7 +55,7 @@
             <div class="flex justify-center flex-col mb-5">
 
                 <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
-                <Ingredients />
+                <Ingredients :id="id" />
                 <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
                 <Instructions />
                 <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>

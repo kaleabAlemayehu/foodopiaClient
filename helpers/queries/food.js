@@ -162,4 +162,16 @@ export const FETCH_ADDITIONAL_IMAGES = gql`
     }
   }
 `;
+
+export const FETCH_INGREDIENT = gql`
+  query GetIngredients($_eq: Int!) {
+    ingredients(where: { recipe_id: { _eq: $_eq } }) {
+      id
+      name
+      quantity
+      recipe_id
+      user_id
+    }
+  }
+`;
 // export const GET_BOOKMARKED_RECIPES = gql``;
