@@ -25,7 +25,7 @@
                                 class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                                 <Edit class="inline text-sm" /> &nbsp; &nbsp; Edit
                             </button>
-                            <button type="button"
+                            <button type="button" @click="deleteRecipe"
                                 class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                                 <Trash class="inline text-sm" /> &nbsp; &nbsp; Delete
                             </button>
@@ -87,7 +87,7 @@ import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import Trash from '~/components/icons/Trash.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID, FETCH_COMMENT } from '~/helpers/queries/food';
+import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE } from '~/helpers/queries/food';
 const user = ref(true)
 const food = ref({});
 const reviews = ref([])
@@ -118,8 +118,26 @@ onMounted(() => {
 
 })
 
-
-// Watch for changes to the initialData and update reviews
+const deleteRecipe = () => {
+    // TODO adding conformation modal
+    const { mutate, onDone, onError } = useMutation(DELETE_RECIPE, {
+        variables: {
+            id: id
+        }
+    })
+    mutate({
+        variables: {
+            id: id
+        }
+    })
+    onDone(result => {
+        console.log(result)
+        navigateTo("/")
+    })
+    onError(err => {
+        console.log(err)
+    })
+}
 
 
 </script>

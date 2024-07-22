@@ -219,4 +219,23 @@ export const FETCH_COMMENT = gql`
     }
   }
 `;
+
+export const DELETE_RECIPE = gql`
+  mutation DeleteRecipe($id: Int!) {
+    delete_recipes_by_pk(id: $id) {
+      avg_rating
+      category_id
+      created_at
+      description
+      featured_image_url
+      prep_time
+      id
+      total_comments
+      title
+      total_likes
+      updated_at
+      user_id
+    }
+  }
+`;
 // export const GET_BOOKMARKED_RECIPES = gql``;
