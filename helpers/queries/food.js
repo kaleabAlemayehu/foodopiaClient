@@ -238,4 +238,14 @@ export const DELETE_RECIPE = gql`
     }
   }
 `;
+
+export const ADD_BOOKMARK = gql`
+  mutation MyMutation($recipe_id: Int!) {
+    insert_bookmarks_one(object: { recipe_id: $recipe_id }) {
+      recipe_id
+      user_id
+    }
+  }
+`;
+
 // export const GET_BOOKMARKED_RECIPES = gql``;

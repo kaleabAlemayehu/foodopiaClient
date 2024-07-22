@@ -62,12 +62,14 @@
 </template>
 
 <script setup>
+
 import Banner from '~/components/Header/Banner.vue';
 import FoodItem from '~/components/Showcase/FoodItem.vue';
 import Skeleton from '~/components/Showcase/Skeleton.vue';
 import Empty from '~/components/Food/Empty.vue';
 import { ref, onMounted, computed } from 'vue';
 import { GET_RECIPE_BY_CATEGORIES } from '~/helpers/queries/food';
+
 const foods = ref([])
 const Loading = ref(true);
 const offset = ref(0)
@@ -87,6 +89,9 @@ onMounted(() => {
     fetchFood()
 
 });
+onBeforeUpdate(() => {
+    fetchFood()
+})
 
 const handleMenuTabs = (type) => {
     menuTab.value = type;

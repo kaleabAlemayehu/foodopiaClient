@@ -26,11 +26,12 @@
                                 <Edit class="inline text-sm" /> &nbsp; &nbsp; Edit
                             </button>
                             <DeleteModal @confirmed="deleteRecipe()" />
+                            <!-- live update on the delete -->
 
                         </div>
                         <div v-else class="mt-8">
 
-                            <button type="button"
+                            <button type="button" @click="addBookmark()"
                                 class=" focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                                 <Bookmark class="inline text-lg" /> &nbsp; &nbsp; Add Bookmark
                             </button>
@@ -56,11 +57,14 @@
                 <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
                 <Instructions :id="id" />
                 <div v-if="reviews.length > 0" class="w-full h-px bg-gray-200 mx-auto my-8"></div>
-                <Rating v-for="review, index in reviews" :key="index" :review="review" />
+                <div :key="keyValue">
+
+                    <Rating v-for="review, index in reviews" :key="index" :review="review" />
+                </div>
 
                 <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
                 <!-- TODO: live update on the comment show area -->
-                <Comment :id="id" @comment-submited="updateCommentFetch()" />
+                <Comment :id="id" @comment-submited="fetchComment()" />
 
             </div>
 
@@ -84,10 +88,11 @@ import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE } from '~/helpers/queries/food';
+import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK } from '~/helpers/queries/food';
 const user = ref(true)
 const food = ref({});
 const reviews = ref([])
+const keyValue = ref(0)
 const disabled = ref(false);
 const { params } = useRoute();
 const router = useRouter();
@@ -95,12 +100,14 @@ const id = params.id;
 const fetchComment = async () => {
     const { data } = await useAsyncQuery(FETCH_COMMENT, { _eq: id })
     reviews.value = data?._value?.comments || []
+    keyValue.value += 1;
 }
 
 
 const fetchFood = async () => {
     const { data } = await useAsyncQuery(FETCH_RECIPE_BY_ID, { id: id })
     food.value = data?._value?.recipes_by_pk || {}
+
 }
 
 onMounted(() => {
@@ -136,6 +143,25 @@ const deleteRecipe = () => {
     })
 }
 
+const addBookmark = () => {
+    const { mutate, onDone, onError } = useMutation(ADD_BOOKMARK, {
+        variables: {
+            recipe_id: id
+        }
+    })
+    mutate({
+        variables: {
+            recipe_id: id
+        }
+    })
+    onDone(result => {
+        console.log("result", result)
+        console.log("bookmark added")
+    })
+    onError(err => {
+        console.error(err)
+    })
+}
 
 </script>
 
