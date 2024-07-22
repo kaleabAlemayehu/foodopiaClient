@@ -202,4 +202,21 @@ export const CREATE_COMMENT = gql`
     }
   }
 `;
+
+export const FETCH_COMMENT = gql`
+  query GetComments($_eq: Int!) {
+    comments(where: { recipe_id: { _eq: $_eq } }) {
+      comment
+      rating
+      recipe_id
+      user_id
+      created_at
+      id
+      user {
+        username
+        email
+      }
+    }
+  }
+`;
 // export const GET_BOOKMARKED_RECIPES = gql``;

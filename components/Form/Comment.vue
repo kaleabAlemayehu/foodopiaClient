@@ -42,6 +42,7 @@ const storeRating = (value) => {
 }
 const onSubmit = (values, { resetForm }) => {
     if (rating.value > 0) {
+
         error.value = ""
         const { mutate, onDone, onError } = useMutation(CREATE_COMMENT, () => ({
             variables: {

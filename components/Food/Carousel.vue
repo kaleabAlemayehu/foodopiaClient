@@ -59,7 +59,7 @@ const images = ref([])
 const fetchAdditionalImages = async () => {
     const { data } = await useAsyncQuery(FETCH_ADDITIONAL_IMAGES, { _eq: props.id })
     images.value = data?._value?.recipe_images
-    console.log(data?._value?.recipe_images)
+
     // wait for the images to render and initilize carousel
     setTimeout(() => {
         initCarousels()

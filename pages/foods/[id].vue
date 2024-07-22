@@ -58,10 +58,12 @@
                 <Ingredients :id="id" />
                 <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
                 <Instructions :id="id" />
+                <div v-if="reviews.length > 0" class="w-full h-px bg-gray-200 mx-auto my-8"></div>
+                <Rating v-for="review, index in reviews" :key="index" :review="review" />
+
                 <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
-                <Rating />
-                <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
-                <Comment :id="id" @comment-submited="fetchComment" />
+                <!-- TODO: live update on the comment show area -->
+                <Comment :id="id" @comment-submited="updateCommentFetch()" />
 
             </div>
 
@@ -85,14 +87,20 @@ import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import Trash from '~/components/icons/Trash.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID, FETCH_ADDITIONAL_IMAGES } from '~/helpers/queries/food';
-import { image } from '@vee-validate/rules';
+import { FETCH_RECIPE_BY_ID, FETCH_COMMENT } from '~/helpers/queries/food';
 const user = ref(true)
 const food = ref({});
+const reviews = ref([])
 const disabled = ref(false);
 const { params } = useRoute();
 const router = useRouter();
 const id = params.id;
+const fetchComment = async () => {
+    const { data } = await useAsyncQuery(FETCH_COMMENT, { _eq: id })
+    reviews.value = data?._value?.comments || []
+}
+
+
 const fetchFood = async () => {
     const { data } = await useAsyncQuery(FETCH_RECIPE_BY_ID, { id: id })
     food.value = data?._value?.recipes_by_pk || {}
@@ -106,8 +114,12 @@ onMounted(() => {
         user.value = false;
     }
     fetchFood()
+    fetchComment()
 
 })
+
+
+// Watch for changes to the initialData and update reviews
 
 
 </script>
