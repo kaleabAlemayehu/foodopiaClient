@@ -25,10 +25,7 @@
                                 class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                                 <Edit class="inline text-sm" /> &nbsp; &nbsp; Edit
                             </button>
-                            <button type="button" @click="deleteRecipe"
-                                class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
-                                <Trash class="inline text-sm" /> &nbsp; &nbsp; Delete
-                            </button>
+                            <DeleteModal @confirmed="deleteRecipe()" />
 
                         </div>
                         <div v-else class="mt-8">
@@ -85,7 +82,7 @@ import Rating from '~/components/Food/Rating.vue';
 import Comment from '~/components/Form/Comment.vue';
 import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
-import Trash from '~/components/icons/Trash.vue';
+import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
 import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE } from '~/helpers/queries/food';
 const user = ref(true)
