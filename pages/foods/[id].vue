@@ -90,10 +90,11 @@ import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE } from '~/helpers/queries/food';
+import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE, IS_LIKED } from '~/helpers/queries/food';
 const user = ref(true)
 const food = ref({});
 const liked = ref(false)
+const likes = ref([])
 const reviews = ref([])
 const keyValue = ref(0)
 const disabled = ref(false);
@@ -124,13 +125,25 @@ const toggleHeart = () => {
         })
         onDone(result => {
             liked.value = true
-            console.log(result)
+            // TODO add notification with toastify
+
         })
         onError(err => {
             console.log(err)
         })
 
     }
+}
+const isLiked = () => {
+    const { onResult, onError, loading } = useQuery(IS_LIKED, {
+        _eq: id
+    })
+    onResult(({ data }) => {
+        likes.value = data?.likes
+    })
+    onError(err => {
+        console.log(err)
+    })
 }
 const fetchFood = async () => {
     const { data } = await useAsyncQuery(FETCH_RECIPE_BY_ID, { id: id })
@@ -139,6 +152,7 @@ const fetchFood = async () => {
 }
 
 const isBookmarked = () => {
+
     const { onResult, onError, loading } = useQuery(IS_BOOKMARKED, {
         _eq: user.value.id,
         _eq1: id
@@ -165,6 +179,7 @@ onMounted(() => {
     fetchFood()
     fetchComment()
     isBookmarked()
+    isLiked()
 
 })
 
@@ -213,6 +228,14 @@ watch(() => bookmarked.value, () => {
     if (bookmarked.value) {
 
         disabled.value = bookmarked.value.length == 0 ? false : true;
+
+    }
+
+})
+watch(() => likes.value, () => {
+    if (likes.value) {
+
+        liked.value = likes.value.length == 0 ? false : true;
 
     }
 

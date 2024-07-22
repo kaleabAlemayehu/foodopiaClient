@@ -247,7 +247,7 @@ export const ADD_BOOKMARK = gql`
     }
   }
 `;
-
+//  TODO modify isbookmarked query by setting permistion limit to avoid manual registeration of user_id
 export const IS_BOOKMARKED = gql`
   query IsBookmarked($_eq: Int!, $_eq1: Int!) {
     bookmarks(where: { user_id: { _eq: $_eq }, recipe_id: { _eq: $_eq1 } }) {
@@ -259,6 +259,16 @@ export const IS_BOOKMARKED = gql`
 export const ADD_LIKE = gql`
   mutation AddLike($recipe_id: Int!) {
     insert_likes_one(object: { recipe_id: $recipe_id }) {
+      created_at
+      id
+      recipe_id
+      user_id
+    }
+  }
+`;
+export const IS_LIKED = gql`
+  query IsLiked($_eq: Int = 10) {
+    likes(where: { recipe_id: { _eq: $_eq } }) {
       created_at
       id
       recipe_id
