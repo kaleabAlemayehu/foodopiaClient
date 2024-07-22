@@ -42,7 +42,8 @@
                     <!-- Right side -->
                     <div class="order-1 md:order-2 lg:order-2 flex flex-col">
 
-                        <Heart class="text-primary text-4xl self-end " />
+                        <Heart class="text-gray-400 text-4xl self-end cursor-pointer" :class="{ 'text-red-600': liked }"
+                            @click="toggleHeart" />
 
                         <img :src="food.featured_image_url" class="w-3/4 md:w-3/4 lg:w-full mx-auto" alt="food" />
                     </div>
@@ -89,9 +90,10 @@ import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED } from '~/helpers/queries/food';
+import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE } from '~/helpers/queries/food';
 const user = ref(true)
 const food = ref({});
+const liked = ref(false)
 const reviews = ref([])
 const keyValue = ref(0)
 const disabled = ref(false);
@@ -105,7 +107,31 @@ const fetchComment = async () => {
     keyValue.value += 1;
 }
 
+const toggleHeart = () => {
 
+    if (liked.value) {
+
+    } else {
+        const { mutate, onDone, onError } = useMutation(ADD_LIKE, () => ({
+            variables: {
+                recipe_id: id
+            }
+        }))
+        mutate({
+            variables: {
+                recipe_id: id
+            }
+        })
+        onDone(result => {
+            liked.value = true
+            console.log(result)
+        })
+        onError(err => {
+            console.log(err)
+        })
+
+    }
+}
 const fetchFood = async () => {
     const { data } = await useAsyncQuery(FETCH_RECIPE_BY_ID, { id: id })
     food.value = data?._value?.recipes_by_pk || {}
@@ -121,8 +147,6 @@ const isBookmarked = () => {
 
     onResult(({ data }) => {
         bookmarked.value = data?.bookmarks
-
-
     })
 
     onError(err => {
@@ -189,7 +213,7 @@ watch(() => bookmarked.value, () => {
     if (bookmarked.value) {
 
         disabled.value = bookmarked.value.length == 0 ? false : true;
-        console.log("disabledvalue: ", disabled.value)
+
     }
 
 })

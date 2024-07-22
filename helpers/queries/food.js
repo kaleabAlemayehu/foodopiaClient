@@ -256,5 +256,15 @@ export const IS_BOOKMARKED = gql`
     }
   }
 `;
+export const ADD_LIKE = gql`
+  mutation AddLike($recipe_id: Int!) {
+    insert_likes_one(object: { recipe_id: $recipe_id }) {
+      created_at
+      id
+      recipe_id
+      user_id
+    }
+  }
+`;
 
 // export const GET_BOOKMARKED_RECIPES = gql``;
