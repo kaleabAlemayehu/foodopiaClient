@@ -174,4 +174,16 @@ export const FETCH_INGREDIENT = gql`
     }
   }
 `;
+
+export const FETCH_INSTRUCTION = gql`
+  query GetInstructions($_eq: Int!) {
+    steps(order_by: { step_order: asc }, where: { recipe_id: { _eq: $_eq } }) {
+      description
+      id
+      recipe_id
+      step_order
+      user_id
+    }
+  }
+`;
 // export const GET_BOOKMARKED_RECIPES = gql``;

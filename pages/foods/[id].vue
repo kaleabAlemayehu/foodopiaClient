@@ -57,7 +57,7 @@
                 <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
                 <Ingredients :id="id" />
                 <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
-                <Instructions />
+                <Instructions :id="id" />
                 <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
                 <Rating />
                 <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
