@@ -186,4 +186,20 @@ export const FETCH_INSTRUCTION = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT = gql`
+  mutation InsertComment(
+    $recipe_id: Int = 10
+    $rating: Int = 10
+    $comment: String = ""
+  ) {
+    insert_comments_one(
+      object: { comment: $comment, rating: $rating, recipe_id: $recipe_id }
+    ) {
+      recipe {
+        user_id
+      }
+    }
+  }
+`;
 // export const GET_BOOKMARKED_RECIPES = gql``;

@@ -28,12 +28,18 @@
 // text-yellow-300
 // text-gray-300
 import Star from '../icons/Star.vue';
-const rating = ref(-1)
+const props = defineProps(["value"])
+const emit = defineEmits(["ratingValue"])
+const rating = ref(0)
 const toggleRating = (index) => {
     rating.value = rating === index ? -1 : index;
+    emit("ratingValue", rating.value + 1)
 }
+watch(() => props.value, (newValue) => {
+    rating.value = newValue - 1;
 
-
+    emit("ratingValue", rating.value + 1)
+}, { immediate: true })
 
 </script>
 
