@@ -78,6 +78,7 @@ const handleRoute = () => {
 };
 
 const truncatedDescription = computed(() => props.description.slice(0, 50));
+
 </script>
 
 <style scoped>

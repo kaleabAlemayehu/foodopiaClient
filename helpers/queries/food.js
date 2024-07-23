@@ -338,4 +338,28 @@ export const DELETE_LIKE = gql`
   }
 `;
 
-// export const GET_BOOKMARKED_RECIPES = gql``;
+export const GET_BOOKMARKED_RECIPES = gql`
+  query GetBookmarkedRecipes($limit: Int!, $offset: Int!) {
+    bookmarks_aggregate {
+      aggregate {
+        count
+      }
+    }
+    bookmarks(limit: $limit, offset: $offset) {
+      recipe {
+        avg_rating
+        category_id
+        created_at
+        description
+        featured_image_url
+        id
+        prep_time
+        title
+        total_comments
+        total_likes
+        updated_at
+        user_id
+      }
+    }
+  }
+`;
