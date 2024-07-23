@@ -113,9 +113,11 @@
                     aria-describedby="user_avatar_help" id="thumbnail" type="file" accept="image/*" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">ThumbNail Image </div>
                 <ErrorMessage name="thumbnail" class="err" />
-                <div class="flex flex-wrap justify-center items-center" id="image_preview">
+                <div class="flex flex-wrap justify-center items-center" id="image_preview"
+                    v-if="thumbnailImage && thumbnailImage.length > 0">
                     <div v-for="(image, index) in thumbnailImage" :key="index" class="relative w-1/2 p-2">
                         <img :src="image.url" class="w-full h-auto object-cover rounded" :alt="image.name" />
+
                         <div
                             class="absolute inset-0 flex items-center justify-center bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60  opacity-0 hover:opacity-100 transition-opacity duration-500">
                             <button class="text-white bg-trasparent p-2 rounded" @click="removeThumbNail(index)">
@@ -134,9 +136,10 @@
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Select Multiple
                     Picutures Of The Food As You Want!</div>
                 <ErrorMessage name="images" class="err" />
-                <div class="flex flex-wrap" id="image_preview">
+                <div class="flex flex-wrap" id="image_preview" v-if="images && images.length > 0">
                     <div v-for="(image, index) in images" :key="index" class="relative w-1/2 p-2">
                         <img :src="image.url" class="w-full h-auto object-cover rounded" :alt="image.name" />
+
                         <div
                             class="absolute inset-0 flex items-center justify-center bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60  opacity-0 hover:opacity-100 transition-opacity duration-500">
                             <button class="text-white bg-trasparent p-2 rounded" @click="removeImage(index)">
@@ -213,12 +216,21 @@ const initialValues = {
         return {
             name: instruction.description
         }
-    }) || [{ name: "" }, { name: "" }]
+    }) || [{ name: "" }, { name: "" }],
+    images: props?.recipe ? "image" : "",
+    thumbnail: props?.recipe ? "image" : "",
 
 }
 const user = ref(false)
-const images = ref([])
-const thumbnailImage = ref([])
+const images = ref(props?.recipe?.recipe_images?.filter((image) => !image.is_featured).map((image) => {
+    if (!image.is_featured) {
+        return {
+            name: image.image_url,
+            url: image.image_url,
+        }
+    }
+}) || [])
+const thumbnailImage = ref(props?.recipe?.featured_image_url ? [{ name: props.recipe.featured_image_url, url: props.recipe.featured_image_url }] : [])
 const handleThumbNail = (event) => {
     const files = Array.from(event.target.files);
     thumbnailImage.value = files.map((file) => {
@@ -473,6 +485,7 @@ onMounted(() => {
     } else {
         navigateTo('/')
     }
+    console.log(images, thumbnailImage)
 
 })
 
