@@ -101,7 +101,7 @@ const likes = ref([])
 const reviews = ref([])
 const bookmarked = ref(false);
 const { params } = useRoute();
-const bookmarkes = ref([0])
+const bookmarks = ref([0])
 const router = useRouter();
 const id = params.id;
 const fetchComment = () => {
@@ -183,13 +183,14 @@ const fetchFood = async () => {
 const isBookmarked = () => {
 
     const { onResult, onError, loading } = useQuery(IS_BOOKMARKED, {
-        _eq: user.value.id,
-        _eq1: id
+        _eq: id
     })
 
 
     onResult(({ data }) => {
-        bookmarked.value = data?.bookmarks
+        bookmarks.value = data?.bookmarks
+        console.log(bookmarks.value)
+
     })
 
     onError(err => {
@@ -270,16 +271,17 @@ const toggleBookmark = () => {
         onDone(result => {
             console.log("deleteResult", result)
             bookmarked.value = false
+            // TODO add toastify notification
         })
         onError(err => {
             console.log(err)
         })
     }
 }
-watch(() => bookmarked.value, () => {
-    if (bookmarked.value) {
+watch(() => bookmarks.value, () => {
+    if (bookmarks.value) {
 
-        bookmarked.value = bookmarkes.value.length == 0 ? false : true;
+        bookmarked.value = bookmarks.value.length == 0 ? false : true;
 
     }
 

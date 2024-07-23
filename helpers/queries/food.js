@@ -247,10 +247,10 @@ export const ADD_BOOKMARK = gql`
     }
   }
 `;
-//  TODO modify isbookmarked query by setting permistion limit to avoid manual registeration of user_id
+
 export const IS_BOOKMARKED = gql`
-  query IsBookmarked($_eq: Int!, $_eq1: Int!) {
-    bookmarks(where: { user_id: { _eq: $_eq }, recipe_id: { _eq: $_eq1 } }) {
+  query IsBookmarked($_eq: Int!) {
+    bookmarks(where: { recipe_id: { _eq: $_eq } }) {
       recipe_id
       user_id
     }
