@@ -337,4 +337,5 @@ export const DELETE_LIKE = gql`
     }
   }
 `;
+
 // export const GET_BOOKMARKED_RECIPES = gql``;

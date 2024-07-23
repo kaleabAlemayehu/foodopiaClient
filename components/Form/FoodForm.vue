@@ -108,7 +108,7 @@
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="thumbnail">Upload
                     ThumbNail
                     Image</label>
-                <Field as="input" name="thumbnail" rules="required|image|size:2000" @change="handleThumbNail"
+                <Field as="input" name="thumbnail" rules="required" @change="handleThumbNail"
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     aria-describedby="user_avatar_help" id="thumbnail" type="file" accept="image/*" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">ThumbNail Image </div>
@@ -130,7 +130,7 @@
             <div class="mb-5">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload
                     Image</label>
-                <Field as="input" name="images" rules="required|image|size:2000" @change="handleFileChange"
+                <Field as="input" name="images" rules="required" @change="handleFileChange"
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     aria-describedby="user_avatar_help" id="user_avatar" multiple type="file" accept="image/*" />
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Select Multiple
@@ -190,7 +190,8 @@ import Cross from '../icons/Cross.vue';
 import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 'vee-validate';
 import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
-import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT, INSERT_INSTRUCTION, INSERT_IMAGE } from '~/helpers/queries/food';
+import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT, INSERT_INSTRUCTION, INSERT_IMAGE, DELETE_RECIPE } from '~/helpers/queries/food';
+import { image } from '@vee-validate/rules';
 const props = defineProps(["recipe"])
 
 
@@ -254,7 +255,7 @@ const handleThumbNail = (event) => {
 }
 const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
-    images.value = files.map((file) => {
+    images.value = [...images.value, ...files.map((file) => {
         const obj = {
             name: file.name,
             url: URL.createObjectURL(file),
@@ -271,10 +272,11 @@ const handleFileChange = (event) => {
 
         return obj;
 
-    });
+    })]
 };
 const removeImage = (index) => {
     images.value.splice(index, 1);
+    console.log("image", images.value)
 };
 const removeThumbNail = (index) => {
     thumbnailImage.value.splice(index, 1);
@@ -283,32 +285,458 @@ const removeThumbNail = (index) => {
 
 
 const onSubmit = async (values, { resetForm }) => {
+    const route = useRoute()
+    const page = route.path
+    if (page == "/foods/create") {
 
 
-    if (values.instructions.length && values.ingredients.length) {
-        thumbnailImage.value.forEach(img => {
-            const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
-                variables: {
-                    fileName: img.name,
-                    base64Str: img.base64,
-                }
-            }))
-            mutate({
-                variables: {
-                    fileName: img.name,
-                    base64Str: img.base64,
-                }
+
+
+        if (values.instructions.length && values.ingredients.length) {
+            thumbnailImage.value.forEach(img => {
+                const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
+                    variables: {
+                        fileName: img.name,
+                        base64Str: img.base64,
+                    }
+                }))
+                mutate({
+                    variables: {
+                        fileName: img.name,
+                        base64Str: img.base64,
+                    }
+                })
+                onDone(result => {
+                    thumbnailUrl.value = result.data.imageUpload
+                    thumbnailImage.value = []
+
+                    // create a recipe
+                    const { mutate, onDone, onError } = useMutation(CREATE_FOOD, () => ({
+                        variables: {
+                            title: values.title,
+                            description: values.description,
+                            featured_image_url: thumbnailUrl.value.imageUrl,
+                            prep_time: values.preparationTime,
+                            category_id: values.category,
+                        }
+                    }))
+                    mutate({
+                        variables: {
+                            title: values.title,
+                            description: values.description,
+                            featured_image_url: thumbnailUrl.value.imageUrl,
+                            prep_time: values.preparationTime,
+                            category_id: values.category,
+                        }
+                    })
+                    onDone(result => {
+                        const recipeId = result.data.insert_recipes_one.id;
+                        console.log(result.data.insert_recipes_one.featured_image_url)
+                        // add ingredient
+                        values.ingredients.forEach(ingredient => {
+                            const { mutate, onDone, onError } = useMutation(INSERT_INGREDIENT, () => ({
+                                variables: {
+                                    name: ingredient.name,
+                                    quantity: ingredient.amount,
+                                    recipe_id: recipeId,
+                                }
+                            }))
+                            mutate({
+                                variables: {
+                                    name: ingredient.name,
+                                    quantity: ingredient.amount,
+                                    recipe_id: recipeId,
+                                }
+                            })
+                            onDone(result => {
+                                // TODO   add notification popups ( here or down there ↓)
+                                // reset the values
+                                resetForm()
+
+                            })
+                            onError(err => {
+                                error.value = err.message;
+                            })
+                        })
+                        // add instruction 
+                        values.instructions.forEach((instruction, index) => {
+                            const { mutate, onDone, onError } = useMutation(INSERT_INSTRUCTION, () => ({
+                                variables: {
+                                    description: instruction.name,
+                                    recipe_id: recipeId,
+                                    step_order: index,
+                                }
+                            }))
+                            mutate({
+                                variables: {
+                                    description: instruction.name,
+                                    recipe_id: recipeId,
+                                    step_order: index,
+                                }
+                            })
+                            onDone((result) => {
+                                // TODO add notification popups (here or up there ↑)
+                                resetForm()
+
+                            })
+                            onError(err => {
+                                error.value = err.message;
+
+                            })
+                        })
+
+                        // TODO add thumbnailimage upload to images url table
+
+                        const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
+                            variables: {
+                                is_featured: true,
+                                image_url: thumbnailUrl.value.imageUrl,
+                                recipe_id: recipeId,
+                            }
+                        }))
+                        mutate({
+                            variables: {
+                                is_featured: true,
+                                image_url: thumbnailUrl.value.imageUrl,
+                                recipe_id: recipeId,
+                            }
+                        })
+
+                        onDone(result => {
+                            resetForm()
+
+                        })
+                        onError(err => {
+                            error.value = err.message
+                        })
+
+                        // upload images to the server
+                        // get the number of the images
+                        count.value = images.value.length
+                        images.value.forEach((image) => {
+                            const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
+                                variables: {
+                                    fileName: image.name,
+                                    base64Str: image.base64,
+                                }
+                            }))
+                            mutate({
+                                variables: {
+                                    fileName: image.name,
+                                    base64Str: image.base64,
+                                }
+                            })
+
+                            onDone(result => {
+                                // insert image url to the table
+                                const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
+                                    variables: {
+                                        is_featured: false,
+                                        image_url: result.data.imageUpload.imageUrl,
+                                        recipe_id: recipeId,
+                                    }
+                                }))
+                                mutate({
+                                    variables: {
+                                        is_featured: false,
+                                        image_url: result.data.imageUpload.imageUrl,
+                                        recipe_id: recipeId,
+                                    }
+                                })
+
+                                onDone(result => {
+                                    // count and clear images
+                                    count.value--;
+                                    resetForm()
+                                    if (count.value == 0) {
+                                        images.value = []
+                                    }
+
+                                })
+                                onError(err => {
+                                    error.value = err.message
+                                })
+
+                            })
+
+                            onError(err => {
+                                error.value = err.message;
+                                return
+                            })
+
+                        })
+
+                    })
+                    onError(err => {
+                        error.value = err.message;
+                        return
+                    })
+
+                })
+                onError(err => {
+                    error.value = err.message;
+                    return;
+                })
             })
-            onDone(result => {
-                thumbnailUrl.value = result.data.imageUpload
-                thumbnailImage.value = []
+        } else {
+            error.value = " There Must Be At Least One Instruction And One Ingredient!"
+        }
+    } else if (page == "/foods/edit") {
+        // delete the recipe
+        const route = useRoute();
+        const recipeId = route.query.recipeId;
+        console.log(recipeId)
+        const { mutate, onDone, onError } = useMutation(DELETE_RECIPE, () => ({
+            variables: {
+                id: parseInt(recipeId)
+            }
+        }))
+        mutate({
+            variables: {
+                id: parseInt(recipeId)
+            }
+        })
+
+        onDone(result => {
+            console.log(result)
+        })
+        onError(err => {
+            console.log(err)
+        })
+        if (values.instructions.length && values.ingredients.length) {
+            // if the thumnailImage.value is changed
+            if (Object.keys(thumbnailImage.value[0]).includes("base64")) {
+                const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
+                    variables: {
+                        fileName: thumbnailImage.value[0].name,
+                        base64Str: thumbnailImage.value[0].base64,
+                    }
+                }))
+                mutate({
+                    variables: {
+                        fileName: thumbnailImage.value[0].name,
+                        base64Str: thumbnailImage.value[0].base64,
+                    }
+                })
+                onDone(result => {
+                    thumbnailUrl.value = result.data.imageUpload
+                    thumbnailImage.value = []
+
+                    // create a recipe
+                    const { mutate, onDone, onError } = useMutation(CREATE_FOOD, () => ({
+                        variables: {
+                            title: values.title,
+                            description: values.description,
+                            featured_image_url: thumbnailUrl.value.imageUrl,
+                            prep_time: values.preparationTime,
+                            category_id: values.category,
+                        }
+                    }))
+                    mutate({
+                        variables: {
+                            title: values.title,
+                            description: values.description,
+                            featured_image_url: thumbnailUrl.value.imageUrl,
+                            prep_time: values.preparationTime,
+                            category_id: values.category,
+                        }
+                    })
+                    onDone(result => {
+                        const recipeId = result.data.insert_recipes_one.id;
+                        console.log(result.data.insert_recipes_one.featured_image_url)
+                        // add ingredient
+                        values.ingredients.forEach(ingredient => {
+                            const { mutate, onDone, onError } = useMutation(INSERT_INGREDIENT, () => ({
+                                variables: {
+                                    name: ingredient.name,
+                                    quantity: ingredient.amount,
+                                    recipe_id: recipeId,
+                                }
+                            }))
+                            mutate({
+                                variables: {
+                                    name: ingredient.name,
+                                    quantity: ingredient.amount,
+                                    recipe_id: recipeId,
+                                }
+                            })
+                            onDone(result => {
+                                // TODO   add notification popups ( here or down there ↓)
+                                // reset the values
+                                resetForm()
+
+                            })
+                            onError(err => {
+                                error.value = err.message;
+                            })
+                        })
+                        // add instruction 
+                        values.instructions.forEach((instruction, index) => {
+                            const { mutate, onDone, onError } = useMutation(INSERT_INSTRUCTION, () => ({
+                                variables: {
+                                    description: instruction.name,
+                                    recipe_id: recipeId,
+                                    step_order: index,
+                                }
+                            }))
+                            mutate({
+                                variables: {
+                                    description: instruction.name,
+                                    recipe_id: recipeId,
+                                    step_order: index,
+                                }
+                            })
+                            onDone((result) => {
+                                // TODO add notification popups (here or up there ↑)
+                                resetForm()
+
+                            })
+                            onError(err => {
+                                error.value = err.message;
+
+                            })
+                        })
+
+                        // TODO add thumbnailimage upload to images url table
+
+                        const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
+                            variables: {
+                                is_featured: true,
+                                image_url: thumbnailUrl.value.imageUrl,
+                                recipe_id: recipeId,
+                            }
+                        }))
+                        mutate({
+                            variables: {
+                                is_featured: true,
+                                image_url: thumbnailUrl.value.imageUrl,
+                                recipe_id: recipeId,
+                            }
+                        })
+
+                        onDone(result => {
+                            resetForm()
+
+                        })
+                        onError(err => {
+                            error.value = err.message
+                        })
+
+                        // upload images to the server
+                        // get the number of the images
+                        count.value = images.value.length
+                        images.value.forEach((image) => {
+                            // TODO if the image are modified
+                            if (Object.keys(image).includes("base64")) {
+
+                                const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
+                                    variables: {
+                                        fileName: image.name,
+                                        base64Str: image.base64,
+                                    }
+                                }))
+                                mutate({
+                                    variables: {
+                                        fileName: image.name,
+                                        base64Str: image.base64,
+                                    }
+                                })
+
+                                onDone(result => {
+                                    // insert image url to the table
+                                    const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
+                                        variables: {
+                                            is_featured: false,
+                                            image_url: result.data.imageUpload.imageUrl,
+                                            recipe_id: recipeId,
+                                        }
+                                    }))
+                                    mutate({
+                                        variables: {
+                                            is_featured: false,
+                                            image_url: result.data.imageUpload.imageUrl,
+                                            recipe_id: recipeId,
+                                        }
+                                    })
+
+                                    onDone(result => {
+                                        // count and clear images
+                                        count.value--;
+                                        resetForm()
+                                        if (count.value == 0) {
+                                            images.value = []
+                                        }
+
+                                    })
+                                    onError(err => {
+                                        error.value = err.message
+                                    })
+
+                                })
+
+                                onError(err => {
+                                    error.value = err.message;
+                                    return
+                                })
+                            } else {
+                                // TODO if the images are not modified
+                                const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
+                                    variables: {
+                                        is_featured: false,
+                                        image_url: image.url,
+                                        recipe_id: recipeId,
+                                    }
+                                }))
+                                mutate({
+                                    variables: {
+                                        is_featured: false,
+                                        image_url: image.url,
+                                        recipe_id: recipeId,
+                                    }
+                                })
+
+                                onDone(result => {
+                                    //TODO count and clear images
+                                    count.value--;
+                                    resetForm()
+                                    if (count.value == 0) {
+                                        images.value = []
+                                    }
+
+                                })
+                                onError(err => {
+                                    error.value = err.message
+                                })
+
+                            }
+
+                        })
+
+                    })
+                    onError(err => {
+                        error.value = err.message;
+                        return
+                    })
+
+                })
+                onError(err => {
+                    error.value = err.message;
+                    return;
+                })
+            } else {
+                // TODO thumbnail is not modified
+                thumbnailUrl.value = thumbnailImage.value[0].url
+                // thumbnailImage.value = []
+                console.log("thumbUrl", thumbnailUrl.value)
+                console.log("thumbImg", thumbnailImage.value[0])
+
 
                 // create a recipe
                 const { mutate, onDone, onError } = useMutation(CREATE_FOOD, () => ({
                     variables: {
                         title: values.title,
                         description: values.description,
-                        featured_image_url: thumbnailUrl.value.imageUrl,
+                        featured_image_url: thumbnailImage.value[0].url,
                         prep_time: values.preparationTime,
                         category_id: values.category,
                     }
@@ -317,14 +745,13 @@ const onSubmit = async (values, { resetForm }) => {
                     variables: {
                         title: values.title,
                         description: values.description,
-                        featured_image_url: thumbnailUrl.value.imageUrl,
+                        featured_image_url: thumbnailImage.value[0].url,
                         prep_time: values.preparationTime,
                         category_id: values.category,
                     }
                 })
                 onDone(result => {
                     const recipeId = result.data.insert_recipes_one.id;
-                    console.log(result.data.insert_recipes_one.featured_image_url)
                     // add ingredient
                     values.ingredients.forEach(ingredient => {
                         const { mutate, onDone, onError } = useMutation(INSERT_INGREDIENT, () => ({
@@ -383,14 +810,14 @@ const onSubmit = async (values, { resetForm }) => {
                     const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
                         variables: {
                             is_featured: true,
-                            image_url: thumbnailUrl.value.imageUrl,
+                            image_url: thumbnailImage.value[0].url,
                             recipe_id: recipeId,
                         }
                     }))
                     mutate({
                         variables: {
                             is_featured: true,
-                            image_url: thumbnailUrl.value.imageUrl,
+                            image_url: thumbnailImage.value[0].url,
                             recipe_id: recipeId,
                         }
                     })
@@ -407,38 +834,77 @@ const onSubmit = async (values, { resetForm }) => {
                     // get the number of the images
                     count.value = images.value.length
                     images.value.forEach((image) => {
-                        const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
-                            variables: {
-                                fileName: image.name,
-                                base64Str: image.base64,
-                            }
-                        }))
-                        mutate({
-                            variables: {
-                                fileName: image.name,
-                                base64Str: image.base64,
-                            }
-                        })
+                        // TODO if the image are modified
+                        if (Object.keys(image).includes("base64")) {
 
-                        onDone(result => {
-                            // insert image url to the table
+                            const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
+                                variables: {
+                                    fileName: image.name,
+                                    base64Str: image.base64,
+                                }
+                            }))
+                            mutate({
+                                variables: {
+                                    fileName: image.name,
+                                    base64Str: image.base64,
+                                }
+                            })
+
+                            onDone(result => {
+                                // insert image url to the table
+                                const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
+                                    variables: {
+                                        is_featured: false,
+                                        image_url: result.data.imageUpload.imageUrl,
+                                        recipe_id: recipeId,
+                                    }
+                                }))
+                                mutate({
+                                    variables: {
+                                        is_featured: false,
+                                        image_url: result.data.imageUpload.imageUrl,
+                                        recipe_id: recipeId,
+                                    }
+                                })
+
+                                onDone(result => {
+                                    // count and clear images
+                                    count.value--;
+                                    resetForm()
+                                    if (count.value == 0) {
+                                        images.value = []
+                                    }
+
+                                })
+                                onError(err => {
+                                    error.value = err.message
+                                })
+
+                            })
+
+                            onError(err => {
+                                error.value = err.message;
+                                return
+                            })
+                        } else {
+                            // TODO if the images are not modified
                             const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
                                 variables: {
                                     is_featured: false,
-                                    image_url: result.data.imageUpload.imageUrl,
+                                    image_url: image.url,
                                     recipe_id: recipeId,
                                 }
                             }))
                             mutate({
                                 variables: {
                                     is_featured: false,
-                                    image_url: result.data.imageUpload.imageUrl,
+                                    image_url: image.url,
                                     recipe_id: recipeId,
                                 }
                             })
 
                             onDone(result => {
-                                // count and clear images
+                                //TODO count and clear images
                                 count.value--;
                                 resetForm()
                                 if (count.value == 0) {
@@ -450,12 +916,7 @@ const onSubmit = async (values, { resetForm }) => {
                                 error.value = err.message
                             })
 
-                        })
-
-                        onError(err => {
-                            error.value = err.message;
-                            return
-                        })
+                        }
 
                     })
 
@@ -465,19 +926,11 @@ const onSubmit = async (values, { resetForm }) => {
                     return
                 })
 
-            })
-            onError(err => {
-                error.value = err.message;
-                return;
-            })
-        })
-
-
-
-    } else {
-        error.value = " There Must Be At Least One Instruction And One Ingredient!"
+            }
+        }
     }
 }
+
 onMounted(() => {
     const token = useCookie("token");
     if (token.value && token.value != null) {
