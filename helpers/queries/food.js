@@ -256,6 +256,16 @@ export const IS_BOOKMARKED = gql`
     }
   }
 `;
+
+// remove bookmark
+
+export const REMOVE_BOOKMARKED = gql`
+  mutation DeleteBookmark($_eq: Int!) {
+    delete_bookmarks(where: { recipe_id: { _eq: $_eq } }) {
+      affected_rows
+    }
+  }
+`;
 export const ADD_LIKE = gql`
   mutation AddLike($recipe_id: Int!) {
     insert_likes_one(object: { recipe_id: $recipe_id }) {

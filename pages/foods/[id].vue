@@ -30,9 +30,12 @@
 
                         </div>
                         <div v-else class="mt-8">
+                            <button v-if="bookmarked" type="button" @click="toggleBookmark()"
+                                class=" focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
+                                <RemoveBookmark class="inline text-lg" /> &nbsp; &nbsp; Remove Bookmark
+                            </button>
 
-                            <button type="button" @click="addBookmark()" :disabled="disabled"
-                                :class="{ 'cursor-not-allowed bg-red-100': disabled }"
+                            <button v-else type="button" @click="toggleBookmark()"
                                 class=" focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                                 <Bookmark class="inline text-lg" /> &nbsp; &nbsp; Add Bookmark
                             </button>
@@ -86,19 +89,19 @@ import Instructions from '~/components/Food/Instructions.vue';
 import Carousel from '~/components/Food/Carousel.vue';
 import Rating from '~/components/Food/Rating.vue';
 import Comment from '~/components/Form/Comment.vue';
-import Stars from '~/components/Form/Stars.vue';
 import Edit from '~/components/icons/Edit.vue';
 import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
-import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE, IS_LIKED, DELETE_LIKE } from '~/helpers/queries/food';
+import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE, IS_LIKED, DELETE_LIKE, REMOVE_BOOKMARKED } from '~/helpers/queries/food';
+import RemoveBookmark from '~/components/icons/RemoveBookmark.vue';
 const user = ref(true)
 const food = ref({});
 const liked = ref(false)
 const likes = ref([])
 const reviews = ref([])
-const disabled = ref(false);
+const bookmarked = ref(false);
 const { params } = useRoute();
-const bookmarked = ref([0])
+const bookmarkes = ref([0])
 const router = useRouter();
 const id = params.id;
 const fetchComment = () => {
@@ -230,30 +233,53 @@ const deleteRecipe = () => {
     })
 }
 
-const addBookmark = () => {
-    const { mutate, onDone, onError } = useMutation(ADD_BOOKMARK, {
-        variables: {
-            recipe_id: id
-        }
-    })
-    mutate({
-        variables: {
-            recipe_id: id
-        }
-    })
-    onDone(result => {
-        console.log("result", result)
-        disabled.value = true
-        // TODO add toastify notification
-    })
-    onError(err => {
-        console.error(err)
-    })
+const toggleBookmark = () => {
+
+    if (!bookmarked.value) {
+
+        const { mutate, onDone, onError } = useMutation(ADD_BOOKMARK, {
+            variables: {
+                recipe_id: id
+            }
+        })
+        mutate({
+            variables: {
+                recipe_id: id
+            }
+        })
+        onDone(result => {
+            console.log("result", result)
+            bookmarked.value = true
+            // TODO add toastify notification
+        })
+        onError(err => {
+            console.error(err)
+        })
+
+    } else {
+        const { mutate, onDone, onError } = useMutation(REMOVE_BOOKMARKED, {
+            variables: {
+                _eq: id
+            }
+        })
+        mutate({
+            variables: {
+                _eq: id
+            }
+        })
+        onDone(result => {
+            console.log("deleteResult", result)
+            bookmarked.value = false
+        })
+        onError(err => {
+            console.log(err)
+        })
+    }
 }
 watch(() => bookmarked.value, () => {
     if (bookmarked.value) {
 
-        disabled.value = bookmarked.value.length == 0 ? false : true;
+        bookmarked.value = bookmarkes.value.length == 0 ? false : true;
 
     }
 
