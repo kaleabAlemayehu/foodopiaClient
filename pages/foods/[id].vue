@@ -59,7 +59,7 @@
                 <div class="w-full h-px bg-gray-200 mx-auto mt-8"></div>
                 <Instructions :id="id" />
                 <div v-if="reviews.length > 0" class="w-full h-px bg-gray-200 mx-auto my-8"></div>
-                <div :key="keyValue">
+                <div>
 
                     <Rating v-for="review, index in reviews" :key="index" :review="review" />
                 </div>
@@ -96,17 +96,24 @@ const food = ref({});
 const liked = ref(false)
 const likes = ref([])
 const reviews = ref([])
-const keyValue = ref(0)
 const disabled = ref(false);
 const { params } = useRoute();
 const bookmarked = ref([0])
 const router = useRouter();
 const id = params.id;
-const fetchComment = async () => {
-    const { data } = await useAsyncQuery(FETCH_COMMENT, { _eq: id })
-    reviews.value = data?._value?.comments || []
-    keyValue.value += 1;
+const fetchComment = () => {
+    console.log("fetch comment")
+    const { onResult, onError, loading } = useQuery(FETCH_COMMENT, { _eq: id })
+
+    onResult(({ data }) => {
+        reviews.value = data?.comments || []
+
+    })
+    onError(err => {
+        console.log(err)
+    })
 }
+
 
 const toggleHeart = () => {
 
@@ -259,6 +266,9 @@ watch(() => likes.value, () => {
     }
 
 })
+// watch(() => reviews.value, () => {
+//     fetchComment()
+// })
 </script>
 
 <style scoped>

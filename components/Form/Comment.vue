@@ -61,7 +61,6 @@ const onSubmit = (values, { resetForm }) => {
         onDone((result) => {
             emit("commentSubmited")
             resetForm()
-            console.log(result)
             update.value = 0;
         })
         onError(err => {
