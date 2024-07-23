@@ -132,6 +132,45 @@ export const GET_RECIPE_BY_CATEGORIES = gql`
   }
 `;
 
+// get recipe fot edit page
+
+export const FETCH_RECIPE_FOR_EDIT = gql`
+  query GetEditRecipe($id: Int!) {
+    recipes_by_pk(id: $id) {
+      avg_rating
+      category_id
+      created_at
+      description
+      featured_image_url
+      id
+      prep_time
+      title
+      total_comments
+      total_likes
+      updated_at
+      user_id
+      ingredients(where: { recipe_id: { _eq: $id } }) {
+        id
+        name
+        quantity
+        recipe_id
+        user_id
+      }
+      steps(where: { recipe_id: { _eq: $id } }, order_by: { step_order: asc }) {
+        id
+        recipe_id
+        step_order
+        user_id
+        description
+      }
+      recipe_images(where: { recipe_id: { _eq: $id } }) {
+        id
+        image_url
+        is_featured
+      }
+    }
+  }
+`;
 export const FETCH_RECIPE_BY_ID = gql`
   query GetRecipeById($id: Int!) {
     recipes_by_pk(id: $id) {

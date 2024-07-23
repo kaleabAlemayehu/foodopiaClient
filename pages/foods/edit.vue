@@ -14,13 +14,13 @@ import BackRoute from '~/components/Food/BackRoute.vue';
 import FoodForm from '~/components/Form/FoodForm.vue';
 import Loading from '~/components/Form/Loading.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { FETCH_RECIPE_BY_ID } from '~/helpers/queries/food';
+import { FETCH_RECIPE_FOR_EDIT } from '~/helpers/queries/food';
 
 const route = useRoute();
 const recipeId = route.query.recipeId;
 const recipe = ref({})
 
-const { onResult, onError, loading } = useQuery(FETCH_RECIPE_BY_ID, {
+const { onResult, onError, loading } = useQuery(FETCH_RECIPE_FOR_EDIT, {
     id: recipeId
 })
 onResult(({ data }) => {

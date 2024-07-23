@@ -198,23 +198,23 @@ const thumbnailUrl = ref()
 const error = ref(false)
 const count = ref(0)
 const initialValues = {
-    title: props.recipe.title,
-    description: props.recipe.description,
-    ingredients: [{
-        name: '',
-        amount: ''
-    }, {
-        name: '',
-        amount: ''
-    },],
-    instructions: [
-        {
-            name: ""
-        },
-        {
-            name: ""
+    title: props?.recipe?.title || "",
+    description: props?.recipe?.description || "",
+    preparationTime: props?.recipe?.prep_time || "",
+    category: props?.recipe?.category_id || "",
+    // TODO you may change the query
+    ingredients: props?.recipe?.ingredients?.map((ingredient => {
+        return {
+            name: ingredient.name,
+            amount: ingredient.quantity
         }
-    ]
+    })) || [{ name: "", quantity: "" }, { name: "", quantity: "" }],
+    instructions: props?.recipe?.steps?.map((instruction) => {
+        return {
+            name: instruction.description
+        }
+    }) || [{ name: "" }, { name: "" }]
+
 }
 const user = ref(false)
 const images = ref([])
