@@ -188,11 +188,18 @@ import { configure, Form, Field, ErrorMessage, defineRule, FieldArray } from 've
 import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
 import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT, INSERT_INSTRUCTION, INSERT_IMAGE } from '~/helpers/queries/food';
+const props = defineProps(["recipe"])
+
+
+
+
 const imageUrls = ref([])
 const thumbnailUrl = ref()
 const error = ref(false)
 const count = ref(0)
 const initialValues = {
+    title: props.recipe.title,
+    description: props.recipe.description,
     ingredients: [{
         name: '',
         amount: ''
@@ -466,7 +473,9 @@ onMounted(() => {
     } else {
         navigateTo('/')
     }
+
 })
+
 </script>
 
 <style scoped>
