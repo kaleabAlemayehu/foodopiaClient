@@ -28,8 +28,8 @@
             <Skeleton v-for="n in 9" :key="n" />
         </div>
         <div v-else>
-            <div v-if="foods.length > 0" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
-                <FoodItem v-for="item in foods" :key="item.id" v-bind="item" />
+            <div v-if="foods.length && !loading" class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-10 mt-12">
+                <FoodItem v-for="item in foods" :key="item.id" :recipe="item" />
             </div>
             <Empty v-else />
         </div>
@@ -71,20 +71,51 @@ import Empty from '~/components/Food/Empty.vue';
 
 import { initModals } from 'flowbite';
 import { onMounted } from 'vue';
-const loading = ref(true)
+import { GET_FILTERED_RECIPES } from '~/helpers/queries/food';
 const foods = ref([])
+const loading = ref(true)
 const offset = ref(0)
 const page = ref(1)
 const pageLimit = ref(0)
 const limit = ref(9)
-const tempared = ref(false)
+const userIds = ref([])
+const ingIds = ref([])
+const minTime = ref(0)
+const maxTime = ref(300)
+const { query } = useRoute()
+const title = query.title
 
+const { data, refresh } = await useAsyncQuery(GET_FILTERED_RECIPES, {
+    limit: limit.value,
+    offset: offset.value,
+    userIds: userIds.value,
+    maxTime: maxTime.value,
+    minTime: minTime.value,
+    ingIds: ingIds.value,
+    title: title,
+})
+foods.value = data?._value?.recipes || []
+pageLimit.value = Math.ceil(data?.recipes_aggregate?.aggregate.count / limit.value)
 
 const fetchFood = async () => {
-    // const { data } = await useAsyncQuery(GET_BOOKMARKED_RECIPES, { offset: offset.value, limit: limit.value })
-    // foods.value = data?._value?.bookmarks || []
-    // pageLimit.value = Math.ceil(data?._value?.bookmarks_aggregate?.aggregate.count / limit.value)
-    // console.log(data)
+
+    const { result, onResult, onError, loading } = useQuery(GET_FILTERED_RECIPES, {
+        limit: limit.value,
+        offset: offset.value,
+        userIds: userIds.value,
+        maxTime: maxTime.value,
+        minTime: minTime.value,
+        ingIds: ingIds.value,
+    })
+    onResult(({ data }) => {
+        foods.value = data?.recipes || []
+        pageLimit.value = Math.ceil(data?.recipes_aggregate?.aggregate.count / limit.value)
+
+    })
+    onError(err => {
+        console.log(err)
+    })
+
 
 }
 const handlePrev = () => {
@@ -99,6 +130,7 @@ const handleNext = () => {
     if (pageLimit.value > page.value) {
         offset.value += limit.value;
         page.value++;
+        console.log(foods.value)
     } else {
         console.log("not possible")
     }
@@ -108,25 +140,19 @@ onMounted(() => {
     initModals()
     fetchFood()
 })
-
-
-
-
-
-
-
 const handleFilter = (parameter) => {
-
-    console.log(parameter.ingredientsId)
-    console.log(parameter.usersId)
-    console.log(parameter.minTime, parameter.maxTime)
+    ingIds.value = parameter.ingredientsId
+    userIds.value = parameter.usersId
+    maxTime.value = parameter.maxTime
+    minTime.value = parameter.minTime
+    fetchFood()
 }
 
-watch(offset, fetchFood(), { immediate: true })
+watch(offset, fetchFood, { immediate: true })
 watch(foods, () => {
     setTimeout(() => {
         loading.value = false;
-    }, 1500);
+    }, 3000);
 }, { immediate: true })
 
 

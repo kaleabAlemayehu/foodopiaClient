@@ -413,11 +413,11 @@ export const GET_ALL_USERS = gql`
 
 export const GET_FILTERED_RECIPES = gql`
   query MyQuery(
-    $limit: Int!
-    $offset: Int!
-    $title: String
-    $minTime: Int
-    $maxTime: Int
+    $limit: Int = 9
+    $offset: Int = 0
+    $title: String = ""
+    $minTime: Int = 0
+    $maxTime: Int = 0
     $userIds: [Int!]
     $ingIds: [Int!]
   ) {
