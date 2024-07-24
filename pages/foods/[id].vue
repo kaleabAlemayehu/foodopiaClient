@@ -36,6 +36,7 @@
                             </button>
 
                             <button v-else type="button" @click="toggleBookmark()"
+                                :class="{ 'cursor-not-allowed': !user }"
                                 class=" focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
                                 <Bookmark class="inline text-lg" /> &nbsp; &nbsp; Add Bookmark
                             </button>
@@ -45,7 +46,8 @@
                     <!-- Right side -->
                     <div class="order-1 md:order-2 lg:order-2 flex flex-col">
 
-                        <Heart class="text-gray-400 text-4xl self-end cursor-pointer" :class="{ 'text-red-600': liked }"
+                        <Heart :class="{ 'cursor-pointer': user, 'text-red-600': liked, }"
+                            class="text-gray-400 text-4xl self-end cursor-pointer 'cursor-not-allowed'"
                             @click="toggleHeart" />
 
                         <img :src="food.featured_image_url" class="w-3/4 md:w-3/4 lg:w-full mx-auto" alt="food" />
@@ -94,7 +96,7 @@ import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
 import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE, IS_LIKED, DELETE_LIKE, REMOVE_BOOKMARKED } from '~/helpers/queries/food';
 import RemoveBookmark from '~/components/icons/RemoveBookmark.vue';
-const user = ref(true)
+const user = ref(false)
 const food = ref({});
 const liked = ref(false)
 const likes = ref([])
@@ -123,60 +125,70 @@ const fetchComment = () => {
 
 
 const toggleHeart = () => {
+    if (user.value) {
+        if (liked.value) {
+            const { mutate, onDone, onError } = useMutation(DELETE_LIKE, () => ({
+                variables: {
+                    _eq: id
+                }
+            }))
+            mutate({
+                variables: {
+                    _eq: id
+                }
+            })
+            onDone(result => {
+                console.log("unliked")
+                liked.value = false
+                // TODO add notification with toastify
+            })
+            onError(err => {
+                console.log(err)
+            })
 
-    if (liked.value) {
-        const { mutate, onDone, onError } = useMutation(DELETE_LIKE, () => ({
-            variables: {
-                _eq: id
-            }
-        }))
-        mutate({
-            variables: {
-                _eq: id
-            }
-        })
-        onDone(result => {
-            console.log("unliked")
-            liked.value = false
-            // TODO add notification with toastify
-        })
-        onError(err => {
-            console.log(err)
-        })
+        } else {
+            const { mutate, onDone, onError } = useMutation(ADD_LIKE, () => ({
+                variables: {
+                    recipe_id: id
+                }
+            }))
+            mutate({
+                variables: {
+                    recipe_id: id
+                }
+            })
+            onDone(result => {
+                console.log("liked")
+                liked.value = true
+                // TODO add notification with toastify
+
+            })
+            onError(err => {
+                console.log(err)
+            })
+
+        }
 
     } else {
-        const { mutate, onDone, onError } = useMutation(ADD_LIKE, () => ({
-            variables: {
-                recipe_id: id
-            }
-        }))
-        mutate({
-            variables: {
-                recipe_id: id
-            }
-        })
-        onDone(result => {
-            console.log("liked")
-            liked.value = true
-            // TODO add notification with toastify
+        // TODO Add login first notification
+        console.log("login first")
+    }
 
+}
+const isLiked = () => {
+    if (user.value) {
+
+
+        const { onResult, onError, loading } = useQuery(IS_LIKED, {
+            _eq: id
+        })
+        onResult(({ data }) => {
+            likes.value = data?.likes
         })
         onError(err => {
             console.log(err)
         })
-
     }
-}
-const isLiked = () => {
-    const { onResult, onError, loading } = useQuery(IS_LIKED, {
-        _eq: id
-    })
-    onResult(({ data }) => {
-        likes.value = data?.likes
-    })
-    onError(err => {
-        console.log(err)
-    })
 }
 const fetchFood = async () => {
     const { data } = await useAsyncQuery(FETCH_RECIPE_BY_ID, { id: id })
@@ -185,22 +197,25 @@ const fetchFood = async () => {
 }
 
 const isBookmarked = () => {
-
-    const { onResult, onError, loading } = useQuery(IS_BOOKMARKED, {
-        _eq: id
-    })
+    if (user.value) {
 
 
-    onResult(({ data }) => {
-        bookmarks.value = data?.bookmarks
-        console.log(bookmarks.value)
+        const { onResult, onError, loading } = useQuery(IS_BOOKMARKED, {
+            _eq: id
+        })
 
-    })
 
-    onError(err => {
-        console.log(err)
-    })
+        onResult(({ data }) => {
+            bookmarks.value = data?.bookmarks
+            console.log(bookmarks.value)
 
+        })
+
+        onError(err => {
+            console.log(err)
+        })
+
+    }
 }
 
 onMounted(() => {
@@ -239,47 +254,52 @@ const deleteRecipe = () => {
 }
 
 const toggleBookmark = () => {
+    if (user.value) {
+        if (!bookmarked.value) {
 
-    if (!bookmarked.value) {
+            const { mutate, onDone, onError } = useMutation(ADD_BOOKMARK, {
+                variables: {
+                    recipe_id: id
+                }
+            })
+            mutate({
+                variables: {
+                    recipe_id: id
+                }
+            })
+            onDone(result => {
+                console.log("result", result)
+                bookmarked.value = true
+                // TODO add toastify notification
+            })
+            onError(err => {
+                console.error(err)
+            })
 
-        const { mutate, onDone, onError } = useMutation(ADD_BOOKMARK, {
-            variables: {
-                recipe_id: id
-            }
-        })
-        mutate({
-            variables: {
-                recipe_id: id
-            }
-        })
-        onDone(result => {
-            console.log("result", result)
-            bookmarked.value = true
-            // TODO add toastify notification
-        })
-        onError(err => {
-            console.error(err)
-        })
+        } else {
+            const { mutate, onDone, onError } = useMutation(REMOVE_BOOKMARKED, {
+                variables: {
+                    _eq: id
+                }
+            })
+            mutate({
+                variables: {
+                    _eq: id
+                }
+            })
+            onDone(result => {
+                console.log("deleteResult", result)
+                bookmarked.value = false
+                // TODO add toastify notification
+            })
+            onError(err => {
+                console.log(err)
+            })
+        }
 
     } else {
-        const { mutate, onDone, onError } = useMutation(REMOVE_BOOKMARKED, {
-            variables: {
-                _eq: id
-            }
-        })
-        mutate({
-            variables: {
-                _eq: id
-            }
-        })
-        onDone(result => {
-            console.log("deleteResult", result)
-            bookmarked.value = false
-            // TODO add toastify notification
-        })
-        onError(err => {
-            console.log(err)
-        })
+        // TODO add login first notification
+        console.log("login first!")
     }
 }
 watch(() => bookmarks.value, () => {
