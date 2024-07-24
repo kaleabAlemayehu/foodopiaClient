@@ -36,14 +36,15 @@
                         <h4 class="text-md font-semibold text-gray-900 dark:text-white">
                             Filter By Ingredients
                         </h4>
-                        <ul class="h-36 overflow-y-auto">
+                        <ul class="h-36 overflow-y-auto" v-if="!loading">
 
-                            <div v-for="ing in 17" :key="ing" class="flex px-4 py-2 items-center me-4">
-                                <input checked :id="`red-checkbox-${ing}`" type="checkbox" value=""
+                            <div v-for="ing, index in ingredients" :key="index"
+                                class="flex px-4 py-2 items-center me-4">
+                                <input checked :id="`red-checkbox-${index}`" type="checkbox" value=""
                                     class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label :for="`red-checkbox-${ing}`"
-                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Shiro
-                                    Powder</label>
+                                <label :for="`red-checkbox-${index}`"
+                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ ing.name
+                                    }}</label>
                             </div>
                         </ul>
                     </div>
@@ -93,10 +94,35 @@ import { initModals } from 'flowbite';
 import { onMounted } from 'vue';
 import Filter from '../icons/Filter.vue';
 import RangeSlider from './RangeSlider.vue';
+import { GET_ALL_INGREDIENT } from '~/helpers/queries/food';
+const ingredients = ref([])
+const { data } = await useAsyncQuery(GET_ALL_INGREDIENT)
+ingredients.value = data?._value?.ingredients
+
+
+
+const fetchIngredient = () => {
+    const { onResult, onError, loading, refetch } = useQuery(GET_ALL_INGREDIENT)
+    onResult((data) => {
+        ingredients.value = data?.ingredients
+        console.log()
+    })
+    onError(err => {
+        console.log(err)
+    })
+}
+
 onMounted(() => {
+    console.log("ingredientsOnMount", ingredients.value)
     initModals()
 })
-
+watch(() => ingredients.value, (newvalue) => {
+    if (!newvalue) {
+        initModals()
+        console.log(ingredients)
+        // fetchIngredient()
+    }
+}, { immediate: true })
 </script>
 
 <style scoped></style>
