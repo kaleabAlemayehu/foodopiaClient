@@ -206,7 +206,7 @@ const initialValues = {
     description: props?.recipe?.description || "",
     preparationTime: props?.recipe?.prep_time || "",
     category: props?.recipe?.category_id || "",
-    // TODO you may change the query
+
     ingredients: props?.recipe?.ingredients?.map((ingredient => {
         return {
             name: ingredient.name,
@@ -385,7 +385,6 @@ const onSubmit = async (values, { resetForm }) => {
                             })
                         })
 
-                        // TODO add thumbnailimage upload to images url table
 
                         const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
                             variables: {
@@ -597,7 +596,7 @@ const onSubmit = async (values, { resetForm }) => {
                             })
                         })
 
-                        // TODO add thumbnailimage upload to images url table
+                        //  add thumbnailimage upload to images url table
 
                         const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
                             variables: {
@@ -626,7 +625,7 @@ const onSubmit = async (values, { resetForm }) => {
                         // get the number of the images
                         count.value = images.value.length
                         images.value.forEach((image) => {
-                            // TODO if the image are modified
+                            //  if the image are modified
                             if (Object.keys(image).includes("base64")) {
 
                                 const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
@@ -679,7 +678,7 @@ const onSubmit = async (values, { resetForm }) => {
                                     return
                                 })
                             } else {
-                                // TODO if the images are not modified
+                                //  if the images are not modified
                                 const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
                                     variables: {
                                         is_featured: false,
@@ -696,7 +695,7 @@ const onSubmit = async (values, { resetForm }) => {
                                 })
 
                                 onDone(result => {
-                                    //TODO count and clear images
+                                    // count and clear images
                                     count.value--;
                                     resetForm()
                                     if (count.value == 0) {
@@ -724,7 +723,7 @@ const onSubmit = async (values, { resetForm }) => {
                     return;
                 })
             } else {
-                // TODO thumbnail is not modified
+                //  thumbnail is not modified
                 thumbnailUrl.value = thumbnailImage.value[0].url
                 // thumbnailImage.value = []
                 console.log("thumbUrl", thumbnailUrl.value)
@@ -795,7 +794,7 @@ const onSubmit = async (values, { resetForm }) => {
                             }
                         })
                         onDone((result) => {
-                            // TODO add notification popups (here or up there ↑)
+                            // add notification popups (here or up there ↑)
                             resetForm()
 
                         })
@@ -834,7 +833,7 @@ const onSubmit = async (values, { resetForm }) => {
                     // get the number of the images
                     count.value = images.value.length
                     images.value.forEach((image) => {
-                        // TODO if the image are modified
+                        //  if the image are modified
                         if (Object.keys(image).includes("base64")) {
 
                             const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
@@ -887,7 +886,7 @@ const onSubmit = async (values, { resetForm }) => {
                                 return
                             })
                         } else {
-                            // TODO if the images are not modified
+                            //  if the images are not modified
                             const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
                                 variables: {
                                     is_featured: false,
@@ -904,7 +903,7 @@ const onSubmit = async (values, { resetForm }) => {
                             })
 
                             onDone(result => {
-                                //TODO count and clear images
+                                // count and clear images
                                 count.value--;
                                 resetForm()
                                 if (count.value == 0) {

@@ -233,7 +233,6 @@ onMounted(() => {
 })
 
 const deleteRecipe = () => {
-    // TODO adding conformation modal
     const { mutate, onDone, onError } = useMutation(DELETE_RECIPE, {
         variables: {
             id: id
