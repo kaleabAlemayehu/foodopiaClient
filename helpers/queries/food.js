@@ -363,3 +363,27 @@ export const GET_BOOKMARKED_RECIPES = gql`
     }
   }
 `;
+
+export const GET_MY_RECIPES = gql`
+  query GetMyRecipes($limit: Int!, $offset: Int!, $_eq: Int!) {
+    recipes_aggregate(where: { user_id: { _eq: $_eq } }) {
+      aggregate {
+        count
+      }
+    }
+    recipes(offset: $offset, limit: $limit, where: { user_id: { _eq: $_eq } }) {
+      avg_rating
+      category_id
+      created_at
+      description
+      featured_image_url
+      id
+      prep_time
+      title
+      total_comments
+      total_likes
+      updated_at
+      user_id
+    }
+  }
+`;
