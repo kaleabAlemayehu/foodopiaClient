@@ -14,7 +14,7 @@
                 <div class="err">{{ error }}</div>
             </div>
             <div class="flex items-center justify-between px-3 py-2 border-t dark:border-red-600">
-                <button type="submit"
+                <button type="submit" :disabled="!user" :class="{ 'cursor-not-allowed': !user }"
                     class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
                     Post comment
                 </button>
@@ -26,6 +26,7 @@
 </template>
 
 <script setup>
+import { jwtDecode } from 'jwt-decode';
 import Stars from './Stars.vue';
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { CREATE_COMMENT } from '~/helpers/queries/food';
@@ -34,6 +35,7 @@ const props = defineProps({
     id: Number
 })
 const error = ref("")
+const user = ref(false)
 const update = ref(0)
 const rating = ref(-1)
 const storeRating = (value) => {
@@ -72,6 +74,15 @@ const onSubmit = (values, { resetForm }) => {
         error.value = "you have to give a rating before you comment!"
     }
 }
+
+onMounted(() => {
+    const token = useCookie("token")
+    if (token.value && token.value !== null) {
+        user.value = jwtDecode(token.value)
+    } else {
+        user.value = false;
+    }
+})
 </script>
 
 <style scoped>
