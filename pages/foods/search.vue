@@ -171,11 +171,18 @@ const handleFilter = (parameter) => {
     fetchFood()
 }
 
-watch(offset, fetchFood, { immediate: true })
+watch(offset, () => {
+    loading.value = true;
+    fetchFood()
+    setTimeout(() => {
+        loading.value = false;
+
+    }, 1500);
+}, { immediate: true })
 watch(foods, () => {
     setTimeout(() => {
         loading.value = false;
-    }, 3000);
+    }, 1500);
 }, { immediate: true })
 
 
