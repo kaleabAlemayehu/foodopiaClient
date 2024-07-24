@@ -112,7 +112,7 @@ const handleEdit = () => {
 }
 const fetchComment = () => {
     console.log("fetch comment")
-    const { onResult, onError, loading } = useQuery(FETCH_COMMENT, { _eq: id })
+    const { onResult, onError, loading, refetch } = useQuery(FETCH_COMMENT, { _eq: id })
 
     onResult(({ data }) => {
         reviews.value = data?.comments || []
@@ -120,6 +120,9 @@ const fetchComment = () => {
     })
     onError(err => {
         console.log(err)
+    })
+    refetch({
+        _eq: id
     })
 }
 
