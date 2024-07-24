@@ -57,10 +57,13 @@ import { onMounted, defineProps } from 'vue';
 import { FETCH_ADDITIONAL_IMAGES } from '~/helpers/queries/food';
 const images = ref([])
 const fetchAdditionalImages = async () => {
-    const { data } = await useAsyncQuery(FETCH_ADDITIONAL_IMAGES, { _eq: props.id })
-    images.value = data?._value?.recipe_images
+    const { onResult, onError, refetch } = useQuery(FETCH_ADDITIONAL_IMAGES, { _eq: props.id })
 
+    onResult(({ data }) => {
+        images.value = data?.recipe_images
+    })
     // wait for the images to render and initilize carousel
+    refetch({ _eq: props.id })
     setTimeout(() => {
         initCarousels()
 

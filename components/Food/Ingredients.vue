@@ -20,10 +20,16 @@ const props = defineProps({
     id: Number
 })
 
-onMounted(async () => {
-    const { data } = await useAsyncQuery(FETCH_INGREDIENT, { _eq: props.id })
-    ingredients.value = data?._value?.ingredients || []
+const { onResult, onError, refetch } = useQuery(FETCH_INGREDIENT, { _eq: props.id })
+onResult(({ data }) => {
+
+    ingredients.value = data?.ingredients || []
 })
+onError(err => {
+    console.log(err)
+})
+refetch({ _eq: props.id })
+
 </script>
 
 <style scoped></style>
