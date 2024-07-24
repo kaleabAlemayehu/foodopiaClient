@@ -68,7 +68,7 @@
                             Filter By Preparation Time
                         </h4>
                         <div class="flex flex-col">
-                            <RangeSlider :min="0" :max="1000" />
+                            <RangeSlider :min="1" :max="200" />
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -107,13 +107,6 @@ users.value = usrs?._value?.users
 onMounted(() => {
     initModals()
 })
-watch(() => ingredients.value, (newvalue) => {
-    if (!newvalue) {
-        initModals()
-        console.log(ingredients)
-        // fetchIngredient()
-    }
-}, { immediate: true })
 </script>
 
 <style scoped></style>

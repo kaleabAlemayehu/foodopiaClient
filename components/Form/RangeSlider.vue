@@ -2,10 +2,10 @@
     <div class=" flex justify-center items-center">
         <div class="relative max-w-xl w-full">
             <div>
-                <input type="range" step="100" :min="min" :max="max" @input="minTrigger" v-model="minPrice"
+                <input type="range" step="1" :min="min" :max="max" @input="minTrigger" v-model="minTime"
                     class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer">
 
-                <input type="range" step="100" :min="min" :max="max" @input="maxTrigger" v-model="maxPrice"
+                <input type="range" step="1" :min="min" :max="max" @input="maxTrigger" v-model="maxTime"
                     class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer">
 
                 <div class="relative z-10 h-2">
@@ -21,11 +21,11 @@
 
             <div class="flex justify-between items-center py-5">
                 <div>
-                    <input type="text" maxlength="5" @input="minTrigger" v-model="minPrice"
+                    <input type="text" maxlength="5" @input="minTrigger" v-model="minTime"
                         class="px-3 py-2 border border-gray-200 rounded w-24 text-center">
                 </div>
                 <div>
-                    <input type="text" maxlength="5" @input="maxTrigger" v-model="maxPrice"
+                    <input type="text" maxlength="5" @input="maxTrigger" v-model="maxTime"
                         class="px-3 py-2 border border-gray-200 rounded w-24 text-center">
                 </div>
             </div>
@@ -36,21 +36,30 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const minPrice = ref(1000);
-const maxPrice = ref(7000);
-const min = ref(100);
-const max = ref(10000);
+const minTime = ref(0);
+const maxTime = ref(300);
+const min = ref(0);
+const max = ref(300);
 const minThumb = ref(0);
 const maxThumb = ref(0);
 
 const minTrigger = () => {
-    minPrice.value = Math.min(minPrice.value, maxPrice.value - 500);
-    minThumb.value = ((minPrice.value - min.value) / (max.value - min.value)) * 100;
+    if (minTime.value < 0) {
+        minTime.value = 0
+    }
+    minTime.value = Math.min(minTime.value, maxTime.value - 1);
+    minThumb.value = ((minTime.value - min.value) / (max.value - min.value)) * 100;
+    console.log("(min, max)", minTime._value, maxTime._value)
 };
 
 const maxTrigger = () => {
-    maxPrice.value = Math.max(maxPrice.value, minPrice.value + 500);
-    maxThumb.value = 100 - (((maxPrice.value - min.value) / (max.value - min.value)) * 100);
+    if (maxTime.value > 300) {
+        maxTime.value = 300
+    }
+    maxTime.value = Math.max(maxTime.value, minTime.value + 1);
+    maxThumb.value = 100 - (((maxTime.value - min.value) / (max.value - min.value)) * 100);
+    console.log("(min, max)", minTime._value
+        , maxTime._value)
 };
 
 onMounted(() => {
