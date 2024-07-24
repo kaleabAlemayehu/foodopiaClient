@@ -156,6 +156,7 @@ const sendFilters = () => {
 }
 onMounted(() => {
     initModals()
+    sendFilters()
 })
 
 </script>

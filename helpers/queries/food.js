@@ -412,33 +412,26 @@ export const GET_ALL_USERS = gql`
 `;
 
 export const GET_FILTERED_RECIPES = gql`
-  query GetFilteredRecipes(
-    $_in: [Int!]!
-    $_lte: Int!
-    $_gte: Int!
-    $_in1: [Int!]!
+  query MyQuery(
     $limit: Int!
     $offset: Int!
+    $title: String
+    $minTime: Int
+    $maxTime: Int
+    $userIds: [Int!]
+    $ingIds: [Int!]
   ) {
-    recipes_aggregate(
-      where: {
-        ingredients: { id: { _in: $_in } }
-        prep_time: { _lte: $_lte, _gte: $_gte }
-        user_id: { _in: $_in1 }
-      }
-    ) {
-      aggregate {
-        count
-      }
-    }
     recipes(
-      where: {
-        ingredients: { id: { _in: $_in } }
-        prep_time: { _lte: $_lte, _gte: $_gte }
-        user_id: { _in: $_in1 }
-      }
-      offset: $offset
       limit: $limit
+      offset: $offset
+      where: {
+        _or: [
+          { title: { _ilike: $title } }
+          { prep_time: { _gte: $minTime, _lte: $maxTime } }
+          { user_id: { _in: $userIds } }
+          { ingredients: { id: { _in: $ingIds } } }
+        ]
+      }
     ) {
       avg_rating
       category_id
@@ -452,6 +445,20 @@ export const GET_FILTERED_RECIPES = gql`
       total_likes
       updated_at
       user_id
+    }
+    recipes_aggregate(
+      where: {
+        _or: [
+          { title: { _ilike: $title } }
+          { prep_time: { _gte: $minTime, _lte: $maxTime } }
+          { user_id: { _in: $userIds } }
+          { ingredients: { id: { _in: $ingIds } } }
+        ]
+      }
+    ) {
+      aggregate {
+        count
+      }
     }
   }
 `;
