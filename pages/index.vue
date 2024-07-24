@@ -77,11 +77,17 @@ const page = ref(1)
 const pageLimit = ref(0)
 const limit = ref(9)
 const _eq = ref(1)
-const fetchFood = async () => {
-    const { data } = await useAsyncQuery(GET_RECIPE_BY_CATEGORIES, { offset: offset.value, _eq: _eq.value, limit: limit.value })
-    foods.value = data?._value?.recipes || []
-    pageLimit.value = Math.ceil(data?._value?.recipes_aggregate.aggregate.count / limit.value)
+const fetchFood = () => {
+    const { onResult, onError, refetch } = useQuery(GET_RECIPE_BY_CATEGORIES, { offset: offset.value, _eq: _eq.value, limit: limit.value })
+    onResult(({ data }) => {
+        foods.value = data?.recipes || []
+        pageLimit.value = Math.ceil(data?.recipes_aggregate.aggregate.count / limit.value)
+    })
 
+    onError(er => {
+        console.log(er)
+    })
+    refetch({ offset: offset.value, _eq: _eq.value, limit: limit.value })
 }
 const menuTab = ref(1);
 
