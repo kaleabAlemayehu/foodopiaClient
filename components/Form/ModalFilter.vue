@@ -38,11 +38,11 @@
                         </h4>
                         <ul class="h-36 overflow-y-auto" v-if="!loading">
 
-                            <div v-for="ing, index in ingredients" :key="index"
+                            <div v-for="ing in ingredients" :key="ing.id" @change="toggleIngredient(ing.id)"
                                 class="flex px-4 py-2 items-center me-4">
-                                <input checked :id="`red-checkbox-${index}`" type="checkbox" value=""
+                                <input checked :id="`red-checkbox-${ing.id}`" type="checkbox" value=""
                                     class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label :for="`red-checkbox-${index}`"
+                                <label :for="`red-checkbox-${ing.id}`"
                                     class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ ing.name
                                     }} - {{ ing.quantity }}</label>
                             </div>
@@ -54,10 +54,11 @@
                         </h4>
                         <ul class="h-36 overflow-y-auto">
 
-                            <div v-for="user in users" :key="user.email" class="flex px-4 py-2 items-center me-4">
-                                <input checked :id="`red-checkbox-${user.email}`" type="checkbox" value=""
+                            <div v-for="user in users" @change="toggleUser(user.id)" :key="user.id"
+                                class="flex px-4 py-2 items-center me-4">
+                                <input checked :id="`red-checkbox-${user.id}`" type="checkbox" value=""
                                     class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label :for="`red-checkbox-${user.email}`"
+                                <label :for="`red-checkbox-${user.id}`"
                                     class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ user.username
                                     }}</label>
                             </div>
@@ -68,7 +69,7 @@
                             Filter By Preparation Time
                         </h4>
                         <div class="flex flex-col">
-                            <RangeSlider :min="1" :max="200" />
+                            <RangeSlider :min="1" :max="200" @minmax="storeMinMax" />
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -96,17 +97,54 @@ import Filter from '../icons/Filter.vue';
 import RangeSlider from './RangeSlider.vue';
 import { GET_ALL_INGREDIENT, GET_ALL_USERS } from '~/helpers/queries/food';
 const ingredients = ref([])
+const allIngredients = ref([])
 const users = ref([])
+const allUser = ref([])
 const { data: ings } = await useAsyncQuery(GET_ALL_INGREDIENT)
 ingredients.value = ings?._value?.ingredients
+allIngredients.value = ingredients.value.map((ing) => {
+    return {
+        id: ing.id,
+        checked: true,
+    }
+})
+
+
 const { data: usrs } = await useAsyncQuery(GET_ALL_USERS)
 users.value = usrs?._value?.users
-
-
+allUser.value = users.value.map((usr) => {
+    return {
+        id: usr.id,
+        checked: true,
+    }
+})
+const minTime = ref(0)
+const maxTime = ref(300)
+const storeMinMax = (min, max) => {
+    minTime.value = min;
+    maxTime.value = max
+}
+const toggleIngredient = (id) => {
+    allIngredients.value.forEach(el => {
+        if (el.id == id) {
+            el.checked = !el.checked
+        }
+    })
+}
+const toggleUser = (id) => {
+    allUser.value.forEach(el => {
+        if (el.id == id) {
+            el.checked = !el.checked
+        }
+    })
+    console.log(allUser.value)
+    console.log(id)
+}
 
 onMounted(() => {
     initModals()
 })
+
 </script>
 
 <style scoped></style>

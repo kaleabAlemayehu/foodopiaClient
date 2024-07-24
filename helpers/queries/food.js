@@ -406,6 +406,52 @@ export const GET_ALL_USERS = gql`
       email
       created_at
       username
+      id
+    }
+  }
+`;
+
+export const GET_FILTERED_RECIPES = gql`
+  query GetFilteredRecipes(
+    $_in: [Int!]!
+    $_lte: Int!
+    $_gte: Int!
+    $_in1: [Int!]!
+    $limit: Int!
+    $offset: Int!
+  ) {
+    recipes_aggregate(
+      where: {
+        ingredients: { id: { _in: $_in } }
+        prep_time: { _lte: $_lte, _gte: $_gte }
+        user_id: { _in: $_in1 }
+      }
+    ) {
+      aggregate {
+        count
+      }
+    }
+    recipes(
+      where: {
+        ingredients: { id: { _in: $_in } }
+        prep_time: { _lte: $_lte, _gte: $_gte }
+        user_id: { _in: $_in1 }
+      }
+      offset: $offset
+      limit: $limit
+    ) {
+      avg_rating
+      category_id
+      created_at
+      description
+      featured_image_url
+      id
+      prep_time
+      title
+      total_comments
+      total_likes
+      updated_at
+      user_id
     }
   }
 `;

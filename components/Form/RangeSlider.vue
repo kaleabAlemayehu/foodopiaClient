@@ -35,6 +35,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+const emit = defineEmits(["minmax"])
 
 const minTime = ref(0);
 const maxTime = ref(300);
@@ -49,7 +50,8 @@ const minTrigger = () => {
     }
     minTime.value = Math.min(minTime.value, maxTime.value - 1);
     minThumb.value = ((minTime.value - min.value) / (max.value - min.value)) * 100;
-    console.log("(min, max)", minTime._value, maxTime._value)
+    emit("minmax", minTime.value, maxTime.value)
+
 };
 
 const maxTrigger = () => {
@@ -58,8 +60,7 @@ const maxTrigger = () => {
     }
     maxTime.value = Math.max(maxTime.value, minTime.value + 1);
     maxThumb.value = 100 - (((maxTime.value - min.value) / (max.value - min.value)) * 100);
-    console.log("(min, max)", minTime._value
-        , maxTime._value)
+    emit("minmax", minTime.value, maxTime.value)
 };
 
 onMounted(() => {
