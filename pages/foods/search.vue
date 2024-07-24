@@ -2,7 +2,7 @@
     <div class=" my-16 py-12  max-w-screen-xl mx-auto px-6">
 
         <form v-if="!loading" class="flex items-center max-w-xl mx-auto mb-16 mt-8">
-            <ModalFilter />
+            <ModalFilter @filter="handleFilter" />
 
             <label for="simple-search" class="sr-only">Search</label>
             <div class="relative w-full">
@@ -70,6 +70,11 @@ import { initModals } from 'flowbite';
 import { onMounted } from 'vue';
 const loading = ref(true)
 const foods = ref([])
+const handleFilter = (parameter) => {
+    console.log(parameter.ingredientsId)
+    console.log(parameter.usersId)
+    console.log(parameter.minTime, parameter.maxTime)
+}
 onMounted(() => {
     loading.value = true;
     setTimeout(() => {

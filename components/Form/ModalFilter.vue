@@ -75,7 +75,7 @@
                     <!-- Modal footer -->
                     <div
                         class="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button data-modal-hide="crud-modal" type="button"
+                        <button data-modal-hide="crud-modal" type="button" @click="sendFilters"
                             class="text-white  bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                             <Filter class="inline" /> Filter
                         </button>
@@ -96,6 +96,7 @@ import { onMounted } from 'vue';
 import Filter from '../icons/Filter.vue';
 import RangeSlider from './RangeSlider.vue';
 import { GET_ALL_INGREDIENT, GET_ALL_USERS } from '~/helpers/queries/food';
+const emit = defineEmits(["filter"])
 const ingredients = ref([])
 const allIngredients = ref([])
 const users = ref([])
@@ -137,10 +138,22 @@ const toggleUser = (id) => {
             el.checked = !el.checked
         }
     })
-    console.log(allUser.value)
-    console.log(id)
 }
 
+const sendFilters = () => {
+    const ingId = (allIngredients.value.filter(el => {
+        return el.checked
+    })).map(el => {
+        return el.id
+    })
+    const userId = (allUser.value.filter(el => {
+        return el.checked
+    })).map(el => {
+        return el.id
+    })
+
+    emit("filter", { ingredientsId: ingId, usersId: userId, minTime: minTime.value, maxTime: maxTime.value })
+}
 onMounted(() => {
     initModals()
 })
