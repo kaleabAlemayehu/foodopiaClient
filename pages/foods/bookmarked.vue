@@ -55,10 +55,13 @@ const limit = ref(9)
 
 const foods = ref([])
 const fetchFood = async () => {
-    const { data } = await useAsyncQuery(GET_BOOKMARKED_RECIPES, { offset: offset.value, limit: limit.value })
-    foods.value = data?._value?.bookmarks || []
-    pageLimit.value = Math.ceil(data?._value?.bookmarks_aggregate?.aggregate.count / limit.value)
-    console.log(data)
+    const { onResult, onError, refetch } = useQuery(GET_BOOKMARKED_RECIPES, { offset: offset.value, limit: limit.value })
+    onResult(({ data }) => {
+
+        foods.value = data?.bookmarks || []
+        pageLimit.value = Math.ceil(data?.bookmarks_aggregate?.aggregate.count / limit.value)
+    })
+    refetch({ offset: offset.value, limit: limit.value })
 
 }
 const handlePrev = () => {

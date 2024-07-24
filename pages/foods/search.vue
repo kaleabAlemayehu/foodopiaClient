@@ -85,7 +85,7 @@ const maxTime = ref(300)
 const { query } = useRoute()
 const title = query.title
 
-const { data, refresh } = await useAsyncQuery(GET_FILTERED_RECIPES, {
+const { onResult, onError, refetch } = useQuery(GET_FILTERED_RECIPES, {
     limit: limit.value,
     offset: offset.value,
     userIds: userIds.value,
@@ -94,12 +94,27 @@ const { data, refresh } = await useAsyncQuery(GET_FILTERED_RECIPES, {
     ingIds: ingIds.value,
     title: title,
 })
-foods.value = data?._value?.recipes || []
-pageLimit.value = Math.ceil(data?.recipes_aggregate?.aggregate.count / limit.value)
+onResult(({ data }) => {
+
+    foods.value = data?.recipes || []
+    pageLimit.value = Math.ceil(data?.recipes_aggregate?.aggregate.count / limit.value)
+})
+onError(err => {
+    console.log(err)
+})
+refetch({
+    limit: limit.value,
+    offset: offset.value,
+    userIds: userIds.value,
+    maxTime: maxTime.value,
+    minTime: minTime.value,
+    ingIds: ingIds.value,
+    title: title,
+})
 
 const fetchFood = async () => {
 
-    const { result, onResult, onError, loading } = useQuery(GET_FILTERED_RECIPES, {
+    const { onResult, onError, refetch } = useQuery(GET_FILTERED_RECIPES, {
         limit: limit.value,
         offset: offset.value,
         userIds: userIds.value,
@@ -114,6 +129,14 @@ const fetchFood = async () => {
     })
     onError(err => {
         console.log(err)
+    })
+    refetch({
+        limit: limit.value,
+        offset: offset.value,
+        userIds: userIds.value,
+        maxTime: maxTime.value,
+        minTime: minTime.value,
+        ingIds: ingIds.value,
     })
 
 

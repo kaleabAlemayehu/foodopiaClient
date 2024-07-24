@@ -21,10 +21,14 @@ const props = defineProps({
 })
 const instructions = ref([])
 onMounted(async () => {
-    const { data } = await useAsyncQuery(FETCH_INSTRUCTION, {
+    const { onResult, onError, refetch } = useQuery(FETCH_INSTRUCTION, {
         _eq: props.id
     })
-    instructions.value = data?._value?.steps || []
+    onResult(({ data }) => {
+
+        instructions.value = data?.steps || []
+    })
+    refetch({ _eq: props.id })
 })
 </script>
 

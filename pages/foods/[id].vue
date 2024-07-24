@@ -193,9 +193,16 @@ const isLiked = () => {
         })
     }
 }
-const fetchFood = async () => {
-    const { data } = await useAsyncQuery(FETCH_RECIPE_BY_ID, { id: id })
-    food.value = data?._value?.recipes_by_pk || {}
+const fetchFood = () => {
+    const { onResult, onError, refetch } = useQuery(FETCH_RECIPE_BY_ID, { id: id })
+    onResult(({ data }) => {
+
+        food.value = data?.recipes_by_pk || {}
+    })
+    onError(err => {
+        console.log(err)
+    })
+    refetch({ id: id })
 
 }
 
