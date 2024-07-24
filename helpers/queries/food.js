@@ -388,22 +388,24 @@ export const GET_MY_RECIPES = gql`
   }
 `;
 
-// export const GET_ALL_INGREDIENT = gql`
-//   query GetAllIngredients {
-//     ingredients {
-//       id
-//       name
-//       quantity
-//       recipe_id
-//       user_id
-//     }
-//   }
-// `;
-
 export const GET_ALL_INGREDIENT = gql`
   query GetAllIngredients {
-    ingredients(distinct_on: name) {
+    ingredients {
+      id
       name
+      quantity
+      recipe_id
+      user_id
+    }
+  }
+`;
+
+export const GET_ALL_USERS = gql`
+  query GetAllUsers {
+    users {
+      email
+      created_at
+      username
     }
   }
 `;

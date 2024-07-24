@@ -44,7 +44,7 @@
                                     class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label :for="`red-checkbox-${index}`"
                                     class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ ing.name
-                                    }}</label>
+                                    }} - {{ ing.quantity }}</label>
                             </div>
                         </ul>
                     </div>
@@ -54,11 +54,11 @@
                         </h4>
                         <ul class="h-36 overflow-y-auto">
 
-                            <div v-for="user in 17" :key="user" class="flex px-4 py-2 items-center me-4">
-                                <input checked :id="`red-checkbox-${user}`" type="checkbox" value=""
+                            <div v-for="user in users" :key="user.email" class="flex px-4 py-2 items-center me-4">
+                                <input checked :id="`red-checkbox-${user.email}`" type="checkbox" value=""
                                     class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label :for="`red-checkbox-${user}`"
-                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">user{{ user
+                                <label :for="`red-checkbox-${user.email}`"
+                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ user.username
                                     }}</label>
                             </div>
                         </ul>
@@ -94,26 +94,17 @@ import { initModals } from 'flowbite';
 import { onMounted } from 'vue';
 import Filter from '../icons/Filter.vue';
 import RangeSlider from './RangeSlider.vue';
-import { GET_ALL_INGREDIENT } from '~/helpers/queries/food';
+import { GET_ALL_INGREDIENT, GET_ALL_USERS } from '~/helpers/queries/food';
 const ingredients = ref([])
-const { data } = await useAsyncQuery(GET_ALL_INGREDIENT)
-ingredients.value = data?._value?.ingredients
+const users = ref([])
+const { data: ings } = await useAsyncQuery(GET_ALL_INGREDIENT)
+ingredients.value = ings?._value?.ingredients
+const { data: usrs } = await useAsyncQuery(GET_ALL_USERS)
+users.value = usrs?._value?.users
 
 
-
-const fetchIngredient = () => {
-    const { onResult, onError, loading, refetch } = useQuery(GET_ALL_INGREDIENT)
-    onResult((data) => {
-        ingredients.value = data?.ingredients
-        console.log()
-    })
-    onError(err => {
-        console.log(err)
-    })
-}
 
 onMounted(() => {
-    console.log("ingredientsOnMount", ingredients.value)
     initModals()
 })
 watch(() => ingredients.value, (newvalue) => {
