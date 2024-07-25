@@ -71,9 +71,12 @@
 <script setup>
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import { CREATE_ACCOUNT, LOGIN } from "../../helpers/queries/auth.js"
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 const error = ref(null)
 
 const onSubmit = async (values) => {
+
     const { mutate, onDone, onError } = useMutation(CREATE_ACCOUNT, () => ({
         variables: {
             email: values.email,
@@ -103,6 +106,15 @@ const onSubmit = async (values) => {
             // add token to a cookie
             token.value = result.data.signup.token;
             // TODO: add notification popup
+
+
+            toast("Welcome! You Register Successfully!", {
+                "theme": "auto",
+                "type": "default",
+                "dangerouslyHTMLString": true,
+                "clearOnUrlChange": false,
+
+            })
             navigateTo("/");
 
         }

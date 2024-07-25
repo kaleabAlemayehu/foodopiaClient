@@ -1,7 +1,7 @@
 <template>
     <div class="bg-gray-50 h-screen overflow-hidden ">
         <BackRoute class="w-min absolute left-1/3 top-[8rem] m-0 p-0 " />
-        <SignupForm class="" />
+        <SignupForm />
 
     </div>
 </template>
