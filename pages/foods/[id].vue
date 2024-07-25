@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="w-full h-px bg-gray-200 mx-auto my-8"></div>
-                <!-- TODO: live update on the comment show area -->
+
                 <Comment :id="id" @comment-submited="fetchComment()" />
 
             </div>
@@ -96,6 +96,8 @@ import DeleteModal from '~/components/Form/DeleteModal.vue';
 import { jwtDecode } from 'jwt-decode';
 import { FETCH_RECIPE_BY_ID, FETCH_COMMENT, DELETE_RECIPE, ADD_BOOKMARK, IS_BOOKMARKED, ADD_LIKE, IS_LIKED, DELETE_LIKE, REMOVE_BOOKMARKED } from '~/helpers/queries/food';
 import RemoveBookmark from '~/components/icons/RemoveBookmark.vue';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 const user = ref(false)
 const food = ref({});
 const liked = ref(false)
@@ -143,7 +145,13 @@ const toggleHeart = () => {
             onDone(result => {
                 console.log("unliked")
                 liked.value = false
-                // TODO add notification with toastify
+
+                toast("You Unlike The Recipe!", {
+                    "theme": "auto",
+                    "type": "default",
+                    "dangerouslyHTMLString": true,
+                    "clearOnUrlChange": false,
+                })
             })
             onError(err => {
                 console.log(err)
@@ -163,7 +171,12 @@ const toggleHeart = () => {
             onDone(result => {
                 console.log("liked")
                 liked.value = true
-                // TODO add notification with toastify
+                toast("You Like The Recipe!", {
+                    "theme": "auto",
+                    "type": "default",
+                    "dangerouslyHTMLString": true,
+                    "clearOnUrlChange": false,
+                })
 
             })
             onError(err => {
@@ -173,7 +186,12 @@ const toggleHeart = () => {
         }
 
     } else {
-        // TODO Add login first notification
+        toast("You Have To Login First!", {
+            "theme": "auto",
+            "type": "default",
+            "dangerouslyHTMLString": true,
+            "clearOnUrlChange": false,
+        })
         console.log("login first")
     }
 
@@ -279,7 +297,12 @@ const toggleBookmark = () => {
             onDone(result => {
                 console.log("result", result)
                 bookmarked.value = true
-                // TODO add toastify notification
+                toast("The Recipe Add To Bookmarked Section That You Can See It!", {
+                    "theme": "auto",
+                    "type": "default",
+                    "dangerouslyHTMLString": true,
+                    "clearOnUrlChange": false,
+                })
             })
             onError(err => {
                 console.error(err)
@@ -299,7 +322,12 @@ const toggleBookmark = () => {
             onDone(result => {
                 console.log("deleteResult", result)
                 bookmarked.value = false
-                // TODO add toastify notification
+                toast("The Recipe Removed From Bookmarked Section!", {
+                    "theme": "auto",
+                    "type": "default",
+                    "dangerouslyHTMLString": true,
+                    "clearOnUrlChange": false,
+                })
             })
             onError(err => {
                 console.log(err)
@@ -307,7 +335,12 @@ const toggleBookmark = () => {
         }
 
     } else {
-        // TODO add login first notification
+        toast("You Have To Login First!", {
+            "theme": "auto",
+            "type": "default",
+            "dangerouslyHTMLString": true,
+            "clearOnUrlChange": false,
+        })
         console.log("login first!")
     }
 }

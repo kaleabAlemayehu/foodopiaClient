@@ -32,10 +32,19 @@ const user = ref(false)
 const props = defineProps(["value"])
 const emit = defineEmits(["ratingValue"])
 const rating = ref(0)
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import { jwtDecode } from 'jwt-decode';
 const toggleRating = (index) => {
     if (user.value == false) {
-        // TODO add notification to tell first log in to rate
+
+        toast("You have to login first!", {
+            "theme": "auto",
+            "type": "default",
+            "dangerouslyHTMLString": true,
+            "clearOnUrlChange": false,
+
+        })
         console.log("login first")
     } else {
 

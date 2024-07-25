@@ -360,7 +360,7 @@ const onSubmit = async (values, { resetForm }) => {
                                 }
                             })
                             onDone(result => {
-                                // TODO   add notification popups ( here or down there ↓)
+
                                 // reset the values
                                 resetForm()
 
@@ -386,8 +386,8 @@ const onSubmit = async (values, { resetForm }) => {
                                 }
                             })
                             onDone((result) => {
-                                // TODO add notification popups (here or up there ↑)
-                                // TODO done notification
+
+
                                 toast("Done! Your Recipe Added For Users To enjoy it!", {
                                     "theme": "auto",
                                     "type": "default",
@@ -562,7 +562,7 @@ const onSubmit = async (values, { resetForm }) => {
                                 }
                             })
                             onDone(result => {
-                                // TODO   add notification popups ( here or down there ↓)
+
                                 // reset the values
                                 resetForm()
 
@@ -588,7 +588,15 @@ const onSubmit = async (values, { resetForm }) => {
                                 }
                             })
                             onDone((result) => {
-                                // TODO add notification popups (here or up there ↑)
+
+
+                                toast("Edited! Your Recipe Edited Successfully!", {
+                                    "theme": "auto",
+                                    "type": "default",
+                                    "dangerouslyHTMLString": true,
+                                    "clearOnUrlChange": false,
+
+                                })
                                 resetForm()
 
                             })
@@ -770,7 +778,7 @@ const onSubmit = async (values, { resetForm }) => {
                             }
                         })
                         onDone(result => {
-                            // TODO   add notification popups ( here or down there ↓)
+
 
                             // reset the values
                             resetForm()
@@ -798,6 +806,13 @@ const onSubmit = async (values, { resetForm }) => {
                         })
                         onDone((result) => {
                             // add notification popups (here or up there ↑)
+                            toast("Edited! Your Recipe Edited Successfully!", {
+                                "theme": "auto",
+                                "type": "default",
+                                "dangerouslyHTMLString": true,
+                                "clearOnUrlChange": false,
+
+                            })
                             resetForm()
 
                         })
@@ -807,7 +822,7 @@ const onSubmit = async (values, { resetForm }) => {
                         })
                     })
 
-                    // TODO add thumbnailimage upload to images url table
+
 
                     const { mutate, onDone, onError } = useMutation(INSERT_IMAGE, () => ({
                         variables: {
@@ -837,7 +852,7 @@ const onSubmit = async (values, { resetForm }) => {
                     count.value = images.value.length
                     images.value.forEach((image) => {
                         //  if the image are modified
-                        if (Object.keys(image).includes("base64")) {
+                        if (temparedImages.value) {
 
                             const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
                                 variables: {
