@@ -192,6 +192,8 @@ import Cancle from '../icons/Cancle.vue';
 import { jwtDecode } from 'jwt-decode';
 import { CREATE_FOOD, UPLOAD_IMAGE, INSERT_INGREDIENT, INSERT_INSTRUCTION, INSERT_IMAGE, DELETE_RECIPE } from '~/helpers/queries/food';
 import { image } from '@vee-validate/rules';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 const props = defineProps(["recipe"])
 
 
@@ -385,6 +387,14 @@ const onSubmit = async (values, { resetForm }) => {
                             })
                             onDone((result) => {
                                 // TODO add notification popups (here or up there ↑)
+                                // TODO done notification
+                                toast("Done! Your Recipe Added For Users To enjoy it!", {
+                                    "theme": "auto",
+                                    "type": "default",
+                                    "dangerouslyHTMLString": true,
+                                    "clearOnUrlChange": false,
+
+                                })
                                 resetForm()
 
                             })
@@ -459,6 +469,7 @@ const onSubmit = async (values, { resetForm }) => {
                                     if (count.value == 0) {
                                         images.value = []
                                     }
+
 
                                 })
                                 onError(err => {
@@ -760,6 +771,7 @@ const onSubmit = async (values, { resetForm }) => {
                         })
                         onDone(result => {
                             // TODO   add notification popups ( here or down there ↓)
+
                             // reset the values
                             resetForm()
 
