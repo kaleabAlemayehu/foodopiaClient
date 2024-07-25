@@ -35,9 +35,7 @@
                             <div class="err text-center">{{ error }}</div>
                             <div class="flex items-center justify-between mb-3 ">
 
-                                <a href="#"
-                                    class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
-                                    password?</a>
+
                             </div>
                             <button type="submit"
                                 class="w-full mb-3   text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Sign
@@ -61,6 +59,8 @@
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import { LOGIN } from "../../helpers/queries/auth.js"
 const error = ref(null)
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const onSubmit = (values) => {
     const { mutate, onDone, onError } = useMutation(LOGIN, () => ({
@@ -87,6 +87,13 @@ const onSubmit = (values) => {
             })
             token.value = result.data.login.token;
             // TODO add notification popup
+
+            toast("Welcome Back! How are you?", {
+                "theme": "auto",
+                "type": "default",
+                "dangerouslyHTMLString": true,
+                "clearOnUrlChange": false,
+            })
             navigateTo('/')
         }
     })
