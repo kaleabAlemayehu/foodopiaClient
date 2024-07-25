@@ -171,7 +171,7 @@
                 {{ error }}
 
             </div>
-            <button type="submit" class="w-full focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300
+            <button type="submit" @click="legit = true" class="w-full focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300
             font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700
             dark:focus:ring-red-900"> Submit
 
@@ -195,8 +195,9 @@ import { image } from '@vee-validate/rules';
 const props = defineProps(["recipe"])
 
 
-
-
+const legit = ref(false)
+const temparedThumb = ref(false)
+const temparedImages = ref(false)
 const imageUrls = ref([])
 const thumbnailUrl = ref()
 const error = ref(false)
@@ -233,6 +234,7 @@ const images = ref(props?.recipe?.recipe_images?.filter((image) => !image.is_fea
 }) || [])
 const thumbnailImage = ref(props?.recipe?.featured_image_url ? [{ name: props.recipe.featured_image_url, url: props.recipe.featured_image_url }] : [])
 const handleThumbNail = (event) => {
+    temparedThumb.value = true
     const files = Array.from(event.target.files);
     thumbnailImage.value = files.map((file) => {
         const obj = {
@@ -252,10 +254,12 @@ const handleThumbNail = (event) => {
         return obj;
 
     });
+    console.log("conditon", Object.keys(thumbnailImage.value[0]).includes("base64"))
 }
 const handleFileChange = (event) => {
+    temparedImages.value = true
     const files = Array.from(event.target.files);
-    images.value = [...images.value, ...files.map((file) => {
+    images.value = files.map((file) => {
         const obj = {
             name: file.name,
             url: URL.createObjectURL(file),
@@ -272,15 +276,20 @@ const handleFileChange = (event) => {
 
         return obj;
 
-    })]
+    })
 };
 const removeImage = (index) => {
+    console.log("imagebefore", images.value)
+    console.log("image", images.value[index])
     images.value.splice(index, 1);
-    console.log("image", images.value)
+
+    console.log("imageafter", images.value)
 };
 const removeThumbNail = (index) => {
     thumbnailImage.value.splice(index, 1);
 };
+const route = useRoute();
+const recipeId = route.query.recipeId;
 
 
 
@@ -480,31 +489,13 @@ const onSubmit = async (values, { resetForm }) => {
         } else {
             error.value = " There Must Be At Least One Instruction And One Ingredient!"
         }
-    } else if (page == "/foods/edit") {
-        // delete the recipe
-        const route = useRoute();
-        const recipeId = route.query.recipeId;
-        console.log(recipeId)
-        const { mutate, onDone, onError } = useMutation(DELETE_RECIPE, () => ({
-            variables: {
-                id: parseInt(recipeId)
-            }
-        }))
-        mutate({
-            variables: {
-                id: parseInt(recipeId)
-            }
-        })
+    } else if (page == "/foods/edit" && legit.value) {
 
-        onDone(result => {
-            console.log(result)
-        })
-        onError(err => {
-            console.log(err)
-        })
+
         if (values.instructions.length && values.ingredients.length) {
+
             // if the thumnailImage.value is changed
-            if (Object.keys(thumbnailImage.value[0]).includes("base64")) {
+            if (temparedThumb.value) {
                 const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
                     variables: {
                         fileName: thumbnailImage.value[0].name,
@@ -626,7 +617,7 @@ const onSubmit = async (values, { resetForm }) => {
                         count.value = images.value.length
                         images.value.forEach((image) => {
                             //  if the image are modified
-                            if (Object.keys(image).includes("base64")) {
+                            if (temparedImages.value) {
 
                                 const { mutate, onDone, onError } = useMutation(UPLOAD_IMAGE, () => ({
                                     variables: {
@@ -926,6 +917,25 @@ const onSubmit = async (values, { resetForm }) => {
                 })
 
             }
+            navigateTo('/')
+            // delete the recipe
+            const { mutate, onDone, onError } = useMutation(DELETE_RECIPE, () => ({
+                variables: {
+                    id: parseInt(recipeId)
+                }
+            }))
+            mutate({
+                variables: {
+                    id: parseInt(recipeId)
+                }
+            })
+
+            onDone(result => {
+                console.log(result)
+            })
+            onError(err => {
+                console.log(err)
+            })
         }
     }
 }
@@ -937,7 +947,6 @@ onMounted(() => {
     } else {
         navigateTo('/')
     }
-    console.log(images, thumbnailImage)
 
 })
 

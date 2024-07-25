@@ -95,9 +95,6 @@ onMounted(() => {
     fetchFood()
 
 });
-onBeforeUpdate(() => {
-    fetchFood()
-})
 
 const handleMenuTabs = (type) => {
     menuTab.value = type;
