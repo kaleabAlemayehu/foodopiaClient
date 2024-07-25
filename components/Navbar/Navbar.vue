@@ -25,7 +25,7 @@
                             {{ user.username }} </p>
 
                     </NuxtLink>
-                    <Logout class="cursor-pointer text-primary my-auto" @click="signOutUser" />
+                    <LogoutModal class="inline" @confirmed="signOutUser" />
                 </div>
             </div>
             <div v-else>
@@ -43,6 +43,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import LogoutModal from './LogoutModal.vue';
 import Logout from '../icons/Logout.vue';
 import User from '../icons/User.vue';
 import Dropdown from './Dropdown.vue';
