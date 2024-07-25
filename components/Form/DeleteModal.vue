@@ -1,17 +1,17 @@
 <template>
     <div>
-        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+        <button data-modal-target="delete-modal" data-modal-toggle="delete-modal"
             class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-max my-16">
             <Trash class="inline text-sm" /> &nbsp; &nbsp; Delete
         </button>
 
-        <div id="popup-modal" tabindex="-1"
+        <div id="delete-modal" tabindex="-1"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <button type="button"
                         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-hide="popup-modal">
+                        data-modal-hide="delete-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -28,11 +28,11 @@
                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
                             delete this Recipe
                             ?</h3>
-                        <button data-modal-hide="popup-modal" type="button" @click="$emit('confirmed')"
+                        <button data-modal-hide="delete-modal" type="button" @click="$emit('confirmed')"
                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center">
                             Yes, I'm sure
                         </button>
-                        <button data-modal-hide="popup-modal" type="button"
+                        <button data-modal-hide="delete-modal" type="button"
                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No,
                             cancel</button>
                     </div>
